@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import VideoPlayer from 'react-native-video-controls';
 import theme from '../../../resources/theme';
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
-import CometChatMessageReactions from '../../Messages/Extensions/CometChatMessageReactions';
+import CometChatMessageReactions from '../Extensions/CometChatMessageReactions';
 import CometChatReadReceipt from '../CometChatReadReceipt';
 import style from './styles';
 import CometChatAvatar from '../../Shared/CometChatAvatar';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
-import { CometChatMessageReactions } from '../../Messages/Extensions';
+import { CometChatMessageReactions } from '../Extensions';
 import CometChatReadReceipt from '../CometChatReadReceipt';
 import style from './styles';
 import theme from '../../../resources/theme';

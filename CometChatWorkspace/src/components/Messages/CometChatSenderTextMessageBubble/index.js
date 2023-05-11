@@ -12,7 +12,7 @@ import Autolink from 'react-native-autolink';
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
 import CometChatReadReceipt from '../CometChatReadReceipt';
 import style from './styles';
-import { CometChatMessageReactions } from '../../Messages/Extensions';
+import { CometChatMessageReactions } from '../Extensions';
 import * as enums from '../../../utils/enums';
 import * as actions from '../../../utils/actions';
 import { CometChatContext } from '../../../utils/CometChatContext';

@@ -265,6 +265,7 @@ class CometChatMessageHeader extends React.Component {
   };
 
   render() {
+    console.log('222',this.props.item,);
     let image;
     let userName;
     let presence;

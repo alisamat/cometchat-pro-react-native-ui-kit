@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, TouchableWithoutFeedback, Alert } from 'react-native';
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
 import CometChatReadReceipt from '../CometChatReadReceipt';
-import CometChatMessageReactions from '../../Messages/Extensions/CometChatMessageReactions';
+import CometChatMessageReactions from '../Extensions/CometChatMessageReactions';
 import style from './styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNFetchBlob from 'rn-fetch-blob';

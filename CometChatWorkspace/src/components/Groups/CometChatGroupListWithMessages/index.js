@@ -80,6 +80,7 @@ class CometChatGroupListWithMessages extends React.Component {
    */
 
   itemClicked = (item, type) => {
+    console.log('83',item, type);
     this.setState({ item: { ...item }, type, viewDetailScreen: false }, () => {
       this.navigateToMessageListScreen(item, type);
     });
@@ -92,6 +93,7 @@ class CometChatGroupListWithMessages extends React.Component {
    */
 
   navigateToMessageListScreen = (item, type) => {
+    console.log('955');
     this.props.navigation.navigate(
       enums.NAVIGATION_CONSTANTS.COMET_CHAT_MESSAGES,
       {

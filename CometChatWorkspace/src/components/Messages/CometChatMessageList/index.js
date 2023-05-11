@@ -9,10 +9,10 @@ import { MessageListManager } from './controller';
 
 import * as enums from '../../../utils/enums';
 import * as actions from '../../../utils/actions';
-import CometChatSenderPollMessageBubble from '../../Messages/Extensions/CometChatSenderPollMessageBubble';
-import CometChatSenderStickerMessageBubble from '../../Messages/Extensions/CometChatSenderStickerMessageBubble';
-import CometChatReceiverPollMessageBubble from '../../Messages/Extensions/CometChatReceiverPollMessageBubble';
-import CometChatReceiverStickerMessageBubble from '../../Messages/Extensions/CometChatReceiverStickerMessageBubble';
+import CometChatSenderPollMessageBubble from '../Extensions/CometChatSenderPollMessageBubble';
+import CometChatSenderStickerMessageBubble from '../Extensions/CometChatSenderStickerMessageBubble';
+import CometChatReceiverPollMessageBubble from '../Extensions/CometChatReceiverPollMessageBubble';
+import CometChatReceiverStickerMessageBubble from '../Extensions/CometChatReceiverStickerMessageBubble';
 import CometChatActionMessageBubble from '../CometChatActionMessageBubble';
 import CometChatDeleteMessageBubble from '../CometChatDeleteMessageBubble';
 import CometChatReceiverVideoMessageBubble from '../CometChatReceiverVideoMessageBubble';

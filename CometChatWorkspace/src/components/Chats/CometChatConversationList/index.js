@@ -3,6 +3,11 @@
 /* eslint-disable radix */
 import React from 'react';
 import { CometChat } from '@cometchat-pro/react-native-chat';
+// import { NavigationContainer } from '@react-navigation/native';
+import assets from '../../../../../../assets';
+import constants from '../../../../../../Util/Constants';
+
+
 import { CometChatManager } from '../../../utils/controller';
 import { ConversationListManager } from './controller';
 import * as enums from '../../../utils/enums';
@@ -26,12 +31,16 @@ import {
   Platform,
   Image,
   TouchableOpacity,
+  StyleSheet,
   Alert,
   ToastAndroid,
   Vibration
 } from 'react-native';
 import { logger } from '../../../utils/common';
 import { SwipeListView } from 'react-native-swipe-list-view';
+const {width, height, widthRatio, heightRatio} = constants.styleGuide;
+
+
 class CometChatConversationList extends React.Component {
   loggedInUser = null;
 
@@ -808,9 +817,10 @@ class CometChatConversationList extends React.Component {
    * @param conversation: conversation object of the item clicked
    */
   handleClick = (conversation) => {
+    console.log('bass');
     try {
       if (!this.props.onItemClick) return;
-
+console.log('816');
       this.props.onItemClick(
         conversation.conversationWith,
         conversation.conversationType,
@@ -869,7 +879,7 @@ class CometChatConversationList extends React.Component {
     return (
       <View style={[styles.conversationHeaderStyle]}>
         <View style={styles.headingContainer}>
-          <Text style={styles.conversationHeaderTitleStyle}>Chats</Text>
+          <Text style={styles.conversationHeaderTitleStyle}>Sohbet</Text>
         </View>
       </View>
     );
@@ -963,15 +973,38 @@ class CometChatConversationList extends React.Component {
         logger(error);
       });
   };
+   goBack = () => {
+    const {navigation} = this.props;
+    // const {onGoBack} =route.params;
+    // if (route.params.onGoBack) {
+    //   route.params.onGoBack("1");
+    // }
 
+    navigation.goBack();
+}
   render() {
+
     return (
+
       <CometChatContextProvider ref={(el) => (this.contextProviderRef = el)}>
         <SafeAreaView style={{ backgroundColor: 'white' }}>
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.conversationWrapperStyle}>
             <View style={styles.headerContainer}></View>
+        
+           {/* {1- GERİ GİT} */}
+           <TouchableOpacity style={styles1.closeIcon} onPress={this.goBack}>
+            <View style={styles1.closeIcon1}>
+              <Image
+                source={assets.back}
+                resizeMode="contain"
+                style={styles1.imageIcon}
+              />
+              </View>
+            </TouchableOpacity>
+
+    
             {this.listHeaderComponent()}
             <SwipeListView
               contentContainerStyle={styles.flexGrow1}
@@ -1037,7 +1070,36 @@ class CometChatConversationList extends React.Component {
           <DropDownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
         </SafeAreaView>
       </CometChatContextProvider>
+
     );
   }
 }
+const styles1 = StyleSheet.create({
+  closeIcon: {
+   // position: 'absolute',
+    // top: 27 * heightRatio,
+    left: 14 * widthRatio,
+    // backgroundColor: constants.grey,
+    width: 44 * heightRatio,
+    height: 44 * heightRatio,
+    borderRadius: 22 * heightRatio,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeIcon1: {
+    // position: 'absolute',
+    // top: 34 * heightRatio,
+    // left: 25 * widthRatio,
+    backgroundColor: constants.grey,
+    width: 30 * heightRatio,
+    height: 30 * heightRatio,
+    borderRadius: 15 * heightRatio,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageIcon: {
+    height: 14 * heightRatio,
+    width: 14 * heightRatio,
+  },
+})
 export default CometChatConversationList;

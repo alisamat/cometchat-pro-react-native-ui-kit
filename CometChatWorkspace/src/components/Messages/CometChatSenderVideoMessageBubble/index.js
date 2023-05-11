@@ -4,7 +4,7 @@ import VideoPlayer from 'react-native-video-controls';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
 import CometChatReadReceipt from '../CometChatReadReceipt';
-import { CometChatMessageReactions } from '../../Messages/Extensions';
+import { CometChatMessageReactions } from '../Extensions';
 import style from './styles';
 import * as enums from '../../../utils/enums';
 import * as actions from '../../../utils/actions';

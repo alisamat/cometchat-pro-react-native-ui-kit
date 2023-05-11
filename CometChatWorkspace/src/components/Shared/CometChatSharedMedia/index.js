@@ -13,7 +13,7 @@ import { CometChatManager } from '../../../utils/controller';
 import * as enums from '../../../utils/enums';
 import CometChatImageViewer from '../../Messages/CometChatImageViewer';
 import CometChatVideoViewer from '../../Messages/CometChatVideoViewer'
-import DropDownAlert from '../../Shared/DropDownAlert';
+import DropDownAlert from '../DropDownAlert';
 import { SharedMediaManager } from './controller';
 import styles from './styles';
 

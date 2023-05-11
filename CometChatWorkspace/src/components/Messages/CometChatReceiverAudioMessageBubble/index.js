@@ -5,7 +5,7 @@ import * as enums from '../../../utils/enums';
 import * as actions from '../../../utils/actions';
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
 import CometChatReadReceipt from '../CometChatReadReceipt';
-import CometChatMessageReactions from '../../Messages/Extensions/CometChatMessageReactions';
+import CometChatMessageReactions from '../Extensions/CometChatMessageReactions';
 import CometChatAvatar from '../../Shared/CometChatAvatar';
 import style from './styles';
 import AudioControls from './audioControls';

@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-bitwise */
 import React from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import { CometChatManager } from '../../../utils/controller';
 import * as enums from '../../../utils/enums';
@@ -95,7 +96,7 @@ class CometChatConversationListWithMessages extends React.Component {
    * @param type: clicked conversation type - "user" or "group"
    */
   itemClicked = (item, type) => {
-    console.log('7777');
+    console.log('999');
     this.setState({ item: { ...item }, type, viewDetailScreen: false }, () => {
       this.props.navigation.navigate(
         enums.NAVIGATION_CONSTANTS.COMET_CHAT_MESSAGES,

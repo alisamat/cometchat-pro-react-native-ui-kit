@@ -4,7 +4,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../../../resources/theme';
 import * as actions from '../../../utils/actions';
 import { checkMessageForExtensionsData } from '../../../utils/common';
-import CometChatAvatar from '../..//Shared/CometChatAvatar';
+import CometChatAvatar from '../../Shared/CometChatAvatar';
 import CometChatReadReceipt from '../CometChatReadReceipt';
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
 import CometChatMessageReactions from '../Extensions/CometChatMessageReactions';

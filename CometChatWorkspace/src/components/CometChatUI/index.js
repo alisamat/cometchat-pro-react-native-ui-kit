@@ -2,6 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+
 import { CometChatGroupListWithMessages } from '../Groups';
 import { CometChatUserListWithMessages } from '../Users';
 import { CometChatConversationListWithMessages } from '../Chats';
@@ -38,6 +40,8 @@ function CometChatUI() {
     });
   };
   return (
+    <NavigationContainer>
+
     <CometChatContextProvider ref={contextRef}>
       {tabs ? (
         <Tab.Navigator
@@ -106,6 +110,8 @@ function CometChatUI() {
         </Tab.Navigator>
       ) : null}
     </CometChatContextProvider>
+    </NavigationContainer>
+
   );
 }
 

@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
-import { CometChatMessageReactions } from '../../Messages/Extensions';
+import { CometChatMessageReactions } from '../Extensions';
 import CometChatReadReceipt from '../CometChatReadReceipt';
 import style from './styles';
 import * as enums from '../../../utils/enums';

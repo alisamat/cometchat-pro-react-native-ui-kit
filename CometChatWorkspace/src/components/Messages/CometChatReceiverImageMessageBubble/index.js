@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image';
 import CometChatAvatar from '../../Shared/CometChatAvatar';
 import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReplyCount';
 import CometChatReadReceipt from '../CometChatReadReceipt';
-import CometChatMessageReactions from '../../Messages/Extensions/CometChatMessageReactions';
+import CometChatMessageReactions from '../Extensions/CometChatMessageReactions';
 import style from './styles';
 import theme from '../../../resources/theme';
 import * as enums from '../../../utils/enums';

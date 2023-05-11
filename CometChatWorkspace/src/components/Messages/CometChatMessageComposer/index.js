@@ -23,7 +23,7 @@ import style from './styles';
 import {
   CometChatCreatePoll,
   CometChatSmartReplyPreview,
-} from '../../Messages/Extensions';
+} from '../Extensions';
 import CometChatStickerKeyboard from '../CometChatStickerKeyboard';
 import ComposerActions from './composerActions';
 

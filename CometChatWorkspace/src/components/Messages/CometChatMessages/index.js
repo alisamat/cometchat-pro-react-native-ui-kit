@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { CometChat } from '@cometchat-pro/react-native-chat';
+// import { NavigationContainer } from '@react-navigation/native';
 import * as actions from '../../../utils/actions';
 import _ from 'lodash';
 import {
@@ -1053,6 +1054,8 @@ class CometChatMessages extends React.PureComponent {
     );
 
     return (
+      // <NavigationContainer>
+
       <CometChatContextProvider ref={(el) => (this.contextProviderRef = el)}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -1196,6 +1199,8 @@ class CometChatMessages extends React.PureComponent {
             />
           ) : null}
       </CometChatContextProvider>
+      // {/* </NavigationContainer> */}
+
     );
   }
 }

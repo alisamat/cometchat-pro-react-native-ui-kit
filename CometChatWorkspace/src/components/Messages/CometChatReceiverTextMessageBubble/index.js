@@ -13,7 +13,7 @@ import CometChatThreadedMessageReplyCount from '../CometChatThreadedMessageReply
 import CometChatReadReceipt from '../CometChatReadReceipt';
 import CometChatAvatar from '../../Shared/CometChatAvatar';
 import style from './styles';
-import CometChatMessageReactions from '../../Messages/Extensions/CometChatMessageReactions';
+import CometChatMessageReactions from '../Extensions/CometChatMessageReactions';
 import * as enums from '../../../utils/enums';
 import * as actions from '../../../utils/actions';
 import { CometChat } from '@cometchat-pro/react-native-chat';
