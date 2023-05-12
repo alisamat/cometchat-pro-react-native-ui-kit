@@ -994,7 +994,7 @@ console.log('816');
             <View style={styles.headerContainer}></View>
         
            {/* {1- GERİ GİT} */}
-           {/* <TouchableOpacity style={styles1.closeIcon} onPress={this.goBack}>
+           <TouchableOpacity style={styles1.closeIcon} onPress={this.goBack}>
             <View style={styles1.closeIcon1}>
               <Image
                 source={assets.back}
@@ -1002,7 +1002,7 @@ console.log('816');
                 style={styles1.imageIcon}
               />
               </View>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
     
             {this.listHeaderComponent()}
