@@ -6,8 +6,6 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 // import { NavigationContainer } from '@react-navigation/native';
 import assets from '../../../../../../assets';
 import constants from '../../../../../../Util/Constants';
-
-
 import { CometChatManager } from '../../../utils/controller';
 import { ConversationListManager } from './controller';
 import * as enums from '../../../utils/enums';
@@ -44,7 +42,7 @@ const {width, height, widthRatio, heightRatio} = constants.styleGuide;
 class CometChatConversationList extends React.Component {
   loggedInUser = null;
 
-  decoratorMessage = 'Loading...';
+  decoratorMessage = 'Yükleniyor...';
   static contextType = CometChatContext;
   constructor(props) {
     super(props);
@@ -63,7 +61,7 @@ class CometChatConversationList extends React.Component {
   }
 
   componentDidMount() {
-    this.decoratorMessage = 'Loading...';
+    this.decoratorMessage = 'Yükleniyor...';
     
     if (this.ConversationListManager) {
       this.ConversationListManager.removeListeners();
@@ -75,7 +73,7 @@ class CometChatConversationList extends React.Component {
     this.checkRestrictions();
     try {
       this.navListener = this.props.navigation.addListener('focus', () => {
-        this.decoratorMessage = 'Loading...';
+        this.decoratorMessage = 'Yükleniyor...';
         if (this.ConversationListManager) {
           this.ConversationListManager.removeListeners();
         }
@@ -301,7 +299,7 @@ class CometChatConversationList extends React.Component {
           conversationList.splice(groupKey, 1);
           this.setState({ conversationList: conversationList });
           if (conversationList.length === 0) {
-            this.decoratorMessage = 'No chats found';
+            this.decoratorMessage = 'Sohbet bulunamadı';
           }
         }
       }
@@ -842,7 +840,7 @@ console.log('816');
         this.ConversationListManager.fetchNextConversation()
           .then((conversationList) => {
             if (conversationList.length === 0) {
-              this.decoratorMessage = 'No chats found';
+              this.decoratorMessage = 'Sohbet bulunamadı';
             }
             this.setState({
               conversationList: [
@@ -877,7 +875,7 @@ console.log('816');
   listHeaderComponent = () => {
     //list header avatar here.
     return (
-      <View style={[styles.conversationHeaderStyle]}>
+      <View style={[styles.conversationHeaderStyle,{}]}>
         <View style={styles.headingContainer}>
           <Text style={styles.conversationHeaderTitleStyle}>Sohbet</Text>
         </View>
@@ -990,11 +988,12 @@ console.log('816');
         <SafeAreaView style={{ backgroundColor: 'white' }}>
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.conversationWrapperStyle}>
-            <View style={styles.headerContainer}></View>
+            style={[styles.conversationWrapperStyle]}>
+            {/* <View style={[styles.headerContainer,{backgroundColor:"red"}]}></View> */}
         
            {/* {1- GERİ GİT} */}
-           <TouchableOpacity style={styles1.closeIcon} onPress={this.goBack}>
+           <View style={{flexDirection:"row"}}>
+           {/* <TouchableOpacity style={[styles1.closeIcon,{}]} onPress={this.goBack}>
             <View style={styles1.closeIcon1}>
               <Image
                 source={assets.back}
@@ -1002,10 +1001,12 @@ console.log('816');
                 style={styles1.imageIcon}
               />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <View style={{alignContent:"center",flexDirection:"row",justifyContent:"center",flex:1}}><Text style={{color:constants.primarycolor,fontSize:30,fontWeight:"bold",paddingVertical:11}}> Sohbet</Text></View>
+            </View>
 
     
-            {this.listHeaderComponent()}
+            {/* {this.listHeaderComponent()} */}
             <SwipeListView
               contentContainerStyle={styles.flexGrow1}
               data={this.state.conversationList}
