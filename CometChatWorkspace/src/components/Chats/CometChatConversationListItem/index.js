@@ -13,7 +13,7 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { Platform } from 'react-native';
 import { logger } from '../../../utils/common';
 import { CometChatContext } from '../../../utils/CometChatContext';
-
+import formatTurkishDate from '../../FunctionsEmlakisim/formatTurkishDate'
 const conversation = 'conversation';
 const lastMessage = 'lastMessage';
 const deletedAt = 'deletedAt';
@@ -340,10 +340,11 @@ class CometChatConversationListItem extends React.Component {
 
   render() {
     let lastMessageTimeStamp = null;
+    console.log('343',this.state.lastMessageTimestamp);
     if (this.state.lastMessage) {
       lastMessageTimeStamp = (
         <Text style={styles.itemLastMsgTimeStyle} numberOfLines={1}>
-          {this.state.lastMessageTimestamp}
+          {formatTurkishDate(this.state.lastMessageTimestamp)}
         </Text>
       );
     }
@@ -411,7 +412,7 @@ class CometChatConversationListItem extends React.Component {
                 alignItems: 'center',
               }}>
               <Text numberOfLines={1} style={styles.itemLastMsgTimeStyle}>
-                {`${this.state.isThreaded ? 'In a thread : ' : ''}` +
+                {`${this.state.isThreaded ? 'Bir yanıt içerisinde : ' : ''}` +
                   this.state.lastMessage}
               </Text>
 

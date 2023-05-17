@@ -877,7 +877,7 @@ console.log('816');
     return (
       <View style={[styles.conversationHeaderStyle,{}]}>
         <View style={styles.headingContainer}>
-          <Text style={styles.conversationHeaderTitleStyle}>Sohbet</Text>
+          <Text style={styles.conversationHeaderTitleStyle}>Emlak İşim Sohbet</Text>
         </View>
       </View>
     );
@@ -1002,7 +1002,7 @@ console.log('816');
               />
               </View>
             </TouchableOpacity> */}
-            <View style={{alignContent:"center",flexDirection:"row",justifyContent:"center",flex:1}}><Text style={{color:constants.primarycolor,fontSize:30,fontWeight:"bold",paddingVertical:11}}> Sohbet</Text></View>
+            <View style={{alignContent:"center",flexDirection:"row",justifyContent:"center",flex:1}}><Text style={{color:constants.darkblack,fontSize:20,fontWeight:"bold",paddingVertical:11}}>Emlak İşim Sohbet</Text></View>
             </View>
 
     
@@ -1039,7 +1039,7 @@ console.log('816');
                       resizeMode="contain"
                       style={{ height: 24 }}
                     />
-                    <Text style={styles.deleteText}>Delete</Text>
+                    <Text style={styles.deleteText}>Sil</Text>
                   </TouchableOpacity>
                 </View>
               )}
