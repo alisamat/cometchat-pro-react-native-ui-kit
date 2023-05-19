@@ -389,14 +389,11 @@ class CometChatUserListWithMessages extends React.Component {
         />
       );
     }
-    console.log('3922',this.props.route);
+    console.log('3922',this.props);
     return (
       <CometChatContextProvider ref={(el) => (this.contextProviderRef = el)}>
         <View style={{ backgroundColor: 'white' }}>
           <CometChatUserList
-            userids={this.props.route.params.userids}
-            where={this.props.route.params.where}
-            username={this.props.route.params.username}
             theme={this.theme}
             item={this.state.item}
             type={this.state.type}

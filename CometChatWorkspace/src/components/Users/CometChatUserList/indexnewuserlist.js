@@ -5,9 +5,6 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
   TextInput,
   FlatList,
   Platform,
@@ -30,10 +27,6 @@ import { logger } from '../../../utils/common';
 import * as enums from '../../../utils/enums';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import DropDownAlert from '../../Shared/DropDownAlert';
-import constants from '../../../../../../Util/Constants';
-import assets from '../../../../../../assets'
-const { widthRatio,heightRatio} = constants.styleGuide;
-
 class CometChatUserList extends React.PureComponent {
   static contextType = CometChatContext;
 
@@ -41,7 +34,7 @@ class CometChatUserList extends React.PureComponent {
 
   friendsOnly = false;
 
-  decoratorMessage = 'Yükleniyor...';
+  decoratorMessage = 'Loading...';
 
   constructor(props) {
     super(props);
@@ -61,8 +54,6 @@ class CometChatUserList extends React.PureComponent {
   }
 
   componentDidMount() {
-    const{userids,where,username}=this.props
-    console.log('64677',userids,where,username);
     this.checkRestrictions();
     try {
       if (Object.prototype.hasOwnProperty.call(this.props, 'friendsOnly')) {
@@ -70,7 +61,7 @@ class CometChatUserList extends React.PureComponent {
       }
 
       this.navListener = this.props.navigation.addListener('focus', () => {
-        this.decoratorMessage = 'Yükleniyor...';
+        this.decoratorMessage = 'Loading...';
         if (this.UserListManager) {
           this.UserListManager.removeListeners();
         }
@@ -78,7 +69,6 @@ class CometChatUserList extends React.PureComponent {
         this.UserListManager = new UserListManager();
         this.UserListManager.initializeUsersRequest()
           .then((response) => {
-            console.log('7979',response);
             this.getUsers();
             this.UserListManager.attachListeners(this.userUpdated);
           })
@@ -233,7 +223,6 @@ class CometChatUserList extends React.PureComponent {
       .then(() => {
         this.UserListManager.fetchNextUsers()
           .then((userList) => {
-            console.log('2333',userList);
             if (userList.length === 0) {
               this.decoratorMessage = 'No users found';
             }
@@ -330,7 +319,7 @@ class CometChatUserList extends React.PureComponent {
   listHeaderComponent = () => {
     return (
       <View style={[style.contactHeaderStyle]}>
-        <Text style={style.contactHeaderTitleStyle}>Users</Text>
+        <Text style={[style.contactHeaderTitleStyle,{fontSize:22}]}>Gayrimenkul Danışmanları</Text>
         {this.state.restrictions?.isUserSearchEnabled ? (
           <TouchableWithoutFeedback
             onPress={() => this.textInputRef.current.focus()}>
@@ -387,13 +376,8 @@ class CometChatUserList extends React.PureComponent {
       });
     }
   };
-  goBack = () => {
-        const {navigation} = this.props;
-        navigation.goBack();
-    }
-  render() {
-    const{userids,where,username}=this.props
 
+  render() {
     const userList = [...this.state.userList];
     const userListWithHeaders = [];
     let headerIndices = [0];
@@ -416,25 +400,9 @@ class CometChatUserList extends React.PureComponent {
         }
       });
     }
-console.log('4133',this.props);
+
     return (
       <CometChatContextProvider ref={(el) => (this.contextProviderRef = el)}>
-         {/* {1- GERİ GİT} */}
-         {where=="explore"? <View style={{paddingTop:55,flexDirection:"row"}}>
-            <TouchableOpacity style={[styles1.closeIcon,{}]} onPress={this.goBack}>
-             <View style={{flexDirection:"row"}}>
-               <View style={[styles1.closeIcon1]}>
-               <Image
-                source={assets.back}
-                resizeMode="contain"
-                style={styles1.imageIcon}
-              />
-              </View>
-              <View style={{paddingLeft:22,justifyContent:"center"}}>
-              <Text style={{fontSize:22,fontWeight:"bold",color:constants.primarycolor}}>{username}</Text></View>
-              </View>
-            </TouchableOpacity>
-         </View>:null}
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss();
@@ -443,7 +411,7 @@ console.log('4133',this.props);
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={style.contactWrapperStyle}>
             <View style={style.headerContainer}></View>
-            {where!=="explore"?this.listHeaderComponent():null}
+            {this.listHeaderComponent()}
             <FlatList
               data={userListWithHeaders}
               renderItem={this.renderUserView}
@@ -466,37 +434,5 @@ console.log('4133',this.props);
     );
   }
 }
-const styles1 = StyleSheet.create({
-    closeIcon: {
-     // position: 'absolute',
-      // top: 27 * heightRatio,
-      left: 14 * widthRatio,
-      // backgroundColor: constants.grey,
-      // width: 44 * heightRatio,
-      height: 44 * heightRatio,
-      borderRadius: 22 * heightRatio,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    closeIcon1: {
-      // position: 'absolute',
-      // top: 34 * heightRatio,
-      // left: 25 * widthRatio,
-      backgroundColor: constants.grey,
-      width: 30 * heightRatio,
-      height: 30 * heightRatio,
-      borderRadius: 15 * heightRatio,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    imageIcon: {
-      height: 14 * heightRatio,
-      width: 14 * heightRatio,
-    },
-    noApartments: {
-      height: 120 * heightRatio,
-      width: 120 * heightRatio,
-    
-    },
-  })
+
 export default CometChatUserList;
