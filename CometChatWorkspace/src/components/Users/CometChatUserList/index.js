@@ -30,6 +30,8 @@ import { logger } from '../../../utils/common';
 import * as enums from '../../../utils/enums';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import DropDownAlert from '../../Shared/DropDownAlert';
+import {selectusergetComet} from '../../../../../../Components/cometChat'
+
 import constants from '../../../../../../Util/Constants';
 import assets from '../../../../../../assets'
 const { widthRatio,heightRatio} = constants.styleGuide;
@@ -68,14 +70,14 @@ class CometChatUserList extends React.PureComponent {
       if (Object.prototype.hasOwnProperty.call(this.props, 'friendsOnly')) {
         this.friendsOnly = this.props.friendsOnly;
       }
-
       this.navListener = this.props.navigation.addListener('focus', () => {
         this.decoratorMessage = 'Yükleniyor...';
         if (this.UserListManager) {
           this.UserListManager.removeListeners();
         }
         this.setState({ userList: [] });
-        this.UserListManager = new UserListManager();
+        this.UserListManager = new UserListManager("",userids,where);
+        console.log('7990',this.UserListManager);
         this.UserListManager.initializeUsersRequest()
           .then((response) => {
             console.log('7979',response);
@@ -94,11 +96,13 @@ class CometChatUserList extends React.PureComponent {
   checkRestrictions = async () => {
     let context = this.contextProviderRef.state;
     let isUserSearchEnabled = await context.FeatureRestriction.isUserSearchEnabled();
+    console.log('9789',isUserSearchEnabled);
     this.setState({ restrictions: { isUserSearchEnabled } });
   };
 
   componentDidUpdate(prevProps) {
     try {
+    console.log('1333',prevProps);
       if (this.state.textInputFocused) {
         this.textInputRef.current.focus();
       }
@@ -168,7 +172,7 @@ class CometChatUserList extends React.PureComponent {
   userUpdated = (user) => {
     try {
       const userList = [...this.state.userList];
-
+console.log('1777',userList);
       // search for user
       const userKey = userList.findIndex((u) => u.uid === user.uid);
 
@@ -228,10 +232,23 @@ class CometChatUserList extends React.PureComponent {
    * @param
    */
   getUsers = () => {
+    const{userids,where,username}=this.props
+console.log('23444',userids,where,username);
     new CometChatManager()
       .getLoggedInUser()
       .then(() => {
-        this.UserListManager.fetchNextUsers()
+        if(where!=="explore"){
+          var sonuc= selectusergetComet(["12345678","superhero1"])
+          console.log('24545',sonuc);
+          this.decoratorMessage = 'No users found';
+          this.setState({ userList: [] });
+
+        }else{
+
+
+
+        /////////////////////
+        this.UserListManager.fetchNextUsers() ///BURASII
           .then((userList) => {
             console.log('2333',userList);
             if (userList.length === 0) {
@@ -245,13 +262,17 @@ class CometChatUserList extends React.PureComponent {
             this.decoratorMessage = 'Error';
             logger('[CometChatUserList] getUsers fetchNext error', error);
           });
-      })
+          }
+        ///////////////////////
+
+        })
       .catch((error) => {
         const errorCode = error?.message || 'ERROR';
         this.dropDownAlertRef?.showMessage('error', errorCode);
         this.decoratorMessage = 'Error';
         logger('[CometChatUserList] getUsers getLoggedInUser error', error);
       });
+      
   };
 
   /**
@@ -395,13 +416,14 @@ class CometChatUserList extends React.PureComponent {
     const{userids,where,username}=this.props
 
     const userList = [...this.state.userList];
+    console.log('4000',userList);
     const userListWithHeaders = [];
     let headerIndices = [0];
     if (userList.length) {
       headerIndices = [];
       userList.forEach((user) => {
         const chr = user.name[0].toUpperCase();
-        if (chr !== this.currentLetter) {
+        if ((chr !== this.currentLetter&&where!=="explore")&&chr !== this.currentLetter&&where!=="group") {
           this.currentLetter = chr;
           if (!this.state.textInputValue) {
             headerIndices.push(userListWithHeaders.length);
@@ -416,7 +438,7 @@ class CometChatUserList extends React.PureComponent {
         }
       });
     }
-console.log('4133',this.props);
+    console.log('4133',userListWithHeaders);
     return (
       <CometChatContextProvider ref={(el) => (this.contextProviderRef = el)}>
          {/* {1- GERİ GİT} */}

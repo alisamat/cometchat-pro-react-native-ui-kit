@@ -6,8 +6,10 @@ export class UserListManager {
 
   userListenerId = `userlist_${new Date().getTime()}`;
 
-  constructor(searchKey) {
+  constructor(searchKey,userids,where) {
     this.searchKey = searchKey;
+    this.userids = userids;
+    this.where = where;
     this.initializeUsersRequest();
   }
 
@@ -17,16 +19,28 @@ export class UserListManager {
     const userListModeOptions = UIKitSettings.userListFilterOptions;
 
     return new Promise((resolve, reject) => {
+      console.log('2000',userListMode,"2222",userListModeOptions);
       if (userListMode === userListModeOptions['ALL']) {
         if (this.searchKey) {
           this.usersRequest = new CometChat.UsersRequestBuilder()
             .setLimit(30)
             .setSearchKeyword(this.searchKey)
             .build();
-        } else {
+        } else if(this.where=="explore"||this.where=="group") {
+          console.log('3000',this.userids,this.where);
+          this.usersRequest = new CometChat.UsersRequestBuilder()
+            .setLimit(30)
+            .setUIDs(this.userids)
+            .build(this.userids);
+            console.log('28 bura',this.usersRequest);
+            }
+        else {
+          console.log('3000',this.userids,this.where);
           this.usersRequest = new CometChat.UsersRequestBuilder()
             .setLimit(30)
             .build();
+            console.log('28 bura',this.usersRequest);
+
         }
 
         return resolve(this.usersRequest);
