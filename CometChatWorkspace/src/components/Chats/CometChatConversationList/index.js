@@ -890,17 +890,36 @@ console.log('816');
   listEmptyContainer = () => {
     // for loading purposes....
     return (
-      <View style={styles.contactMsgStyle}>
-        <Text
-          style={[
+      <View style={[styles.contactMsgStyle,{flexDirection:"row",flex:1}]}>
+        
+          { this.decoratorMessage == 'Sohbet bulunamadı'? 
+          <View style={{justifyContent:"center",alignContent:"center",}}>
+            <View style={{flexDirection:"row",alignContent:"center",justifyContent:"center",paddingBottom:22}}>
+             <Image
+           resizeMode="contain"
+           source={assets.apartment}
+           style={styles1.noApartments}
+           />
+           </View>
+          <Text style={[
             styles.contactMsgTxtStyle,
             {
               color: `${this.theme.color.secondary}`,
             },
-          ]}>
-          {this.decoratorMessage}
-        </Text>
-      </View>
+          ]}> { this.decoratorMessage}</Text>
+          </View>
+         :
+         <Text
+         style={[
+           styles.contactMsgTxtStyle,
+           {
+             color: `${this.theme.color.secondary}`,
+           },
+         ]}>
+          { this.decoratorMessage}
+        </Text>}
+         </View>
+
     );
   };
 
@@ -1101,6 +1120,11 @@ const styles1 = StyleSheet.create({
   imageIcon: {
     height: 14 * heightRatio,
     width: 14 * heightRatio,
+  },
+  noApartments: {
+    height: 120 * heightRatio,
+    width: 120 * heightRatio,
+  
   },
 })
 export default CometChatConversationList;

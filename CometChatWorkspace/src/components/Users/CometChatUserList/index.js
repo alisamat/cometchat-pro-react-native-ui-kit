@@ -319,7 +319,7 @@ class CometChatUserList extends React.PureComponent {
   listHeaderComponent = () => {
     return (
       <View style={[style.contactHeaderStyle]}>
-        <Text style={style.contactHeaderTitleStyle}>Users</Text>
+        <Text style={[style.contactHeaderTitleStyle,{fontSize:22}]}>Gayrimenkul Danışmanları</Text>
         {this.state.restrictions?.isUserSearchEnabled ? (
           <TouchableWithoutFeedback
             onPress={() => this.textInputRef.current.focus()}>
