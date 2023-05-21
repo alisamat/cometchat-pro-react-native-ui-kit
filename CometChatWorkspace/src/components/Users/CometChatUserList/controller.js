@@ -21,30 +21,43 @@ export class UserListManager {
     return new Promise((resolve, reject) => {
       console.log('2000',userListMode,"2222",userListModeOptions);
       if (userListMode === userListModeOptions['ALL']) {
+        console.log('2444 1 .alan');
         if (this.searchKey) {
-          this.usersRequest = new CometChat.UsersRequestBuilder()
-            .setLimit(30)
-            .setSearchKeyword(this.searchKey)
-            .build();
-        } else if(this.where=="explore"||this.where=="group") {
-          console.log('3000',this.userids,this.where);
-          this.usersRequest = new CometChat.UsersRequestBuilder()
-            .setLimit(30)
-            .setUIDs(this.userids)
-            .build(this.userids);
-            console.log('28 bura',this.usersRequest);
-            }
+          console.log('26',this.where);
+                if(this.where=="group"){
+                  this.usersRequest = new CometChat.UsersRequestBuilder()
+                  .setLimit(30)
+                  .setSearchKeyword(this.searchKey)
+                  .setUIDs(this.userids)
+                  .build(this.userids);
+                  }else{
+                  this.usersRequest = new CometChat.UsersRequestBuilder()
+                  .setLimit(30)
+                  .setSearchKeyword(this.searchKey)
+                  .build();
+                }
+        }
+        
         else {
-          console.log('3000',this.userids,this.where);
-          this.usersRequest = new CometChat.UsersRequestBuilder()
-            .setLimit(30)
-            .build();
-            console.log('28 bura',this.usersRequest);
-
+           if(this.where=="explore"||this.where=="group") {
+            console.log('3000',this.userids,this.where);
+            this.usersRequest = new CometChat.UsersRequestBuilder()
+              .setLimit(30)
+              .setUIDs(this.userids)
+              .build(this.userids);
+              console.log('28 bura',this.usersRequest);
+              }else{
+              console.log('3000',this.userids,this.where);
+              this.usersRequest = new CometChat.UsersRequestBuilder()
+              .setLimit(30)
+              .build();
+              console.log('28 bura',this.usersRequest);
+              }
         }
 
         return resolve(this.usersRequest);
       } else if (userListMode === userListModeOptions['FRIENDS']) {
+        console.log('588888 2. alana');
         if (this.searchKey) {
           this.usersRequest = new CometChat.UsersRequestBuilder()
             .setLimit(30)
