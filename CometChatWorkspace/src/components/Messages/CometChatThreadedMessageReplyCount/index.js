@@ -9,7 +9,7 @@ const CometChatThreadedMessageReplyCount = (props) => {
 
   const { replyCount } = props.message;
   const replyText =
-    replyCount === 1 ? `${replyCount} reply` : `${replyCount} replies`;
+    replyCount === 1 ? `${replyCount} yanıt` : `${replyCount} yanıt`;
 
   let replies = (
     <TouchableOpacity

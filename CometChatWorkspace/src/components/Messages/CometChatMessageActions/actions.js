@@ -97,7 +97,7 @@ export default (props) => {
         props.actionGenerated(actions.DELETE_MESSAGE, props.message)
       }>
       <IonIcon name="ios-trash-outline" size={actionIconSize} color="red" />
-      <Text style={styles.actionsText}>Delete message</Text>
+      <Text style={styles.actionsText}>Mesajı Sil</Text>
     </TouchableOpacity>
   );
 
@@ -127,7 +127,7 @@ export default (props) => {
         props.actionGenerated(actions.EDIT_MESSAGE, props.message)
       }>
       <MCIIcon name="square-edit-outline" size={actionIconSize} />
-      <Text style={styles.actionsText}>Edit message</Text>
+      <Text style={styles.actionsText}>Mesajı Düzenle</Text>
     </TouchableOpacity>
   );
 

@@ -181,48 +181,106 @@ class CometChatConversationListItem extends React.Component {
       const currentTimestamp = Date.now();
 
       const diffTimestamp = currentTimestamp - messageTimestamp;
+console.log('184',currentTimestamp,messageTimestamp);
+      // if (diffTimestamp < 24 * 60 * 60 * 1000) {
+      //   timestamp = messageTimestamp.toLocaleTimeString('tr-TR', {
+      //     hour: 'numeric',
+      //     minute: 'numeric',
+      //     hour12: true,
+      //   });
+      //   if (Platform.OS === 'android' && timestamp !== 'Dün') {
+      //     let time = timestamp.split(':'); // convert to array
 
-      if (diffTimestamp < 24 * 60 * 60 * 1000) {
-        timestamp = messageTimestamp.toLocaleTimeString('en-US', {
-          hour: 'numeric',
-          minute: 'numeric',
-          hour12: true,
-        });
-        if (Platform.OS === 'android' && timestamp !== 'Yesterday') {
-          let time = timestamp.split(':'); // convert to array
+      //     var hours = Number(time[0]);
+      //     var minutes = Number(time[1]?.split(' ')[0]);
+      //     var timeValue;
 
-          var hours = Number(time[0]);
-          var minutes = Number(time[1]?.split(' ')[0]);
-          var timeValue;
+      //     if (hours > 0 && hours <= 12) {
+      //       timeValue = '' + hours;
+      //     } else if (hours > 12) {
+      //       timeValue = '' + (hours - 12);
+      //     } else if (hours == 0) {
+      //       timeValue = '12';
+      //     }
 
-          if (hours > 0 && hours <= 12) {
-            timeValue = '' + hours;
-          } else if (hours > 12) {
-            timeValue = '' + (hours - 12);
-          } else if (hours == 0) {
-            timeValue = '12';
-          }
+      //     timeValue += minutes < 10 ? ':0' + minutes : ':' + minutes; // get minutes
+      //     timeValue += hours >= 12 ? ' PM' : ' AM'; // get AM/PM
+      //     timestamp = timeValue;
+      //   }
+      // } else if (diffTimestamp < 48 * 60 * 60 * 1000) {
+      //   timestamp = 'Dün';
+      // } else if (diffTimestamp < 7 * 24 * 60 * 60 * 1000) {
+      //   timestamp = messageTimestamp.toLocaleDateString('tr-TR', {
+      //     year: '2-digit',
+      //     month: '2-digit',
+      //     day: '2-digit',
+      //   });
+      // } else {
+      //   timestamp = messageTimestamp.toLocaleDateString('tr-TR', {
+      //     year: '2-digit',
+      //     month: '2-digit',
+      //     day: '2-digit',
+      //   });
+      // }
 
-          timeValue += minutes < 10 ? ':0' + minutes : ':' + minutes; // get minutes
-          timeValue += hours >= 12 ? ' PM' : ' AM'; // get AM/PM
-          timestamp = timeValue;
-        }
-      } else if (diffTimestamp < 48 * 60 * 60 * 1000) {
-        timestamp = 'Yesterday';
-      } else if (diffTimestamp < 7 * 24 * 60 * 60 * 1000) {
-        timestamp = messageTimestamp.toLocaleDateString('en-US', {
-          year: '2-digit',
-          month: '2-digit',
-          day: '2-digit',
-        });
-      } else {
-        timestamp = messageTimestamp.toLocaleDateString('en-US', {
-          year: '2-digit',
-          month: '2-digit',
-          day: '2-digit',
-        });
-      }
+      // if (diffTimestamp < 60 * 1000) {
+      //   timestamp = 'Şimdi';
+      // } else if (diffTimestamp < 15 * 60 * 1000) {
+      //   const minutesDiff = Math.ceil(diffTimestamp / (60 * 1000));
+      //   timestamp = minutesDiff === 1 ? '1 dakika' : `${minutesDiff} dakika`;
+      // } else if (diffTimestamp < 24 * 60 * 60 * 1000) {
+      //   timestamp = messageTimestamp.toLocaleTimeString('tr-TR', {
+      //     hour: '2-digit',
+      //     minute: '2-digit',
+      //     hour12: false,
+      //   });
+      // } else if (diffTimestamp < 48 * 60 * 60 * 1000) {
+      //   timestamp = 'Dün';
+      // } else if (diffTimestamp < 7 * 24 * 60 * 60 * 1000) {
+      //   timestamp = messageTimestamp.toLocaleDateString('tr-TR', {
+      //     hour: '2-digit',
+      //     minute: '2-digit',
+      //     year: '2-digit',
+      //     month: '2-digit',
+      //     day: '2-digit',
+      //   });
+      // } else {
+      //   timestamp = messageTimestamp.toLocaleDateString('tr-TR', {
+      //     hour: '2-digit',
+      //     minute: '2-digit',
+      //     year: '2-digit',
+      //     month: '2-digit',
+      //     day: '2-digit',
+      //   });
+      // }
+      ///////
+      const now = new Date();
+const messageDate = messageTimestamp.toLocaleDateString('tr-TR', {
+  year: '2-digit',
+  month: '2-digit',
+  day: '2-digit',
+});
 
+if (diffTimestamp < 60 * 1000) {
+  timestamp = 'Şimdi';
+} else if (diffTimestamp < 15 * 60 * 1000) {
+  const minutesDiff = Math.ceil(diffTimestamp / (60 * 1000));
+  timestamp = minutesDiff === 1 ? '1 dakika' : `${minutesDiff} dakika`;
+} else if (diffTimestamp < 24 * 60 * 60 * 1000) {
+  timestamp = `${messageTimestamp.toLocaleTimeString('tr-TR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })}`;
+} else if (diffTimestamp < 48 * 60 * 60 * 1000) {
+  timestamp = 'Dün';
+} else if (diffTimestamp < 7 * 24 * 60 * 60 * 1000) {
+  timestamp = messageDate;
+} else {
+  timestamp = messageDate;
+}
+
+      ///////
       return timestamp;
     } catch (error) {
       logger(error);
@@ -343,9 +401,9 @@ class CometChatConversationListItem extends React.Component {
     console.log('343',this.state.lastMessageTimestamp);
     if (this.state.lastMessage) {
       lastMessageTimeStamp = (
-        <Text style={styles.itemLastMsgTimeStyle} numberOfLines={1}>
-          {formatTurkishDate(this.state.lastMessageTimestamp)}
-        </Text>
+        <Text style={[styles.itemLastMsgTimeStyle,{ fontWeight: "400" }]} numberOfLines={1}>
+          {/* {formatTurkishDate(this.state.lastMessageTimestamp)} */}
+          {  this.state.lastMessageTimestamp }        </Text>
       );
     }
 
@@ -375,16 +433,19 @@ class CometChatConversationListItem extends React.Component {
               this.props.conversationKey,
             )
           }>
-          <View style={styles.itemThumbnailStyle}>
+          <View style={[styles.itemThumbnailStyle,{
+            width: 50,height: 50,borderRadius: 25
+            }]}>
             <CometChatAvatar
               image={this.getAvatar()}
               cornerRadius={25}
               borderColor={this.props.theme.color.secondary}
-              borderWidth={0}
+              borderWidth={1}
               name={this.props.conversation.conversationWith.name}
             />
             {presence}
           </View>
+     
           <View
             style={[
               styles.itemDetailsContainer,
@@ -397,7 +458,7 @@ class CometChatConversationListItem extends React.Component {
                 width: '100%',
                 alignItems: 'center',
               }}>
-              <Text numberOfLines={1} style={styles.itemNameStyle}>
+              <Text numberOfLines={1} style={[styles.itemNameStyle,{fontWeight:"600"}]}>
                 {this.props.conversation.conversationWith.name}
               </Text>
               <View style={styles.itemLastMsgStyle}>
@@ -411,7 +472,7 @@ class CometChatConversationListItem extends React.Component {
                 width: '100%',
                 alignItems: 'center',
               }}>
-              <Text numberOfLines={1} style={styles.itemLastMsgTimeStyle}>
+              <Text numberOfLines={1} style={[styles.itemLastMsgTimeStyle,{fontWeight:"400"}]}>
                 {`${this.state.isThreaded ? 'Bir yanıt içerisinde : ' : ''}` +
                   this.state.lastMessage}
               </Text>

@@ -28,12 +28,12 @@ const CometChatGroupListItem = (props) => {
     <TouchableOpacity
       style={style.listItem}
       onPress={() => props.clickHandler(props.group)}>
-      <View style={style.avatarStyle}>
+      <View style={[style.avatarStyle,{ width: 50,height: 50}]}>
         <CometChatAvatar
           image={{ uri: props.group.icon }}
           cornerRadius={25}
           borderColor={viewTheme.color.secondary}
-          borderWidth={0}
+          borderWidth={1}
           name={props.group.name}
         />
       </View>
@@ -46,8 +46,8 @@ const CometChatGroupListItem = (props) => {
           <Text numberOfLines={1} style={style.groupNameStyle}>
             {props.group.name}
           </Text>
-          <Text numberOfLines={1} style={style.memberCountStyle}>
-            {`${props.group.membersCount} members`}
+          <Text numberOfLines={1} style={[style.memberCountStyle,{fontWeight:"400"}]}>
+            {`${props.group.membersCount} üye`}
           </Text>
         </View>
         <View style={style.listItemIcon}>{groupTypeIcon}</View>

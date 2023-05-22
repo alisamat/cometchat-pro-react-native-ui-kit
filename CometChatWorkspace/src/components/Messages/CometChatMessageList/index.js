@@ -48,7 +48,7 @@ class CometChatMessageList extends React.PureComponent {
 
   times = 0;
 
-  decoratorMessage = 'Loading...';
+  decoratorMessage = 'Yükleniyor...';
   static contextType = CometChatContext;
 
   constructor(props) {
@@ -91,7 +91,7 @@ class CometChatMessageList extends React.PureComponent {
         this.props.type === CometChat.RECEIVER_TYPE.USER &&
         prevProps.item.uid !== this.props.item.uid
       ) {
-        this.decoratorMessage = 'Loading...';
+        this.decoratorMessage = 'Yükleniyor...';
         this.MessageListManager?.removeListeners();
 
         if (this.props.parentMessageId) {
@@ -116,7 +116,7 @@ class CometChatMessageList extends React.PureComponent {
         this.props.type === CometChat.RECEIVER_TYPE.GROUP &&
         prevProps.item.guid !== this.props.item.guid
       ) {
-        this.decoratorMessage = 'Loading...';
+        this.decoratorMessage = 'Yükleniyor...';
         this.MessageListManager?.removeListeners();
 
         if (this.props.parentMessageId) {
@@ -135,7 +135,7 @@ class CometChatMessageList extends React.PureComponent {
         this.getMessages();
         this.MessageListManager.attachListeners(this.messageUpdated);
       } else if (prevProps.parentMessageId !== this.props.parentMessageId) {
-        this.decoratorMessage = 'Loading...';
+        this.decoratorMessage = 'Yükleniyor...';
         this.MessageListManager?.removeListeners();
         this.MessageListManager = new MessageListManager(
           this.props.item,
@@ -168,7 +168,7 @@ class CometChatMessageList extends React.PureComponent {
         this.MessageListManager.fetchPreviousMessages()
           .then((messageList) => {
             if (messageList.length === 0) {
-              this.decoratorMessage = 'No messages found';
+              this.decoratorMessage = 'Mesaj bulunamadı';
             }
 
             messageList.forEach((message) => {
@@ -1105,10 +1105,10 @@ class CometChatMessageList extends React.PureComponent {
     if (cDate !== messageSentDate && messages[0].sentAt) {
       let dateValue = null;
         if(cDate == currentDate){
-          dateValue = 'Today';
+          dateValue = 'Bugün';
         } 
         else if(new Date() - new Date(messages[0].sentAt * 1000)==1){
-          dateValue = 'Yesterday';
+          dateValue = 'Dün';
         } 
         else {
           dateValue = cDate;
@@ -1162,7 +1162,7 @@ class CometChatMessageList extends React.PureComponent {
             });
           }}
           style={styles.newMessageTextContainer}>
-          <Text>New message</Text>
+          <Text>Yeni mesaj</Text>
           <Icon
             name="arrow-down"
             style={{ marginLeft: 5 }}

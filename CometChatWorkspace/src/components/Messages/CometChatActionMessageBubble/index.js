@@ -16,43 +16,43 @@ const CometChatActionMessageBubble = (props) => {
     let message = null;
     switch (call.status) {
       case CometChat.CALL_STATUS.INITIATED: {
-        message = 'Call initiated';
+        message = 'Arama başlatıldı';
         if (call.type === CometChat.CALL_TYPE.AUDIO) {
           if (call.receiverType === CometChat.RECEIVER_TYPE.USER) {
             message =
               call.callInitiator.uid === loggedInUser.uid
-                ? 'Outgoing audio call'
-                : 'Incoming audio call';
+                ? 'Giden sesli arama'
+                : 'Gelen sesli arama';
           } else if (call.receiverType === CometChat.RECEIVER_TYPE.GROUP) {
             if (call.action === CometChat.CALL_STATUS.INITIATED) {
               message =
                 call.callInitiator.uid === loggedInUser.uid
-                  ? 'Outgoing audio call'
-                  : 'Incoming audio call';
+                  ? 'Giden sesli arama'
+                  : 'Gelen sesli arama';
             } else if (call.action === CometChat.CALL_STATUS.REJECTED) {
               message =
                 call.sender.uid === loggedInUser.uid
-                  ? 'Call rejected'
-                  : `${call.sender.name} rejected call`;
+                  ? 'Arama reddedildi'
+                  : `${call.sender.name} reddedilen çağrı`;
             }
           }
         } else if (call.type === CometChat.CALL_TYPE.VIDEO) {
           if (call.receiverType === CometChat.RECEIVER_TYPE.USER) {
             message =
               call.callInitiator.uid === loggedInUser.uid
-                ? 'Outgoing video call'
-                : 'Incoming video call';
+                ? 'Giden görüntülü arama'
+                : 'Gelen görüntülü arama';
           } else if (call.receiverType === CometChat.RECEIVER_TYPE.GROUP) {
             if (call.action === CometChat.CALL_STATUS.INITIATED) {
               message =
                 call.callInitiator.uid === loggedInUser.uid
-                  ? 'Outgoing video call'
-                  : 'Incoming video call';
+                  ? 'Giden görüntülü arama'
+                  : 'Gelen görüntülü arama';
             } else if (call.action === CometChat.CALL_STATUS.REJECTED) {
               message =
                 call.sender.uid === loggedInUser.uid
-                  ? 'Call rejected'
-                  : `${call.sender.name} rejected call`;
+                  ? 'Arama reddedildi'
+                  : `${call.sender.name} reddedilen çağrı`;
             }
           }
         }
@@ -65,25 +65,25 @@ const CometChatActionMessageBubble = (props) => {
           if (call.action === CometChat.CALL_STATUS.ONGOING) {
             message =
               call.sender.uid === loggedInUser.uid
-                ? 'Call accepted'
-                : `${call.sender.name} joined`;
+                ? 'Çağrı kabul edildi'
+                : `${call.sender.name} katıldı`;
           } else if (call.action === CometChat.CALL_STATUS.REJECTED) {
             message =
               call.sender.uid === loggedInUser.uid
-                ? 'Call rejected'
-                : `${call.sender.name} rejected call`;
+                ? 'Arama reddedildi'
+                : `${call.sender.name} reddedilen çağrı`;
           } else if (call.action === 'left') {
             message =
               call.sender.uid === loggedInUser.uid
-                ? 'You left the call'
-                : `${call.sender.name} left the call`;
+                ? 'aramayı bıraktın'
+                : `${call.sender.name} aramadan ayrıldı`;
           }
         }
 
         break;
       }
       case CometChat.CALL_STATUS.UNANSWERED: {
-        message = 'Call unanswered';
+        message = 'cevapsız çağrı';
         if (
           call.type === CometChat.CALL_TYPE.AUDIO &&
           (call.receiverType === CometChat.RECEIVER_TYPE.USER ||
@@ -91,8 +91,8 @@ const CometChatActionMessageBubble = (props) => {
         ) {
           message =
             call.callInitiator.uid === loggedInUser.uid
-              ? 'Unanswered audio call'
-              : 'Missed audio call';
+              ? 'Cevapsız sesli arama'
+              : 'Cevapsız sesli arama';
         } else if (
           call.type === CometChat.CALL_TYPE.VIDEO &&
           (call.receiverType === CometChat.RECEIVER_TYPE.USER ||
@@ -100,23 +100,23 @@ const CometChatActionMessageBubble = (props) => {
         ) {
           message =
             call.callInitiator.uid === loggedInUser.uid
-              ? 'Unanswered video call'
-              : 'Missed video call';
+              ? 'Cevapsız görüntülü görüşme'
+              : 'Cevapsız görüntülü görüşme';
         }
         break;
       }
       case CometChat.CALL_STATUS.REJECTED: {
-        message = 'Call rejected';
+        message = 'Arama reddedildi';
         break;
       }
       case CometChat.CALL_STATUS.ENDED:
-        message = 'Call ended';
+        message = 'Arama sona erdi';
         break;
       case CometChat.CALL_STATUS.CANCELLED:
-        message = 'Call cancelled';
+        message = 'Arama iptal edildi';
         break;
       case CometChat.CALL_STATUS.BUSY:
-        message = 'Call busy';
+        message = 'Çağrı meşgul';
         break;
       default:
         break;

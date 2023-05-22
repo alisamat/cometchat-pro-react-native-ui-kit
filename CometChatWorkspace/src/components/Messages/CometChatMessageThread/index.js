@@ -628,7 +628,7 @@ class CometChatMessageThread extends React.PureComponent {
     ) {
       const { replyCount } = this.state.parentMessage;
       const replyText =
-        replyCount === 1 ? `${replyCount} reply` : `${replyCount} replies`;
+        replyCount === 1 ? `${replyCount} yanıt` : `${replyCount} yanıt`;
 
       separator = (
         <View style={styles.messageSeparatorStyle}>

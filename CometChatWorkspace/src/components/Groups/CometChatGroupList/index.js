@@ -47,7 +47,7 @@ class CometChatGroupList extends React.Component {
 
   loggedInUser = null;
 
-  decoratorMessage = 'Loading...';
+  decoratorMessage = 'Yükleniyor...';
 
   addIcon = (<Icon2 name="edit" size={24} color={theme.color.blue} />);
 
@@ -76,7 +76,7 @@ class CometChatGroupList extends React.Component {
   componentDidMount() {
     try {
       this.navListener = this.props.navigation.addListener('focus', () => {
-        this.decoratorMessage = 'Loading...';
+        this.decoratorMessage = 'Yükleniyor...';
         if (this.GroupListManager) {
           this.GroupListManager.removeListeners();
         }
@@ -164,7 +164,7 @@ class CometChatGroupList extends React.Component {
           groups.splice(groupKey, 1);
           this.setState({ grouplist: groups });
           if (groups.length === 0) {
-            this.decoratorMessage = 'No groups found';
+            this.decoratorMessage = 'Grup bulunamadı';
           }
         }
       }
@@ -526,7 +526,7 @@ class CometChatGroupList extends React.Component {
         this.GroupListManager.fetchNextGroups()
           .then((groupList) => {
             if (groupList.length === 0) {
-              this.decoratorMessage = 'No groups found';
+              this.decoratorMessage = 'Grup bulunamadı';
             }
             this.setState({
               grouplist: [...this.state.grouplist, ...groupList],
@@ -669,7 +669,7 @@ class CometChatGroupList extends React.Component {
     return (
       <View style={[styles.groupHeaderStyle]}>
         <View style={styles.headingContainer}>
-          <Text style={styles.groupHeaderTitleStyle}>Groups</Text>
+          <Text style={styles.groupHeaderTitleStyle}>Gruplar</Text>
           {this.state.restrictions?.isGroupCreationEnabled ? (
             <TouchableOpacity
               onPress={() => this.createGroupHandler(true)}
@@ -694,7 +694,7 @@ class CometChatGroupList extends React.Component {
                 ref={this.textInputRef}
                 value={this.state.textInputValue}
                 autoCompleteType="off"
-                placeholder="Search"
+                placeholder="Ara"
                 placeholderTextColor={this.theme.color.textInputPlaceholder}
                 onChangeText={this.searchGroup}
                 clearButtonMode="always"
@@ -751,12 +751,12 @@ class CometChatGroupList extends React.Component {
                                   color: this.theme.backgroundColor.blue,
                                 },
                               ]}>
-                              Close
+                              Kapalı
                             </Text>
                           </TouchableOpacity>
                         </View>
                         <Text style={styles.passwordScreenHeader}>
-                          Password Required!
+                          Şifre gerekli !
                         </Text>
                         <View
                           style={[
@@ -766,7 +766,7 @@ class CometChatGroupList extends React.Component {
                             },
                           ]}>
                           <TextInput
-                            placeholder="Enter password!"
+                            placeholder="Şifre giriniz!"
                             secureTextEntry
                             style={styles.passwordInput}
                             autoCompleteType="off"
@@ -806,7 +806,7 @@ class CometChatGroupList extends React.Component {
                                 borderColor: this.theme.backgroundColor.primary,
                               },
                             ]}>
-                            <Text style={styles.nextText}>Next</Text>
+                            <Text style={styles.nextText}>Sonraki</Text>
                           </TouchableOpacity>
                         </View>
                       </View>

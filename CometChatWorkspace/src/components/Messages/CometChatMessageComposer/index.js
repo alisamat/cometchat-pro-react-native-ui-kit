@@ -822,14 +822,14 @@ export default class CometChatMessageComposer extends React.PureComponent {
               style={style.messageInputStyle}
               editable={!disabled}
               value={this.state.messageInput}
-              placeholder="Type a Message..."
+              placeholder="Mesajını Yaz..."
               onChangeText={(text) => this.changeHandler(text)}
               onBlur={this.endTyping}
               ref={this.messageInputRef}
             />
             {sendBtn}
           </View>
-          {liveReactionBtn}
+          {/* {liveReactionBtn} */}
         </View>
       </View>
     );

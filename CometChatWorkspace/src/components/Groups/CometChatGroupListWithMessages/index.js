@@ -707,6 +707,7 @@ class CometChatGroupListWithMessages extends React.Component {
         />
       );
     }
+    console.log('3333');
     return (
       <CometChatContextProvider ref={(el) => (this.contextProviderRef = el)}>
         <SafeAreaView style={style.container}>
