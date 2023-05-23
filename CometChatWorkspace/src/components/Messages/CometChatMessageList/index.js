@@ -1003,6 +1003,9 @@ class CometChatMessageList extends React.PureComponent {
    * @param
    */
   getActionMessageComponent = (message, key) => {
+    console.log('444',message.message);
+    message.message = message.message.replace('joined', 'katıldı');
+
     let component = null;
     if (message.message) {
       component = (
@@ -1088,19 +1091,20 @@ class CometChatMessageList extends React.PureComponent {
 
   renderItem = ({ item, index }) => {
     let messages = [...this.props.messages];
-    let currentDate=new Date().toLocaleDateString();
+    let currentDate=new Date().toLocaleDateString('tr-TR');
     if (messages.length) {
       messages = messages.reverse();
       if (!cDate) {
-        cDate = new Date(messages[0].sentAt * 1000).toLocaleDateString();
+        cDate = new Date(messages[0].sentAt * 1000).toLocaleDateString('tr-TR');
       }
     }
 
     const message = item;
+    // console.log('1100',message);
     let dateSeparator = null;
     const nextMessage = messages[index + 1];
     const messageSentDate = nextMessage
-      ? new Date(nextMessage.sentAt * 1000).toLocaleDateString()
+      ? new Date(nextMessage.sentAt * 1000).toLocaleDateString('tr-TR')
       : null;
     if (cDate !== messageSentDate && messages[0].sentAt) {
       let dateValue = null;
@@ -1129,7 +1133,7 @@ class CometChatMessageList extends React.PureComponent {
     }
     cDate =
       messageSentDate ||
-      new Date(messages[0].sentAt * 1000).toLocaleDateString();
+      new Date(messages[0].sentAt * 1000).toLocaleDateString('tr-TR');
     return (
       <View>
         {index ? dateSeparator : null}
@@ -1148,6 +1152,7 @@ class CometChatMessageList extends React.PureComponent {
     let messages = [...this.props.messages];
     if (messages.length) {
       messages = messages.reverse();
+      // console.log('1155',messages);
     }
 
     let newMsgPopUp = (

@@ -10,7 +10,7 @@ export default StyleSheet.create({
     fontWeight: '500',
     color: theme.color.helpText,
 
-    textTransform: 'uppercase',
+    // textTransform: 'uppercase',
   },
   tickImageStyle: {
     marginLeft: 3,

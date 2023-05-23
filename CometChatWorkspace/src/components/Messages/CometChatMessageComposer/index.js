@@ -819,7 +819,7 @@ export default class CometChatMessageComposer extends React.PureComponent {
           </TouchableOpacity>
           <View style={style.textInputContainer}>
             <TextInput
-              style={style.messageInputStyle}
+              style={[style.messageInputStyle,{borderRadius:12}]}
               editable={!disabled}
               value={this.state.messageInput}
               placeholder="Mesajını Yaz..."

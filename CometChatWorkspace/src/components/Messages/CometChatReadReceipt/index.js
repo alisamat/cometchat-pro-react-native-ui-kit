@@ -57,37 +57,60 @@ const CometChatReadReceipt = (props) => {
     ticks = null;
   }
 
-  let timestamp = new Date(
-    props.message.sentAt
-      ? props.message.sentAt * 1000
-      : props.message._composedAt,
-  ).toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-  });
-  if (Platform.OS === 'android') {
-    let time = timestamp.split(':'); // convert to array
+  // let timestamp = new Date(
+  //   props.message.sentAt
+  //     ? props.message.sentAt * 1000
+  //     : props.message._composedAt,
+  // ).toLocaleTimeString('tr-TR', {
+  //   hour: 'numeric',
+  //   minute: 'numeric',
+  //   // hour12: true,
+  // });
+  // if (Platform.OS === 'android') {
+  //   let time = timestamp.split(':'); // convert to array
 
-    // fetch
-    var hours = Number(time[0]);
-    var minutes = Number(time[1]?.split(' ')[0]);
+  //   // fetch
+  //   var hours = Number(time[0]);
+  //   var minutes = Number(time[1]?.split(' ')[0]);
 
-    // calculate
-    var timeValue;
+  //   // calculate
+  //   var timeValue;
 
-    if (hours > 0 && hours <= 12) {
-      timeValue = '' + hours;
-    } else if (hours > 12) {
-      timeValue = '' + (hours - 12);
-    } else if (hours == 0) {
-      timeValue = '12';
-    }
+  //   if (hours > 0 && hours <= 12) {
+  //     timeValue = '' + hours;
+  //   } else if (hours > 12) {
+  //     timeValue = '' + (hours - 12);
+  //   } else if (hours == 0) {
+  //     timeValue = '12';
+  //   }
 
-    timeValue += minutes < 10 ? ':0' + minutes : ':' + minutes; // get minutes
-    timeValue += hours >= 12 ? ' PM' : ' AM'; // get AM/PM
-    timestamp = timeValue;
-  }
+  //   timeValue += minutes < 10 ? ':0' + minutes : ':' + minutes; // get minutes
+  //   timeValue += hours >= 12 ? ' PM' : ' AM'; // get AM/PM
+  //   timestamp = timeValue;
+  // }
+
+//////////////////
+let sentAt = new Date(props.message.sentAt ? props.message.sentAt * 1000 : props.message._composedAt);
+let now = new Date();
+
+let timestamp = sentAt.toLocaleTimeString('tr-TR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+});
+
+let timeDifference = (now - sentAt) / 1000 / 60; // dakika cinsinden zaman farkı
+
+if (timeDifference < 1) {
+    timestamp = "Şimdi";
+} else if (timeDifference < 5) {
+    timestamp = Math.round(timeDifference) + " dakika";
+}
+
+console.log(1140,timestamp);
+
+
+////////////////////
   if (!isDeliveryReceiptsEnabled) {
     ticks = null;
   }
