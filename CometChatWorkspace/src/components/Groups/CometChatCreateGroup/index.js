@@ -19,7 +19,7 @@ import * as enums from '../../../utils/enums';
 import { logger } from '../../../utils/common';
 import DropDownAlert from '../../Shared/DropDownAlert';
 import { CometChatContext } from '../../../utils/CometChatContext';
-
+import constants from '../../../../../../Util/Constants'
 const closeIcon = <Icon name="close" style={style.modalCloseStyle} />;
 class CometChatCreateGroup extends React.Component {
   static contextType = CometChatContext;
@@ -225,7 +225,7 @@ class CometChatCreateGroup extends React.Component {
                     <View style={style.modalTableStyle}>
                       <View style={style.modalHeader}>
                         <Text style={style.tableCaptionStyle}>
-                          Create Group
+                          Grup Oluştur
                         </Text>
                         <TouchableOpacity
                           style={style.closeBtn}
@@ -253,7 +253,7 @@ class CometChatCreateGroup extends React.Component {
                                 borderColor: this.props.theme.color.grey,
                               },
                             ]}
-                            placeholder="Enter group name"
+                            placeholder="Grup adını girin"
                             type="text"
                             onChangeText={(value) => {
                               this.nameChangeHandler(value);
@@ -270,38 +270,38 @@ class CometChatCreateGroup extends React.Component {
                             selectedValue={this.state.type}>
                             <Picker.Item
                               style={style.inputOptionStyle}
-                              label="Select group type"
+                              label="Grup türünü seçin"
                               value="Select group type"
                             />
                             {this.state.restrictions?.isPublicGroupEnabled ? (
                               <Picker.Item
-                                style={style.inputOptionStyle}
-                                label="Public"
+                                style={{color:constants.primarycolor}}
+                                label="Genel Grup"
                                 value={CometChat.GROUP_TYPE.PUBLIC}
                               />
                             ) : null}
                             {this.state.restrictions?.isPrivateGroupEnabled ? (
                               <Picker.Item
                                 style={style.inputOptionStyle}
-                                label="Private"
+                                label="Özel Grup"
                                 value={CometChat.GROUP_TYPE.PRIVATE}
                               />
                             ) : null}
                             {this.state.restrictions?.isPasswordGroupEnabled ? (
                               <Picker.Item
                                 style={style.inputOptionStyle}
-                                label="Password Protected"
+                                label="Şifre Girişli Grup"
                                 value={CometChat.GROUP_TYPE.PROTECTED}
                               />
                             ) : null}
                           </Picker>
                         </View>
                         {password}
-                        <View style={style.groupButtonContainer}>
+                        <View style={[style.groupButtonContainer]}>
                           <TouchableOpacity
                             style={[
                               style.groupButtonWrapper,
-                              {
+                              { 
                                 backgroundColor: this.props.theme
                                   .backgroundColor.blue,
                               },
@@ -312,7 +312,7 @@ class CometChatCreateGroup extends React.Component {
                                 style.btnText,
                                 { color: this.props.theme.color.white },
                               ]}>
-                              Create
+                              Grup Oluştur
                             </Text>
                           </TouchableOpacity>
                         </View>

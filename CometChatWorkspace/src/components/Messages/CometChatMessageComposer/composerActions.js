@@ -224,7 +224,7 @@ export default class ComposerActions extends Component {
         onPress={() => this.takePhoto()}>
         <EvilIcon name="camera" size={24} />
         <Text style={{ fontSize: 18, marginLeft: 10, fontWeight: '500' }}>
-          Take Photo
+        Fotoğraf çek
         </Text>
       </TouchableOpacity>
     );
@@ -239,7 +239,7 @@ export default class ComposerActions extends Component {
             marginLeft: 10,
             fontWeight: '500',
           }}>
-          Take Video
+          Video çek
         </Text>
       </TouchableOpacity>
     );
@@ -255,7 +255,7 @@ export default class ComposerActions extends Component {
             marginLeft: 10,
             fontWeight: '500',
           }}>
-          Photo Library
+          Dosyadan Fotoğraf Ekle 
         </Text>
       </TouchableOpacity>
     );
@@ -266,7 +266,7 @@ export default class ComposerActions extends Component {
         <IonIcon name="videocam-outline" size={24} />
 
         <Text style={{ fontSize: 18, marginLeft: 10, fontWeight: '500' }}>
-          Video Library
+        Dosyadan Video Ekle 
         </Text>
       </TouchableOpacity>
     );
@@ -277,7 +277,7 @@ export default class ComposerActions extends Component {
         <IonIcon name="ios-folder-outline" size={24} />
 
         <Text style={{ fontSize: 18, marginLeft: 10, fontWeight: '500' }}>
-          Document
+          Belge Ekle
         </Text>
       </TouchableOpacity>
     );
@@ -289,7 +289,7 @@ export default class ComposerActions extends Component {
         <Text
           style={{ fontSize: 18, marginLeft: 10, fontWeight: '500' }}
           onPress={() => this.props.toggleStickers()}>
-          Send Sticker
+          Etiket gönder
         </Text>
       </TouchableOpacity>
     );
@@ -303,7 +303,7 @@ export default class ComposerActions extends Component {
         <MCIIcon name="comment-plus-outline" size={24} />
 
         <Text style={{ fontSize: 18, marginLeft: 10, fontWeight: '500' }}>
-          Create Poll
+        Anket Oluştur
         </Text>
       </TouchableOpacity>
     );

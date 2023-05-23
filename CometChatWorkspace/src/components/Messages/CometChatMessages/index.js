@@ -1060,7 +1060,7 @@ class CometChatMessages extends React.PureComponent {
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{ flex: 1 }}>
-          <SafeAreaView style={style.chatWrapperStyle}>
+          <SafeAreaView style={[style.chatWrapperStyle,{backgroundColor:"#558B2F"}]}>
                   {imageView}
             {this.state.showProfile ? (
               <CometChatUserProfile

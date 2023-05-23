@@ -190,12 +190,12 @@ export default class CometChatSharedMedia extends React.Component {
    */
   getActiveType = () => {
     if (this.state.messageType === CometChat.MESSAGE_TYPE.IMAGE) {
-      return 'Photos';
+      return 'Fotoğraf bulunamadı';
     }
     if (this.state.messageType === CometChat.MESSAGE_TYPE.FILE) {
-      return 'Docs';
+      return 'Dosya bulunamadı';
     }
-    return 'Videos';
+    return 'Video bulunamadı';
   };
 
   /**
@@ -236,11 +236,11 @@ export default class CometChatSharedMedia extends React.Component {
    */
   emptyListComponent = () => {
     return (
-      <View style={styles.emptyComponentContainerStyle}>
+      <View style={[styles.emptyComponentContainerStyle,{paddingTop:10}]}>
         <Text
           style={
-            styles.emptyComponentStyle
-          }>{`No ${this.getActiveType()}`}</Text>
+            [styles.emptyComponentStyle
+          ,{fontSize:22}]}>{`${this.getActiveType()}`}</Text>
       </View>
     );
   };
@@ -332,11 +332,11 @@ export default class CometChatSharedMedia extends React.Component {
         <Text
           style={[
             styles.sectionHeaderStyle,
-            {
+            { paddingTop:10,
               color: currentTheme.color.helpText,
             },
           ]}>
-          Shared Media
+          Paylaşılan Medya
         </Text>
         <View style={[styles.sectionContentStyle]}>
           <View style={styles.mediaBtnStyle}>
@@ -349,7 +349,7 @@ export default class CometChatSharedMedia extends React.Component {
                   ? styles.activeButtonStyle
                   : styles.buttonStyle,
               ]}>
-              <Text style={styles.buttonTextStyle}>Photos</Text>
+              <Text style={styles.buttonTextStyle}>Fotoğraflar</Text>
             </TouchableOpacity>
             {messageType === CometChat.MESSAGE_TYPE.FILE ? (
               <View style={styles.separator} />
@@ -363,7 +363,7 @@ export default class CometChatSharedMedia extends React.Component {
                   ? styles.activeButtonStyle
                   : styles.buttonStyle
               }>
-              <Text style={styles.buttonTextStyle}>Videos</Text>
+              <Text style={styles.buttonTextStyle}>Videolar</Text>
             </TouchableOpacity>
             {messageType === CometChat.MESSAGE_TYPE.IMAGE ? (
               <View style={styles.separator} />
@@ -377,7 +377,7 @@ export default class CometChatSharedMedia extends React.Component {
                   ? styles.activeButtonStyle
                   : styles.buttonStyle,
               ]}>
-              <Text style={styles.buttonTextStyle}>Docs</Text>
+              <Text style={styles.buttonTextStyle}>Dosyalar</Text>
             </TouchableOpacity>
           </View>
           <FlatList

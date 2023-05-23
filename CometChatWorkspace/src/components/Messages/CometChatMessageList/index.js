@@ -1193,7 +1193,7 @@ class CometChatMessageList extends React.PureComponent {
           onEndReached={() => this.getMessages(true)}
           onEndReachedThreshold={0.3}
           inverted={-1}
-          style={{ flex: 1, paddingHorizontal: 5 }}
+          style={{ flex: 1, paddingHorizontal: 5,backgroundColor:"white" }}
           contentContainerStyle={!messages.length ? { flex: 1 } : {}}
           ListFooterComponent={
             messages.length && this.props.parentMessageComponent

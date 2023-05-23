@@ -14,6 +14,7 @@ import detailPaneIcon from './resources/detailpane.png';
 import { logger } from '../../../utils/common';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import { CometChatContext } from '../../../utils/CometChatContext';
+import assets from '../../../../../../assets'
 class CometChatMessageHeader extends React.Component {
   static contextType = CometChatContext;
   constructor(props) {
@@ -153,7 +154,7 @@ class CometChatMessageHeader extends React.Component {
    */
   setStatusForGroup = () => {
     try {
-      const status = `${this.props.item.membersCount} Members`;
+      const status = `${this.props.item.membersCount} üye`;
       this.setState({ status });
     } catch (error) {
       logger(error);
@@ -189,7 +190,7 @@ class CometChatMessageHeader extends React.Component {
             this.props.loggedInUser.uid !== groupUser.uid
           ) {
             const membersCount = parseInt(item.membersCount);
-            const status = `${membersCount} Members`;
+            const status = `${membersCount} üye`;
             this.setState({ status });
           }
           break;
@@ -199,7 +200,7 @@ class CometChatMessageHeader extends React.Component {
             this.props.item.guid === item.guid
           ) {
             const membersCount = parseInt(item.membersCount);
-            const status = `${membersCount} Members`;
+            const status = `${membersCount} üye`;
             this.setState({ status });
           }
           break;
@@ -209,7 +210,7 @@ class CometChatMessageHeader extends React.Component {
             this.props.item.guid === item.guid
           ) {
             const membersCount = parseInt(item.membersCount);
-            const status = `${membersCount} Members`;
+            const status = `${membersCount} üye`;
             this.setState({ status });
           }
           break;
@@ -220,7 +221,7 @@ class CometChatMessageHeader extends React.Component {
             this.props.item.guid === item.receiverId
           ) {
             if (this.state.restrictions?.isTypingIndicatorsEnabled) {
-              this.setState({ status: `${item.sender.name} is typing...` });
+              this.setState({ status: `${item.sender.name} yazıyor...` });
               this.props.actionGenerated(actions.SHOW_REACTION, item);
             }
           } else if (
@@ -228,7 +229,7 @@ class CometChatMessageHeader extends React.Component {
             this.props.type === item.receiverType &&
             this.props.item.uid === item.sender.uid
           ) {
-            this.setState({ status: 'typing...' });
+            this.setState({ status: 'yazıyor...' });
             this.props.actionGenerated(actions.SHOW_REACTION, item);
           }
           break;
@@ -287,10 +288,13 @@ class CometChatMessageHeader extends React.Component {
       }
       userName = this.props.item.name;
     }
-
+   var change =this.state.status
+   change= change.replace('offline', 'çevirimdışı')
+   change= change.replace('online', 'çevirimiçi')
     let status = (
-      <Text style={styles.statusText} numberOfLines={1}>
-        {this.state.status}
+      <Text style={[styles.statusText,{color:"#FFF9C4"}]} numberOfLines={1}>
+        {/* {this.state.status} */}
+      {change}
       </Text>
     );
 
@@ -348,19 +352,20 @@ class CometChatMessageHeader extends React.Component {
       <TouchableOpacity
         onPress={() => this.props.actionGenerated(actions.VIEW_DETAIL)}
         style={styles.videoCallContainer}>
-        <Image style={styles.callIcon} source={detailPaneIcon} />
+        {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
+        <Image style={[styles.callIcon,{tintColor:"white"}]}  source={assets.setting} />
       </TouchableOpacity>
     );
 
     return (
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer,{backgroundColor:"#558B2F"}]}>
         <TouchableOpacity
           onPress={() => this.props.actionGenerated(actions.GO_BACK)}
           style={styles.backButtonContainer}>
           <Icon
             name="chevron-back-sharp"
             size={32}
-            color={this.props.theme.color.blue}
+            color={this.props.theme.color.white}
           />
         </TouchableOpacity>
         <View style={styles.headerDetailContainer}>
@@ -368,7 +373,7 @@ class CometChatMessageHeader extends React.Component {
             style={[
               styles.avatarContainer,
               {
-                backgroundColor: 'rgba(51,153,255,0.25)',
+                backgroundColor: "#FF8A80"	,//'rgba(51,153,255,0.25)',
               },
             ]}>
             <CometChatAvatar
@@ -380,14 +385,16 @@ class CometChatMessageHeader extends React.Component {
             />
             {presence}
           </View>
-          <View style={styles.itemDetailContainer}>
-            <Text style={styles.itemNameText} numberOfLines={1}>
+          <View style={[styles.itemDetailContainer]}>
+            <Text style={[styles.itemNameText,{color:"white",fontWeight: "700"}]} numberOfLines={1}>
               {this.props.item.name}
             </Text>
             {status}
           </View>
-          {videoCallBtn}
-          {audioCallBtn}
+          {/* GÖRÜNTÜLÜ GÖRÜŞME BURAD KAMERA İLE KONUŞMA */}
+          {/* {videoCallBtn} */} 
+          {/* Telefon ile görüşme */}
+          {/* {audioCallBtn} */}
           {info}
         </View>
       </View>

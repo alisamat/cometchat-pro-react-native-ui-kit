@@ -601,9 +601,10 @@ export default class CometChatGroupDetails extends React.Component {
         <Text
           style={[
             style.itemLinkStyle,
-            { color: this.viewTheme.color.primary },
+            // { color: this.viewTheme.color.primary },
+            { color: this.viewTheme.color.blue },
           ]}>
-          View members
+          Üyeleri görüntüle
         </Text>
       </TouchableOpacity>
     );
@@ -625,9 +626,11 @@ export default class CometChatGroupDetails extends React.Component {
           <Text
             style={[
               style.itemLinkStyle,
-              { color: this.viewTheme.color.primary },
+              // { color: this.viewTheme.color.primary },
+              { color: this.viewTheme.color.blue },
+
             ]}>
-            Add members
+            Üye ekle
           </Text>
         </TouchableOpacity>
       );
@@ -639,7 +642,7 @@ export default class CometChatGroupDetails extends React.Component {
           }}>
           <Text
             style={[style.itemLinkStyle, { color: this.viewTheme.color.red }]}>
-            Delete and exit
+            Sil ve çık
           </Text>
         </TouchableOpacity>
       );
@@ -654,9 +657,11 @@ export default class CometChatGroupDetails extends React.Component {
           <Text
             style={[
               style.itemLinkStyle,
-              { color: this.viewTheme.color.primary },
+              // { color: this.viewTheme.color.primary },
+              { color: this.viewTheme.color.blue },
+
             ]}>
-            Banned members
+            Engellenen Üyeler
           </Text>
         </TouchableOpacity>
       );
@@ -674,9 +679,9 @@ export default class CometChatGroupDetails extends React.Component {
           <Text
             style={[
               style.itemLinkStyle,
-              { color: this.viewTheme.color.primary },
+              { color: this.viewTheme.color.red },
             ]}>
-            Leave group
+            Gruptan ayrıl
           </Text>
         </TouchableOpacity>
       );
@@ -705,7 +710,7 @@ export default class CometChatGroupDetails extends React.Component {
 
     let members = (
       <View style={style.fullWidth}>
-        <Text style={[style.sectionHeaderStyle]}>Members</Text>
+        <Text style={[style.sectionHeaderStyle]}>Üyeler</Text>
         <View style={style.listItemContainer}>
           {viewMembersBtn}
           {addMembersBtn}
@@ -715,10 +720,10 @@ export default class CometChatGroupDetails extends React.Component {
     );
 
     let options = (
-      <View style={style.fullWidth}>
+      <View style={[style.fullWidth,{paddingTop:10}]}>
         <Text
           style={[style.sectionHeaderStyle, { color: theme.color.helpText }]}>
-          Options
+          Seçenekler
         </Text>
         <View style={style.listItemContainer}>
           {leaveGroupBtn}
@@ -781,7 +786,7 @@ export default class CometChatGroupDetails extends React.Component {
     }
 
     let avatar = (
-      <View style={style.avatarStyle}>
+      <View style={[style.avatarStyle,{ backgroundColor: "#FF8A80"}]}>
         <CometChatAvatar
           cornerRadius={32}
           borderColor={theme.color.secondary}
@@ -844,7 +849,7 @@ export default class CometChatGroupDetails extends React.Component {
                           style={style.closeIcon}
                         />
                       </TouchableOpacity>
-                      <Text style={style.headerTitleStyle}>Details</Text>
+                      <Text style={[style.headerTitleStyle,{color:"#455A64"}]}>Detaylar</Text>
                     </View>
                     <View style={styles.groupDetailContainer}>
                       {avatar}
@@ -855,7 +860,7 @@ export default class CometChatGroupDetails extends React.Component {
                           </Text>
                         </View>
                         <Text style={style.statusText} numberOfLines={1}>
-                          {parseInt(this.props.item?.membersCount)} Members
+                          {parseInt(this.props.item?.membersCount)} Üye
                         </Text>
                       </View>
                     </View>

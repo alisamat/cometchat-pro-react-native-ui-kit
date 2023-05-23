@@ -90,7 +90,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   groupButtonWrapper: {
-    width: 80 * widthRatio,
+    width:170 * widthRatio,
     height: 36 * heightRatio,
     borderRadius: 5,
     alignItems: 'center',

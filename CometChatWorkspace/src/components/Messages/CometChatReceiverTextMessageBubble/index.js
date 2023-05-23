@@ -58,7 +58,7 @@ const CometChatReceiverTextMessageBubble = (props) => {
     return (
       <Autolink
         text={message.text}
-        style={style.autolinkStyle}
+        style={[style.autolinkStyle]}
         textProps={{ selectable: true }}
         linkProps={{ suppressHighlighting: true }}
         linkStyle={style.messageLinkStyle}
@@ -212,7 +212,8 @@ const CometChatReceiverTextMessageBubble = (props) => {
                   style={[
                     style.messageWrapperStyle,
                     {
-                      backgroundColor: '#F8F8F8',
+                      // backgroundColor: '#F8F8F8',
+                      backgroundColor: '#EEEEEE',
                     },
                   ]}>
                   {messageText}

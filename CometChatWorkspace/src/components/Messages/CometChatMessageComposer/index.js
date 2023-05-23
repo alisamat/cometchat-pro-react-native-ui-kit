@@ -662,7 +662,7 @@ export default class CometChatMessageComposer extends React.PureComponent {
                     color: `${this.props.theme.color.black}`,
                   },
                 ]}>
-                Edit message
+                Mesajı düzenle
               </Text>
               <TouchableOpacity
                 style={style.previewCloseStyle}
@@ -703,7 +703,7 @@ export default class CometChatMessageComposer extends React.PureComponent {
                 color: this.props.theme.color.white,
               },
             ]}>
-            You have blocked this user
+            Bu kullanıcıyı engellediniz
           </Text>
           <Text
             style={[
@@ -712,7 +712,7 @@ export default class CometChatMessageComposer extends React.PureComponent {
                 color: this.props.theme.color.white,
               },
             ]}>
-            To start conversations, click on the user info and unblock the user
+            Sohbet başlatmak için kullanıcı bilgilerine tıklayın ve kullanıcının engellemesini kaldırın
           </Text>
         </View>
       );
@@ -817,9 +817,9 @@ export default class CometChatMessageComposer extends React.PureComponent {
             }}>
             <AntDIcon size={26} name="pluscircle" color="rgba(0,0,0,0.35)" />
           </TouchableOpacity>
-          <View style={style.textInputContainer}>
+          <View style={[style.textInputContainer,{}]}>
             <TextInput
-              style={[style.messageInputStyle,{borderRadius:12}]}
+              style={[style.messageInputStyle,{borderRadius:12,borderWidth:.3,borderColor:"#BDBDBD"}]}
               editable={!disabled}
               value={this.state.messageInput}
               placeholder="Mesajını Yaz..."
