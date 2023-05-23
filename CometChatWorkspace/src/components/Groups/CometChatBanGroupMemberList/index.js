@@ -22,7 +22,7 @@ export default class CometChatBanGroupMemberList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.decoratorMessage = 'Loading...';
+    this.decoratorMessage = 'Yükleniyor...';
 
     this.state = {};
     this.theme = { ...theme, ...props.theme };
@@ -107,7 +107,7 @@ export default class CometChatBanGroupMemberList extends React.Component {
   listHeaderComponent = () => {
     return (
       <View style={[style.contactHeaderStyle]}>
-        <Text style={style.contactHeaderTitleStyle}>Banned Members</Text>
+        <Text style={style.contactHeaderTitleStyle}>Engellenen Üyeler</Text>
       </View>
     );
   };
@@ -162,7 +162,7 @@ export default class CometChatBanGroupMemberList extends React.Component {
     const group = this.context;
     const membersList = [...group.bannedMemberList];
     if (!membersList.length) {
-      this.decoratorMessage = 'No banned members';
+      this.decoratorMessage = 'Engellenen üye yok';
     }
     return (
       <React.Fragment>
@@ -193,7 +193,7 @@ export default class CometChatBanGroupMemberList extends React.Component {
                     <View style={style.headerContainer}>
                       <View style={{}}>
                         <Text style={style.contactHeaderTitleStyle}>
-                          Banned Members
+                          Engellenen Üyeler
                         </Text>
                       </View>
                       <TouchableOpacity
@@ -203,7 +203,7 @@ export default class CometChatBanGroupMemberList extends React.Component {
                         }}
                         style={{}}>
                         <Text style={{ color: this.theme.color.blue }}>
-                          Close
+                          Kapat
                         </Text>
                       </TouchableOpacity>
                     </View>

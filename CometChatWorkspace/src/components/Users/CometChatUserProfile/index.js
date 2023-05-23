@@ -59,7 +59,7 @@ class CometChatUserProfile extends React.Component {
                           size="large"
                           color={theme.color.primary}
                         />
-                        <Text style={{ marginTop: 10 }}>Loading...</Text>
+                        <Text style={{ marginTop: 10 }}>Yükleniyor...</Text>
                       </View>
                     ) : null}
                     <View style={[style.mainContainer]}>

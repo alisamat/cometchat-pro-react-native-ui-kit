@@ -34,7 +34,7 @@ class CometChatUserList extends React.PureComponent {
 
   friendsOnly = false;
 
-  decoratorMessage = 'Loading...';
+  decoratorMessage = 'Yükleniyor...';
 
   constructor(props) {
     super(props);
@@ -61,7 +61,7 @@ class CometChatUserList extends React.PureComponent {
       }
 
       this.navListener = this.props.navigation.addListener('focus', () => {
-        this.decoratorMessage = 'Loading...';
+        this.decoratorMessage = 'Yükleniyor...';
         if (this.UserListManager) {
           this.UserListManager.removeListeners();
         }

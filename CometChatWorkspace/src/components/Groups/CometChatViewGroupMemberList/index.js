@@ -23,7 +23,7 @@ export default class CometChatViewGroupMemberList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.decoratorMessage = 'Loading...';
+    this.decoratorMessage = 'Yükleniyor...';
 
     this.state = {
       membersToBan: [],
@@ -192,7 +192,7 @@ export default class CometChatViewGroupMemberList extends React.Component {
   listHeaderComponent = () => {
     return (
       <View style={[style.contactHeaderStyle]}>
-        <Text style={style.contactHeaderTitleStyle}>Group Members</Text>
+        <Text style={style.contactHeaderTitleStyle}>Grup Üyeleri</Text>
       </View>
     );
   };
@@ -267,7 +267,7 @@ export default class CometChatViewGroupMemberList extends React.Component {
                     <View style={style.headerContainer}>
                       <View style={style.headerContainerStyle}>
                         <Text style={style.contactHeaderTitleStyle}>
-                          Group Members
+                        Grup Üyeleri
                         </Text>
                       </View>
                       <TouchableOpacity
@@ -277,7 +277,7 @@ export default class CometChatViewGroupMemberList extends React.Component {
                         }}
                         style={{}}>
                         <Text style={{ color: this.theme.color.blue }}>
-                          Close
+                          Kapat
                         </Text>
                       </TouchableOpacity>
                     </View>

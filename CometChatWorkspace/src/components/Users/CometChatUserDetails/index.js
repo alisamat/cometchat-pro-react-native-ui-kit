@@ -184,7 +184,7 @@ export default class CometChatUserDetails extends React.Component {
           }}>
           <Text
             style={[style.itemLinkStyle, { color: this.viewTheme.color.red }]}>
-            Unblock User
+            Kullanıcının engelini kaldır
           </Text>
         </TouchableOpacity>
       );
@@ -196,7 +196,7 @@ export default class CometChatUserDetails extends React.Component {
           }}>
           <Text
             style={[style.itemLinkStyle, { color: this.viewTheme.color.red }]}>
-            Block User
+            Kullanıcıyı engelle
           </Text>
         </TouchableOpacity>
       );
@@ -209,7 +209,7 @@ export default class CometChatUserDetails extends React.Component {
         }}>
         <Text
           style={[style.itemLinkStyle, { color: this.viewTheme.color.blue }]}>
-          View Profile
+          Profili Görüntüle
         </Text>
       </TouchableOpacity>
     );
@@ -225,7 +225,7 @@ export default class CometChatUserDetails extends React.Component {
             style.sectionHeaderStyle,
             { color: this.viewTheme.color.secondary },
           ]}>
-          PRIVACY & SUPPORT
+          GİZLİLİK
         </Text>
         <View style={style.blockText}>{blockUserText}</View>
       </View>
@@ -243,7 +243,7 @@ export default class CometChatUserDetails extends React.Component {
               style.sectionHeaderStyle,
               { color: this.viewTheme.color.secondary },
             ]}>
-            ACTIONS
+            HAREKETLER
           </Text>
 
           <View style={style.blockText}>{showProfile}</View>
@@ -306,7 +306,7 @@ export default class CometChatUserDetails extends React.Component {
                         style={{ marginRight: 5 }}
                       />
                     </TouchableOpacity>
-                    <Text style={style.headerTitleStyle}>Details</Text>
+                    <Text style={style.headerTitleStyle}>Detaylar</Text>
                   </View>
                   <View style={style.userDetailContainer}>
                     {avatar}

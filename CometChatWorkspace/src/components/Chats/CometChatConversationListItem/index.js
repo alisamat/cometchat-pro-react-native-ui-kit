@@ -473,7 +473,7 @@ if (diffTimestamp < 60 * 1000) {
                 alignItems: 'center',
               }}>
               <Text numberOfLines={1} style={[styles.itemLastMsgTimeStyle,{fontWeight:"400"}]}>
-                {`${this.state.isThreaded ? 'Bir yanıt içerisinde : ' : ''}` +
+                {`${this.state.isThreaded ? 'Bir mesaj içinde : ' : ''}` +
                   this.state.lastMessage}
               </Text>
 

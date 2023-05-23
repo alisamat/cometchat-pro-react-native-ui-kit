@@ -499,7 +499,8 @@ class CometChatMessages extends React.PureComponent {
     }
     const messageList = [...this.state.messageList];
     members.forEach((eachMember) => {
-      const message = `${this.loggedInUser.name} added ${eachMember.name}`;
+      // const message = `${this.loggedInUser.name} added ${eachMember.name}`;
+      const message = `${this.loggedInUser.name}, ${eachMember.name}'ı ekledi`;
       const sentAt = (new Date() / 1000) | 0;
       const messageObj = {
         category: 'action',

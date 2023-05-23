@@ -682,12 +682,12 @@ class CometChatMessageThread extends React.PureComponent {
                     fontSize: 15,
                     color: this.props.theme.backgroundColor.blue,
                   }}>
-                  Back
+                  Geri
                 </Text>
               </TouchableOpacity>
 
               <View style={styles.headerDetailStyle}>
-                <Text style={[styles.headerTitleStyle]}>Thread</Text>
+                <Text style={[styles.headerTitleStyle]}>Konu Başlığı</Text>
                 <Text style={styles.headerNameStyle}>
                   {this.props.item.name}
                 </Text>

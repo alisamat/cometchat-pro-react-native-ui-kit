@@ -55,9 +55,9 @@ export default (props) => {
   const scopeIcon = <Icon name="edit" size={26} />;
 
   const roles = {};
-  roles[CometChat.GROUP_MEMBER_SCOPE.ADMIN] = 'Administrator';
-  roles[CometChat.GROUP_MEMBER_SCOPE.MODERATOR] = 'Moderator';
-  roles[CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT] = 'Participant';
+  roles[CometChat.GROUP_MEMBER_SCOPE.ADMIN] = 'Yönetici';
+  roles[CometChat.GROUP_MEMBER_SCOPE.MODERATOR] = 'Moderatör';
+  roles[CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT] = 'Katılımcı';
 
   // toggleChangeScope for toggleChange
 
@@ -133,7 +133,7 @@ export default (props) => {
         {receivedScope}
         <TouchableOpacity onPress={() => toggleChange(true)}>
           {scopeIcon}
-          {scopeIcon ? <Text style={style.editText}>Edit</Text> : null}
+          {scopeIcon ? <Text style={style.editText}>Düzenle</Text> : null}
         </TouchableOpacity>
       </View>
     );
@@ -141,14 +141,14 @@ export default (props) => {
 
   // disable change scope, kick, ban of group owner
   if (props.item.owner === props.member.uid) {
-    receivedScope = <Text style={style.ownerText}>Owner</Text>;
+    receivedScope = <Text style={style.ownerText}>Yönetici</Text>;
     changeScope = receivedScope;
     ban = null;
     kick = null;
   }
 
   if (props.loggedInUser.uid === props.member.uid) {
-    name = 'You';
+    name = 'Sen';
     changeScope = receivedScope;
     ban = null;
     kick = null;
@@ -197,14 +197,14 @@ export default (props) => {
             props.actionGenerated(actions.BAN, props.member);
           }}>
           {ban}
-          {ban ? <Text style={style.actionText}>Ban</Text> : null}
+          {ban ? <Text style={style.actionText}>Engelle</Text> : null}
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             props.actionGenerated(actions.KICK, props.member);
           }}>
           {kick}
-          {kick ? <Text style={style.actionText}>Kick</Text> : null}
+          {kick ? <Text style={style.actionText}>Çıkart</Text> : null}
         </TouchableOpacity>
       </View>
     );

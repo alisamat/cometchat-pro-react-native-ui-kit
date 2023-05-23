@@ -66,7 +66,7 @@ export default (props) => {
           props.actionGenerated(actions.SEND_MESSAGE, props.message)
         }>
         <FeatherIcon name="message-circle" size={actionIconSize} />
-        <Text style={styles.actionsText}>Send Message Privately</Text>
+        <Text style={styles.actionsText}>Özel Mesaj Gönder</Text>
       </TouchableOpacity>
     );
   }
@@ -77,7 +77,7 @@ export default (props) => {
         props.actionGenerated(actions.VIEW_MESSAGE_THREAD, props.message)
       }>
       <FeatherIcon name="message-circle" size={actionIconSize} />
-      <Text style={styles.actionsText}>Start Thread</Text>
+      <Text style={styles.actionsText}>Konuyu Başlat</Text>
     </TouchableOpacity>
   );
 

@@ -18,9 +18,12 @@ import {
   KeyboardAvoidingView,
   TouchableHighlight,
   SafeAreaView,
+  Platform,
+  ToastAndroid
 } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Toast from 'react-native-root-toast';
 
 import { CometChatManager } from '../../../utils/controller';
 import { AddMembersManager } from './controller';
@@ -33,7 +36,7 @@ import { logger } from '../../../utils/common';
 class CometChatAddGroupMemberList extends React.Component {
   static contextType = GroupDetailContext;
 
-  decoratorMessage = 'Loading...';
+  decoratorMessage = 'Yükleniyor...';
 
   constructor(props) {
     super(props);
@@ -256,7 +259,9 @@ class CometChatAddGroupMemberList extends React.Component {
         this.props.close();
         CometChat.addMembersToGroup(guid, membersList, [])
           .then((response) => {
+            console.log('3333');
             if (Object.keys(response).length) {
+              console.log('4444');
               for (const member in response) {
                 if (response[member] === 'success') {
                   const found = this.state.userList.find(
@@ -267,6 +272,20 @@ class CometChatAddGroupMemberList extends React.Component {
                 }
               }
               this.props.actionGenerated('addGroupParticipants', membersToAdd);
+              /////
+              Platform.OS=="android"?
+              ToastAndroid.show(
+              'Gruba üye başarıyla eklendi',
+              ToastAndroid.LONG,
+              ):
+              Toast.show('Gruba üye başarıyla eklendi', {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+              });
+              /////
             }
           })
           .catch((error) => {
@@ -374,7 +393,7 @@ class CometChatAddGroupMemberList extends React.Component {
                   <KeyboardAvoidingView style={style.modalContainer} behavior={Platform.OS == 'ios' ? null : 'height'} enabled>
                     <View style={style.headerContainer}>
                         <Text style={style.contactHeaderTitleStyle}>
-                          Add Members
+                          Üye Ekle
                         </Text>
                       <TouchableOpacity
                         onPress={() => {
@@ -383,7 +402,7 @@ class CometChatAddGroupMemberList extends React.Component {
                         }}
                         style={{}}>
                         <Text style={{ color: this.theme.color.blue }}>
-                          Close
+                          Kapat
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -405,7 +424,7 @@ class CometChatAddGroupMemberList extends React.Component {
                           ref={this.textInputRef}
                           autoCompleteType="off"
                           value={this.state.textInputValue}
-                          placeholder="Search"
+                          placeholder="Ara"
                           placeholderTextColor={
                             this.theme.color.textInputPlaceholder
                           }
@@ -461,7 +480,7 @@ class CometChatAddGroupMemberList extends React.Component {
                       <TouchableOpacity
                         style={[
                           style.addBtnStyle,
-                          {
+                          { marginBottom:32,
                             backgroundColor: this.theme.backgroundColor.blue,
                           },
                         ]}
@@ -473,7 +492,7 @@ class CometChatAddGroupMemberList extends React.Component {
                           color: `${this.theme.color.white}`,
                         },
                       ]}>
-                      Add
+                      Ekle
                     </Text>
                   </TouchableOpacity>
                   </KeyboardAvoidingView>

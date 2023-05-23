@@ -18,7 +18,7 @@ class CometChatStickerKeyboard extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.decoratorMessage = 'Loading...';
+    this.decoratorMessage = 'Yükleniyor...';
     this.viewTheme = { ...theme, ...this.props.theme };
     this.state = {
       stickerSet: {},
