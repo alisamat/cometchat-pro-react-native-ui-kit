@@ -7,6 +7,7 @@ import {
   Modal,
   Dimensions,
   KeyboardAvoidingView,
+  Text
 } from 'react-native';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 // import { NavigationContainer } from '@react-navigation/native';

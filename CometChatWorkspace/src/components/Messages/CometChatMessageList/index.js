@@ -38,7 +38,7 @@ import { logger } from '../../../utils/common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CometChatContext } from '../../../utils/CometChatContext';
-
+import PinnedMessages from '../../../../../../Components/cometchatComp/pincomponenet';
 let cDate = null;
 
 class CometChatMessageList extends React.PureComponent {
@@ -55,6 +55,7 @@ class CometChatMessageList extends React.PureComponent {
     super(props);
     this.state = {
       onItemClick: null,
+      pinmessage:[]
     };
 
     this.loggedInUser = props.loggedInUser;
@@ -80,6 +81,7 @@ class CometChatMessageList extends React.PureComponent {
 
     this.getMessages();
     this.MessageListManager.attachListeners(this.messageUpdated);
+    this.pinGet()
   }
 
   componentDidUpdate(prevProps) {
@@ -1148,7 +1150,20 @@ class CometChatMessageList extends React.PureComponent {
       this.setState({ showNewMsg: true });
     }
   };
-
+ pinGet=()=>{
+  console.log('1153',  this.props.type,      this.props.item  );
+  var uid=this.props.type=="group"?this.props.item.guid:this.props.uid
+  const URL = `v1/fetch?receiverType=${this.props.type}&receiver=${uid}`;
+CometChat.callExtension('pin-message', 'GET', URL, null).then(response => {
+    // {pinnedMessages: []}
+    console.log('1155',response.pinnedMessages[0].data.text);
+    this.setState({pinmessage:response.pinnedMessages})
+})
+.catch(error => {
+  console.log('1188',error);
+    // Error occured
+});
+ }
   render() {
     let messages = [...this.props.messages];
     if (messages.length) {
@@ -1181,6 +1196,11 @@ class CometChatMessageList extends React.PureComponent {
 
     return (
       <>
+                  <View style={{backgroundColor:"white"}}>
+                    {/* <Text>Deneme</Text> */}
+                    <PinnedMessages props={this.state.pinmessage}/>
+                    </View>
+
         <FlatList
           ref={this.flatListRef}
           ListEmptyComponent={this.listEmptyComponent}

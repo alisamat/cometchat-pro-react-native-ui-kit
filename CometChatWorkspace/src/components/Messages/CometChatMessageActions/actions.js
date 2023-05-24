@@ -80,6 +80,29 @@ export default (props) => {
       <Text style={styles.actionsText}>Mesaj içinde yeni mesaj gir</Text>
     </TouchableOpacity>
   );
+  /////////// SABİTLE
+   let pinT = (
+    <TouchableOpacity
+      style={styles.action}
+      onPress={() =>
+        
+       // props.actionGenerated(actions.VIEW_MESSAGE_THREAD, props.message)
+              CometChat.callExtension('pin-message', 'POST', 'v1/pin', {
+                "msgId": props.message.id // The ID of the message to be pinned. Here 280.
+                }).then(response => {
+                  console.log('9992',response);
+                    // { success: true }
+                })
+                .catch(error => {
+                  console.log('9696',error);
+                  console.log('9898',props.message);
+                    // Error occurred
+                })
+      }>
+      <FeatherIcon name="message-circle" size={actionIconSize} />
+      <Text style={styles.actionsText}>Mesajı sabitle</Text>
+    </TouchableOpacity>
+  );
 
   // if threaded messages need to be disabled
   if (
@@ -145,6 +168,7 @@ export default (props) => {
       <View style={styles.actionsContainer}>
         {sendMessage}
         {threadedChats}
+        {pinT}
         {editMessage}
         {deleteMessage}
       </View>
