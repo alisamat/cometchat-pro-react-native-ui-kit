@@ -77,7 +77,7 @@ export default (props) => {
         props.actionGenerated(actions.VIEW_MESSAGE_THREAD, props.message)
       }>
       <FeatherIcon name="message-circle" size={actionIconSize} />
-      <Text style={styles.actionsText}>Konuyu Başlat</Text>
+      <Text style={styles.actionsText}>Mesaj içinde yeni mesaj gir</Text>
     </TouchableOpacity>
   );
 

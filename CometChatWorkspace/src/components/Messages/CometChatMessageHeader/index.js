@@ -289,8 +289,10 @@ class CometChatMessageHeader extends React.Component {
       userName = this.props.item.name;
     }
    var change =this.state.status
+   console.log('292',this.state.status);
    change= change.replace('offline', 'çevirimdışı')
    change= change.replace('online', 'çevirimiçi')
+   console.log('295',change);
     let status = (
       <Text style={[styles.statusText,{color:"#FFF9C4"}]} numberOfLines={1}>
         {/* {this.state.status} */}

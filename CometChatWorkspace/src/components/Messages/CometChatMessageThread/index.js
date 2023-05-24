@@ -687,7 +687,7 @@ class CometChatMessageThread extends React.PureComponent {
               </TouchableOpacity>
 
               <View style={styles.headerDetailStyle}>
-                <Text style={[styles.headerTitleStyle]}>Konu Başlığı</Text>
+                <Text style={[styles.headerTitleStyle]}>Mesaj İçinde Mesaj</Text>
                 <Text style={styles.headerNameStyle}>
                   {this.props.item.name}
                 </Text>

@@ -72,7 +72,7 @@ const CometChatUserProfile = (props) => {
             <View style={styles.userNameWrapper}>
               <Text style={styles.userName}>{user?.name}</Text>
             </View>
-            <Text style={styles.status}>Online</Text>
+            <Text style={styles.status}>Çevirimiçi</Text>
           </View>
         ) : null}
       </View>

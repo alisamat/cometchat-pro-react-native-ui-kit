@@ -1005,6 +1005,7 @@ class CometChatMessageList extends React.PureComponent {
   getActionMessageComponent = (message, key) => {
     console.log('444',message.message);
     message.message = message.message.replace('joined', 'katıldı');
+    message.message = message.message.replace('left', 'ayrıldı');
 
     let component = null;
     if (message.message) {

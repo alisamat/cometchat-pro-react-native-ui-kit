@@ -319,6 +319,7 @@ if (diffTimestamp < 60 * 1000) {
    * @param lastMessage - message object
    */
   getMessage = (lastMessage) => {
+    console.log('3222',lastMessage);
     try {
       let message = null;
       this.setState({ isThreaded: lastMessage.parentMessageId });
@@ -395,10 +396,15 @@ if (diffTimestamp < 60 * 1000) {
       logger(error);
     }
   };
-
+  repplace(){
+  var message=this.state.lastMessage
+  message = message.replace('joined', 'katıldı');
+  message = message.replace('left', 'ayrıldı');
+  return message
+  }
   render() {
     let lastMessageTimeStamp = null;
-    console.log('343',this.state.lastMessageTimestamp);
+    console.log('343',this.state.lastMessage);
     if (this.state.lastMessage) {
       lastMessageTimeStamp = (
         <Text style={[styles.itemLastMsgTimeStyle,{ fontWeight: "400" }]} numberOfLines={1}>
@@ -474,7 +480,9 @@ if (diffTimestamp < 60 * 1000) {
               }}>
               <Text numberOfLines={1} style={[styles.itemLastMsgTimeStyle,{fontWeight:"400"}]}>
                 {`${this.state.isThreaded ? 'Bir mesaj içinde : ' : ''}` +
-                  this.state.lastMessage}
+                  // this.state.lastMessage
+                  this.repplace()
+                  }
               </Text>
 
               {this.state.restrictions?.isUnreadCountEnabled ? (

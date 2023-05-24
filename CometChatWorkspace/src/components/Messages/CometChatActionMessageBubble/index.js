@@ -72,7 +72,7 @@ const CometChatActionMessageBubble = (props) => {
               call.sender.uid === loggedInUser.uid
                 ? 'Arama reddedildi'
                 : `${call.sender.name} reddedilen çağrı`;
-          } else if (call.action === 'left') {
+          } else if (call.action === 'ayrıldı') {
             message =
               call.sender.uid === loggedInUser.uid
                 ? 'aramayı bıraktın'

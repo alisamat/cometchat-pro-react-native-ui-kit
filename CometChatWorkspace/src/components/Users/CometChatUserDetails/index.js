@@ -53,9 +53,9 @@ export default class CometChatUserDetails extends React.Component {
 
           let status = '';
           if (user.status === CometChat.USER_STATUS.OFFLINE) {
-            status = 'OFFLINE';
+            status = 'çevirimdışı';
           } else if (user.status === CometChat.USER_STATUS.ONLINE) {
-            status = 'ONLINE';
+            status = 'çevirimiçi';
           }
 
           this.setState({ status: status });
@@ -134,7 +134,7 @@ export default class CometChatUserDetails extends React.Component {
           hours = hours ? hours : 12;
           minutes = minutes < 10 ? '0' + minutes : minutes;
           status =
-            'Yesterday, ' + hours + ':' + minutes + ' ' + ampm.toUpperCase();
+            'Dün, ' + hours + ':' + minutes + ' ' + ampm.toUpperCase();
         } else {
           const month = String(messageTimestamp.getMonth()).padStart(2, '0');
           const day = String(messageTimestamp.getDate()).padStart(2, '0');
@@ -142,7 +142,7 @@ export default class CometChatUserDetails extends React.Component {
           status = day + '/' + month + '/' + year;
         }
       } else if (this.props.item.status === CometChat.USER_STATUS.OFFLINE) {
-        status = 'offline';
+        status = 'çevirimdışı';
       }
 
       this.setState({ status });
