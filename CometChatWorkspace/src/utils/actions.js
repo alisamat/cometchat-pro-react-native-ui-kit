@@ -76,6 +76,10 @@ export const VIEW_MESSAGE_THREAD = 'viewMessageThread';
 export const SEND_MESSAGE = 'sendMessage';
 export const GO_BACK = 'goBack';
 
+export const VIEW_MESSAGE_PIN = 'viewmessagepin';
+
+
+
 export const MESSAGE_READ = 'messageRead';
 export const MESSAGE_FETCHED = 'messageFetched';
 export const MESSAGE_FETCHED_AGAIN = 'messageFetchedAgain';

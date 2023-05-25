@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-shadow */
 import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text,SafeAreaView,Image, FlatList,StyleSheet } from 'react-native';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import { CometChatManager } from '../../../utils/controller';
@@ -38,7 +38,11 @@ import { logger } from '../../../utils/common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CometChatContext } from '../../../utils/CometChatContext';
-import PinnedMessages from '../../../../../../Components/cometchatComp/pincomponenet';
+// import PinnedMessages from '../../../../../../Components/cometchatComp/pincomponenet';
+import constants from '../../../../../../Util/Constants';
+import  assets  from '../../../../../../assets/index';
+
+
 let cDate = null;
 
 class CometChatMessageList extends React.PureComponent {
@@ -55,7 +59,8 @@ class CometChatMessageList extends React.PureComponent {
     super(props);
     this.state = {
       onItemClick: null,
-      pinmessage:[]
+      pinmessage:[],
+      pinadd:0
     };
 
     this.loggedInUser = props.loggedInUser;
@@ -111,6 +116,7 @@ class CometChatMessageList extends React.PureComponent {
             this.context,
           );
         }
+        // this.pinGet()
 
         this.getMessages();
         this.MessageListManager.attachListeners(this.messageUpdated);
@@ -1150,13 +1156,14 @@ class CometChatMessageList extends React.PureComponent {
       this.setState({ showNewMsg: true });
     }
   };
+  //////
  pinGet=()=>{
   console.log('1153',  this.props.type,      this.props.item  );
   var uid=this.props.type=="group"?this.props.item.guid:this.props.uid
   const URL = `v1/fetch?receiverType=${this.props.type}&receiver=${uid}`;
 CometChat.callExtension('pin-message', 'GET', URL, null).then(response => {
     // {pinnedMessages: []}
-    console.log('1155',response.pinnedMessages[0].data.text);
+    console.log('1155',response.pinnedMessages[0]);
     this.setState({pinmessage:response.pinnedMessages})
 })
 .catch(error => {
@@ -1164,7 +1171,140 @@ CometChat.callExtension('pin-message', 'GET', URL, null).then(response => {
     // Error occured
 });
  }
+
+//  pinGet1= ()=>{
+//   console.log('1153',  this.props.type,      this.props.item  );
+//   var uid=this.props.type=="group"?this.props.item.guid:this.props.uid
+//   const URL = `v1/fetch?receiverType=${this.props.type}&receiver=${uid}`;
+// CometChat.callExtension('pin-message', 'GET', URL, null).then(response => {
+//     // {pinnedMessages: []}
+//     console.log('1155',response.pinnedMessages);
+//     this.setState( response.pinnedMessages)
+// })
+// .catch(error => {
+//   console.log('1188',error);
+//   return []
+//     // Error occured
+// });
+//  }
+ PinnedMessagesF = (pinnedMessages) => {
+console.log('3456',this.props.item);
+  pinGet= ()=>{
+    console.log('1153',  this.props.type,      this.props.item  );
+    var uid=this.props.type=="group"?this.props.item.guid:this.props.uid
+    const URL = `v1/fetch?receiverType=${this.props.type}&receiver=${uid}`;
+  CometChat.callExtension('pin-message', 'GET', URL, null).then(response => {
+      // {pinnedMessages: []}
+      console.log('1155',response.pinnedMessages[0]);
+      this.setState({pinmessage:response.pinnedMessages})
+  })
+  .catch(error => {
+    console.log('1188',error);
+      // Error occured
+  });
+   }
+  
+  //   const [pinnedMessages, setPinnedMessages] = useState([]);
+  console.log('8888',pinnedMessages);
+  
+     unpinMessage =async (item) => {
+      console.log('1179',item);
+      console.log('1179',item.id);
+      console.log('1179',item.receiverType);
+      console.log('1179',item.receiver);
+      const URL = 'v1/unpin';
+      // var uid = props.type == "group" ? props.item.guid : props.uid;
+      CometChat.callExtension('pin-message', 'DELETE', URL, {
+        "msgId": item.id,
+        "receiverType": item.receiverType,
+        "receiver": item.receiver
+      })
+      .then(response => {
+        pinGet();
+      })
+      .catch(error => {
+        console.log('Error unpinning message:', error);
+      });
+    };
+  
+     renderItem1 = ({ item }) => {
+    var yazan=  this.loggedInUser.uid === item?.sender?.uid ||this.loggedInUser.uid === item?.sender ||
+    this.loggedInUser.uid === item?.data?.sender?.uid?"Sen":item.sender
+
+     let  date = new Date(item.sentAt * 1000)
+     let formattedDate = date.toLocaleDateString("tr-TR");
+     let formattedTime = date.toLocaleTimeString("tr-TR", { hour: '2-digit', minute: '2-digit' });
+     return (
+
+          <View style={{flexDirection:"row"}}>
+                  <View style={{flexDirection:"column",justifyContent:"center"}}>
+
+              <Icon name='pin' size={30} color='green' />    
+             {/* <Image source={assets.} style={styles.icon} /> */}
+                  </View>
+       
+                <View style={[styles1.messageBubble1,{flex:1,flexDirection:"row",width:'100%'}]}>
+               
+                  <View style={{flex:14,flexDirection:"column"}}>
+                          <View style={{flexDirection: 'row'}}>
+                      
+                          <Text>{item.data.text}</Text>
+                          </View>
+                  
+                        <View style={{ flexDirection: 'row'}}>
+                        <Text style={[styles1.senderInfo,{color:constants.primarycolor}]}>
+                          {/* {item.sender}  */}
+                          {yazan}
+                        </Text>
+                        <Text style={[styles1.senderInfo,{paddingLeft:11}]}>
+                          {formattedDate} {formattedTime}
+                        </Text>
+                        </View>
+                </View>
+
+                  <View style={{flex:1, justifyContent:"center",alignContent:"flex-end" }}>
+
+               
+                  <TouchableOpacity 
+                  style={styles1.ss}
+                  onPress={() => unpinMessage(item)}>
+                  <Icon name='close' size={24} color="lightgrey" />    
+                  {/* <Text style={{fontSize:22,    backgroundColor:constants.lightGrey}}>x</Text> */}
+                  </TouchableOpacity>
+                  </View>
+                  </View>
+
+                {/* </View> */}
+              
+                <View>
+
+              
+
+                </View>
+        </View>
+    )
+  };
+    
+  if(this.state.pinadd!==this.props.pinadd){
+    pinGet()
+  }{
+    this.setState({pinadd:this.props.pinadd})
+  }
+  console.log('22224',this.state.pinmessage);
+    return (
+      <SafeAreaView>
+        <FlatList
+          data={this.state.pinmessage}
+          renderItem={renderItem1}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </SafeAreaView>
+    );
+  };
+
+///////
   render() {
+
     let messages = [...this.props.messages];
     if (messages.length) {
       messages = messages.reverse();
@@ -1193,13 +1333,19 @@ CometChat.callExtension('pin-message', 'GET', URL, null).then(response => {
         </TouchableOpacity>
       </View>
     );
-
+console.log('1233',this.props.pinadd,this.state.pinadd);
     return (
       <>
-                  <View style={{backgroundColor:"white"}}>
-                    {/* <Text>Deneme</Text> */}
-                    <PinnedMessages props={this.state.pinmessage}/>
-                    </View>
+                { (this.state.pinmessage||
+                this.state.pinadd!==this.props.pinadd)
+                && 
+                <View style={{
+                  backgroundColor:"white",
+                  justifyContent:"flex-end",
+                  padding:11,
+                  }}>{this.PinnedMessagesF (this.state.pinmessage)}
+                 </View>}
+
 
         <FlatList
           ref={this.flatListRef}
@@ -1230,4 +1376,47 @@ CometChat.callExtension('pin-message', 'GET', URL, null).then(response => {
     );
   }
 }
+const styles1 = StyleSheet.create({
+ ss:{
+  
+  flexDirection:"column", 
+ justifyContent:"center",alignContent:"center" },
+  messageBubble: {
+      flex:1,
+    flexDirection: 'row',
+    padding: 10,
+  //   paddingRight:30,
+    backgroundColor: constants.lightGrey,
+    borderRadius: 10,
+    marginVertical: 5,
+  //   alignItems: 'center',
+    alignSelf: 'flex-end',
+    maxWidth: '80%',
+  },
+  messageBubble1: {
+      flex:1,
+    flexDirection: 'row',
+    padding: 10,
+  //   paddingRight:30,
+    backgroundColor: constants.lightGrey,
+     borderRadius: 6,
+    marginVertical: 5,
+  //   alignItems: 'center',
+    alignSelf: 'flex-end',
+  //   maxWidth: '80%',
+  },
+  icon: {
+    width: 12,
+    height: 16,
+    tintColor: 'orange',
+    marginRight: 10,
+  },
+  senderInfo: {
+    //paddingRight:30,
+    color: 'gray',
+    alignSelf: 'flex-end',
+    maxWidth: '80%',
+
+  },
+});
 export default CometChatMessageList;

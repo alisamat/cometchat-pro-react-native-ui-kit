@@ -72,7 +72,8 @@ class CometChatMessages extends React.PureComponent {
       joinDirectCall:false,
       outgoingCall: null,
       incomingCall: null,
-      ongoingDirectCall: null
+      ongoingDirectCall: null,
+      pinadd:0,
     };
 
     this.composerRef = React.createRef();
@@ -241,6 +242,13 @@ class CometChatMessages extends React.PureComponent {
           // route.params.actionGenerated('viewMessageThread', messages);
         });
         break;
+////////////////////////////
+        case actions.VIEW_MESSAGE_PIN:
+          this.setState({ messageToReact: null });
+          this.viewmessagepin(messages);
+          break;
+////////////////////////////
+
       case actions.CLOSE_THREAD_CLICKED:
         this.closeThreadMessages();
         break;
@@ -595,6 +603,13 @@ class CometChatMessages extends React.PureComponent {
     });
   };
 
+  viewmessagepin=(message)=>{
+   console.log('6055',message);
+   var pinadd=this.state.pinadd
+   pinadd=pinadd+1
+   this.setState({pinadd})
+  }
+
   onThreadMessageComposed = (composedMessage) => {
     const { route } = this.props;
     const params = route?.params || this.props;
@@ -947,6 +962,7 @@ class CometChatMessages extends React.PureComponent {
   };
 
   render() {
+    console.log('4256',this.props.route.params);
     const { route } = this.props;
     const params = route?.params || this.props;
     let imageView = null;
@@ -1135,6 +1151,7 @@ class CometChatMessages extends React.PureComponent {
             />
             <CometChatMessageList
               theme={this.theme}
+              pinadd={this.state.pinadd}
               messages={this.state.messageList}
               item={
                 params.type === CometChat.RECEIVER_TYPE.USER

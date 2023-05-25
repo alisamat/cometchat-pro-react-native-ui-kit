@@ -77,7 +77,7 @@ export default (props) => {
         props.actionGenerated(actions.VIEW_MESSAGE_THREAD, props.message)
       }>
       <FeatherIcon name="message-circle" size={actionIconSize} />
-      <Text style={styles.actionsText}>Mesaj içinde yeni mesaj gir</Text>
+      <Text style={styles.actionsText}>Mesaj için yeni yanıt gir</Text>
     </TouchableOpacity>
   );
   /////////// SABİTLE
@@ -91,6 +91,10 @@ export default (props) => {
                 "msgId": props.message.id // The ID of the message to be pinned. Here 280.
                 }).then(response => {
                   console.log('9992',response);
+                  if(response.success){
+                    props.actionGenerated(actions.VIEW_MESSAGE_PIN, props.message)
+
+                  }
                     // { success: true }
                 })
                 .catch(error => {
@@ -99,7 +103,10 @@ export default (props) => {
                     // Error occurred
                 })
       }>
-      <FeatherIcon name="message-circle" size={actionIconSize} />
+      {/* <FeatherIcon name="message-circle" size={actionIconSize} /> */}
+      {/* <FeatherIcon name="message-circle" size={actionIconSize} /> */}
+      <IonIcon name='pin' size={26} color='green' />    
+
       <Text style={styles.actionsText}>Mesajı sabitle</Text>
     </TouchableOpacity>
   );
