@@ -2,6 +2,7 @@
 import React from 'react';
 import { MessageHeaderManager } from './controller';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 import { CometChatUserPresence, CometChatAvatar } from '../../Shared';
 import * as enums from '../../../utils/enums';
@@ -15,6 +16,9 @@ import { logger } from '../../../utils/common';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import { CometChatContext } from '../../../utils/CometChatContext';
 import assets from '../../../../../../assets'
+import constants from '../../../../../../Util/Constants'
+const {widthRatio,height, heightRatio} = constants.styleGuide;
+
 class CometChatMessageHeader extends React.Component {
   static contextType = CometChatContext;
   constructor(props) {
@@ -23,6 +27,7 @@ class CometChatMessageHeader extends React.Component {
     this.state = {
       status: '',
       presence: 'offline',
+      aoutowrite:true,
     };
   }
 
@@ -264,9 +269,24 @@ class CometChatMessageHeader extends React.Component {
       logger(error);
     }
   };
-
+  showmessageF =()=>{
+    showMessage({
+      message: "OTOMATİK", 
+    description: "Otomatik cümle önerme", 
+    type: "success",
+    //  icon: "success", 
+      // position: "right",
+      icon: props => <Image source={assets.chatsact} {...props} />,
+     autoHide:true,
+    autoHide:false,
+    statusBarHeight:40*heightRatio,
+    onPress: () => {
+      // this.setState({pushloading:false})
+      hideMessage()
+    },
+    });
+  }
   render() {
-    console.log('222',this.props.item,);
     let image;
     let userName;
     let presence;
@@ -353,12 +373,36 @@ class CometChatMessageHeader extends React.Component {
     let info = (
       <TouchableOpacity
         onPress={() => this.props.actionGenerated(actions.VIEW_DETAIL)}
-        style={styles.videoCallContainer}>
+        style={[styles.videoCallContainer,{paddingHorizontal:3}]}>
         {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
-        <Image style={[styles.callIcon,{tintColor:"white"}]}  source={assets.setting} />
+        <Image style={[[styles.callIcon,{ height: 21,width: 21}],{tintColor:"white"}]}  source={assets.setting} />
       </TouchableOpacity>
     );
+////
 
+let aoutowrite = (
+  <TouchableOpacity
+    onLongPress={()=>{
+    this. showmessageF()
+    }}
+    onPress={() => {
+       this.props.actionGenerated(actions.AOUTO_WRİTE)
+      var color=this.state.aoutowrite
+      console.log('3333',color);
+      color=color?false:true
+this.setState({aoutowrite:color})
+    }
+    }
+    style={styles.videoCallContainer}>
+    {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
+    {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={assets.setting} /> */}
+   {this.state.aoutowrite? <Icon name="md-create" size={25} color={ "white"} />:
+    <Icon name="md-create" size={25} color={"darkgrey"} />
+}
+  </TouchableOpacity>
+);
+ 
+////
     return (
       <View style={[styles.headerContainer,{backgroundColor:"#558B2F"}]}>
         <TouchableOpacity
@@ -397,6 +441,7 @@ class CometChatMessageHeader extends React.Component {
           {/* {videoCallBtn} */} 
           {/* Telefon ile görüşme */}
           {/* {audioCallBtn} */}
+          {aoutowrite}
           {info}
         </View>
       </View>

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 13,
   },
-  autoLinkStyle: { color: 'white', fontSize: 15 },
+  autoLinkStyle: { color: 'black', fontSize: 15 },
   previewAutoLinkStyle: { textAlign: 'center' },
   linkStyle: { textDecorationLine: 'underline', fontSize: 15 },
   linkTextStyle: { fontWeight: '700' },

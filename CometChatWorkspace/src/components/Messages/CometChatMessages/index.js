@@ -51,6 +51,7 @@ class CometChatMessages extends React.PureComponent {
     const { route } = props;
     const params = route?.params || props;
     this.state = {
+      aoutowrite:true,
       messageList: [],
       scrollToBottom: true,
       messageToBeEdited: '',
@@ -248,6 +249,15 @@ class CometChatMessages extends React.PureComponent {
           this.viewmessagepin(messages);
           break;
 ////////////////////////////
+//////////////// BURADA ÇALIŞMA
+        case actions.AOUTO_WRİTE:
+          console.log('253',);
+           this.aoutowrite()
+          // this.viewmessagepin(messages);
+          break;
+
+
+//////////////// BURADA ÇALIŞMA sonu
 
       case actions.CLOSE_THREAD_CLICKED:
         this.closeThreadMessages();
@@ -418,6 +428,14 @@ class CometChatMessages extends React.PureComponent {
     }
   };
   
+  aoutowrite=()=>{
+    console.log('6599',);
+  
+    var resaoutowrite=this.state.aoutowrite?false:true
+    this.setState({ aoutowrite: resaoutowrite });
+   
+  }
+
   sendMessage = (message) => {
     const { route } = this.props;
 
@@ -998,6 +1016,7 @@ class CometChatMessages extends React.PureComponent {
         showMessage={(type, message) => {
           this.DropDownAlertRef?.showMessage(type, message);
         }}
+        aoutowrite={this.state.aoutowrite}
       />
     );
 
@@ -1158,6 +1177,7 @@ class CometChatMessages extends React.PureComponent {
               actionGenerated={this.actionHandler}
             />
             <CometChatMessageList
+
               theme={this.theme}
               pinadd={this.state.pinadd}
               messages={this.state.messageList}

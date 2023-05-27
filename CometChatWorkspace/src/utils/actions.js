@@ -76,7 +76,6 @@ export const VIEW_MESSAGE_THREAD = 'viewMessageThread';
 export const SEND_MESSAGE = 'sendMessage';
 export const GO_BACK = 'goBack';
 
-export const VIEW_MESSAGE_PIN = 'viewmessagepin';
 
 
 
@@ -94,3 +93,9 @@ export const POLL_ANSWERED = 'pollAnswered';
 export const BAN = 'ban';
 export const KICK = 'kick';
 export const CHANGE_SCOPE = 'changescope';
+
+
+export const VIEW_MESSAGE_PIN = 'viewmessagepin';
+export const AOUTO_WRİTE = 'aoutowrite';
+
+

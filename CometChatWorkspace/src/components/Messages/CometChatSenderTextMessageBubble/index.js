@@ -189,7 +189,7 @@ const CometChatSenderTextMessageBubble = (props) => {
         onLongPress={() => {
           props.actionGenerated(actions.OPEN_MESSAGE_ACTIONS, message);
         }}>
-        <View style={[style.messageWrapperStyle,{backgroundColor:"#43A047"}]}>{messageText}</View>
+        <View style={[style.messageWrapperStyle,{backgroundColor:"#90EE90"}]}>{messageText}</View>
       </TouchableWithoutFeedback>
       <View style={[style.messageInfoWrapperStyle]}>
         <CometChatThreadedMessageReplyCount

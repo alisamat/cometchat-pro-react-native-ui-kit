@@ -63,6 +63,7 @@ import constants from '../../../../../../Util/Constants'
       suggestions:[],
       vallength:0,
       newdataBeflist:[],
+      aoutowrite:true,
 
       showFilePicker: false,
       messageInput: '',
@@ -204,7 +205,7 @@ import constants from '../../../../../../Util/Constants'
     this.setState({ messageInput: text, messageType: 'text' });
     // let suggestions = this.getSuggestions(text);
     // this.setState({suggestions});
-    this.descDataGet(text)
+    this.state.aoutowrite? this.descDataGet(text):null
 
   };
 
@@ -586,7 +587,7 @@ newdatalist:this.state.dataTitle,
 
   endTyping = (metadata) => {
     try {
-      this.setState({newdatalist:[]})
+      // this.setState({newdatalist:[]})
       const { receiverId, receiverType } = this.getReceiverDetails();
 
       const typingMetadata = metadata || undefined;
@@ -653,6 +654,14 @@ newdatalist:this.state.dataTitle,
       case actions.SEND_STICKER:
         this.sendSticker(message);
         break;
+//////////////// BURADA ÇALIŞMA
+        // case actions.AOUTO_WRİTE:
+        //   this.aoutowrite()
+        //   // this.viewmessagepin(messages);
+        //   break;
+
+
+//////////////// BURADA ÇALIŞMA sonu
       case actions.CLOSE_STICKER:
         this.toggleStickerPicker();
         break;
@@ -660,6 +669,14 @@ newdatalist:this.state.dataTitle,
         break;
     }
   };
+////
+// aoutowrite=()=>{
+//   console.log('6599',);
+
+//   var resaoutowrite=this.state.aoutowrite?false:true
+//   this.setState({ aoutowrite: resaoutowrite });
+ 
+// }
 
   /**
    * handler for sending sticker message
@@ -838,6 +855,7 @@ console.log('715',dataN);
   
 ///////////
   render() {
+    console.log('22562',this.props.item,);
 
 
     let disabled = false;
@@ -1046,7 +1064,7 @@ console.log('715',dataN);
         {stickerViewer}
         {smartReplyPreview}
         {/* BURADA ÇALIŞMA VAR */}
-{ this.state.messageInput.length>1 &&this.state. newdatalist.length&&this.state.newdatalistG?
+{ this.props.aoutowrite&&this.state.messageInput.length>1 &&this.state. newdatalist.length&&this.state.newdatalistG?
   // ||(dataTitle.length !== 0 &&val.length!==0 &&! inputFocused)  (
                       <RequestSuggestions
                       data={this.state.newdatalist}
