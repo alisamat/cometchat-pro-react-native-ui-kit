@@ -107,7 +107,7 @@ if (timeDifference < 1) {
     timestamp = Math.round(timeDifference) + " dakika";
 }
 
-console.log(1140,timestamp);
+// console.log(1140,timestamp);
 
 
 ////////////////////

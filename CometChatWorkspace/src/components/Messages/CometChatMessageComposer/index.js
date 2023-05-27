@@ -10,6 +10,7 @@ import {
   Text,
   Keyboard,
   Platform,
+  Pressable,
   Vibration
 } from 'react-native';
 import * as consts from '../../../utils/consts';
@@ -17,6 +18,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDIcon from 'react-native-vector-icons/AntDesign';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import Sound from 'react-native-sound';
+import { MentionInput } from 'react-native-controlled-mentions'
+
+import { observer, inject } from 'mobx-react';
+import { getSnapshot } from 'mobx-state-tree';
 
 import style from './styles';
 
@@ -33,8 +38,11 @@ import * as actions from '../../../utils/actions';
 import { heightRatio } from '../../../utils/consts';
 import { logger } from '../../../utils/common';
 import { CometChatContext } from '../../../utils/CometChatContext';
+import General from '../../../../../../store/general';
+import RequestSuggestions from '../../../../../../Components/RequestSuggestionsChat';
+import constants from '../../../../../../Util/Constants'
 
-export default class CometChatMessageComposer extends React.PureComponent {
+ class CometChatMessageComposer extends React.PureComponent {
   static contextType = CometChatContext;
   constructor(props) {
     super(props);
@@ -49,6 +57,13 @@ export default class CometChatMessageComposer extends React.PureComponent {
     this.isTyping = false;
 
     this.state = {
+      dataTitle:[],
+      newdatalist:[],
+      newdatalistG:false,
+      suggestions:[],
+      vallength:0,
+      newdataBeflist:[],
+
       showFilePicker: false,
       messageInput: '',
       messageType: '',
@@ -82,7 +97,30 @@ export default class CometChatMessageComposer extends React.PureComponent {
       this._keyboardDidHide,
     );
     this.checkRestrictions();
+
+  ////////////// . SİLLL
+  // const { general} = this.props;
+
+  //  general.getdataGenerals().then(
+  //   (generaldata)=>{
+  //    console.log('9696 generLDt',generaldata);
+  //   })
+
+ ////////////////// . SİLL
+
+
+    this.getgeneral()
   }
+  getgeneral=()=>{
+    console.log('10022');
+    const { general} = this.props;
+    let generaldetail = getSnapshot(general);
+    const dataTitle=generaldetail.generalsList[0].General?.rules5
+    console.log('9787',generaldetail.generalsList[0].General)
+    console.log('9788',dataTitle)
+    // let newwdataTitle =dataTitle.concat(ackdet)
+    this.setState({newdatalist:dataTitle,dataTitle})
+  };
 
   checkRestrictions = async () => {
     let isLiveReactionsEnabled =
@@ -159,11 +197,147 @@ export default class CometChatMessageComposer extends React.PureComponent {
    */
 
   changeHandler = (text) => {
+    console.log('22222d');
+    // this.renderSuggestions(text)
+
     this.startTyping();
     this.setState({ messageInput: text, messageType: 'text' });
+    // let suggestions = this.getSuggestions(text);
+    // this.setState({suggestions});
+    this.descDataGet(text)
+
   };
 
-  /**
+
+////// BURADA ÇALIŞMA VAR
+descDataGet=(texx)=>{
+  var newData=[]
+  var bslk=texx.slice(texx.length-1,texx.length) //son harfi al
+  
+  if(bslk==" ") // boşluk ise listeyi doldur
+  { 
+      this.setState({newdatalistG:false,newdatalist:this.state.dataTitle})
+  }
+  else 
+  { 
+      this.setState({newdatalistG:true}) //listeyi göster
+      var bslk1=texx.slice(texx.length-2,texx.length-1) // sondan ikinci harfi al
+      // console.log('23333 bslk1 -',bslk1,"23344",bslk1==" ")
+      var dataN=  bslk1==" "?this.state.dataTitle:this.state.newdatalist //sondan ikinci boşluk ise doldur
+      // console.log('253 azala azala gitmesi lazım-',dataN);
+      var trimF=texx.trim() // boşlıukları al 
+      var sncnewarray =trimF.split(" ")
+
+       newData=dataN
+ 
+      if(this.state.vallength>texx.length){
+        console.log('GERİ GİTTİ GİRMESİ LAZIM');
+        newData=this.state.newdataBeflist
+      }
+      this.setState({newdataBeflist:dataN,vallength:texx.length})
+      console.log('282 vallength',this.state.vallength);
+      console.log('283 dataN',dataN.length);
+      console.log('284 texx ',texx.length,);
+      console.log('285 sncnewarray',sncnewarray);
+      console.log('286 sncnewarray son',sncnewarray[sncnewarray.length-1]);
+      if(texx.length&&dataN.length&&sncnewarray[sncnewarray.length-1].length>1){
+                newData=[]
+                var z=0
+                var sayi=-1
+                var itemData=""
+                var textData="" 
+                for(z=0;z<dataN.length;z++){
+                  // itemData = dataN[z].toUpperCase();
+                  itemData = dataN[z].toLocaleUpperCase('tr-TR');
+                  console.log('254 itemData',itemData);
+                  // textData = texx.toUpperCase();
+                  textData = sncnewarray[sncnewarray.length-1].toLocaleUpperCase('tr-TR');
+                  console.log('253 textData',textData);
+                  sayi= itemData.indexOf(textData)
+                  console.log('22233',sayi);
+                      if(sayi>-1){ 
+                      newData.push(dataN[z])
+                      if(newData.length==7){z=dataN.length}
+                      }
+                }
+      }else{
+        this.setState({newdatalistG:false})
+      }
+      // console.log('22225',newdatalist.length)
+      // console.log('22226',newdatalistG);
+      this.setState({newdatalist:newData})
+   }
+}
+selectTitle=(textt)=>{
+  var str = this.state.messageInput
+  var arraystr=str.split(" ")
+  var a=0
+  var arrasatir=""
+  for(a=0;a<arraystr.length;a++){
+   if(arraystr[a]!==""){
+    arrasatir=arrasatir+" "+arraystr[a]
+   }
+ }
+ arrasatir=arrasatir.trim()
+ 
+  var arraystr1=arrasatir.split(" ")
+  console.log('483 str hali', arrasatir);  
+  console.log('485 boşuktabn arınmıs', arraystr1);  
+  console.log('490',(arraystr1[arraystr1.length-1]));
+  var sonkelime= (arraystr1[arraystr1.length-1])
+  var son2kelime= (arraystr1[arraystr1.length-2]+" "+sonkelime)
+  var son3kelime= (arraystr1[arraystr1.length-3]+" "+son2kelime)
+  var endnewstr=""
+
+ if(arraystr1.length==1 &&textt.toLocaleUpperCase('tr-TR').indexOf(sonkelime.toLocaleUpperCase('tr-TR')) >-1){
+   console.log('496',sonkelime.length+1);
+     endnewstr="" 
+ }    
+ if(arraystr1.length>1 &&textt.toLocaleUpperCase('tr-TR').indexOf(sonkelime.toLocaleUpperCase('tr-TR')) >-1){
+ console.log('496',sonkelime.length+1);
+   endnewstr=arrasatir.slice(0,arrasatir.length-(sonkelime.length+1))
+   console.log('497',endnewstr);
+ } 
+ if( arraystr1.length>2 &&textt.toLocaleUpperCase('tr-TR').indexOf( son2kelime.toLocaleUpperCase('tr-TR') ) >-1){
+ console.log('496',son2kelime.length+1);
+   endnewstr=arrasatir.slice(0,arrasatir.length-(son2kelime.length+1))
+   console.log('497',endnewstr);
+ } 
+ if(arraystr1.length>3 && textt.toLocaleUpperCase('tr-TR').indexOf( son3kelime.toLocaleUpperCase('tr-TR') ) >-1){
+ console.log('496',son3kelime.length+1);
+   endnewstr=arrasatir.slice(0,arrasatir.length-(son3kelime.length+1))
+   console.log('497',endnewstr);
+ }
+ 
+ var ssstr=str.slice(str.length-1,str.length)
+ var newnewtext=""
+ console.log('481',ssstr);
+ if(ssstr==","||ssstr=="."||endnewstr.length==0){
+ newnewtext=this.capitalizeFirstLetter(textt)+" "
+ }else{
+ newnewtext=this.capitalizeFirstLetterlovwercase(textt)+" "
+ }
+ 
+ var araval=endnewstr.length==0?newnewtext :endnewstr+" "+newnewtext
+ console.log('514',araval);
+ 
+
+ this.setState({messageInput:araval,
+  newdatalist:[]
+  //  inputFocused:false,
+   })
+   
+  //  this.messageInputRef.focus()
+ }
+capitalizeFirstLetter(str) {
+  return str.charAt(0).toLocaleUpperCase('tr-TR') + str.slice(1);
+}
+ capitalizeFirstLetterlovwercase(str) {
+return str.charAt(0).toLocaleLowerCase() + str.slice(1);
+}
+
+////// BURADA ÇALIŞMA VAR
+/**
    * Fetches the receiver's details.
    * @param
    */
@@ -291,6 +465,13 @@ export default class CometChatMessageComposer extends React.PureComponent {
       this.props.actionGenerated(actions.MESSAGE_COMPOSED, [textMessage]);
       this.setState({ messageInput: '', replyPreview: false });
 
+this.setState({
+vallength:0,
+newdataBeflist:[],
+newdatalist:this.state.dataTitle,
+})
+
+
       this.messageInputRef.current.textContent = '';
       this.playAudio();
       CometChat.sendMessage(textMessage)
@@ -405,6 +586,7 @@ export default class CometChatMessageComposer extends React.PureComponent {
 
   endTyping = (metadata) => {
     try {
+      this.setState({newdatalist:[]})
       const { receiverId, receiverType } = this.getReceiverDetails();
 
       const typingMetadata = metadata || undefined;
@@ -594,8 +776,70 @@ export default class CometChatMessageComposer extends React.PureComponent {
       this.props.actionGenerated(actions.STOP_REACTION);
     }, typingInterval);
   };
+///////////
+descDataGet=(texx)=>{
+  var newData=[]
+  var bslk=texx.slice(texx.length-1,texx.length) //son harfi al
+  console.log('703',this.state.dataTitle);
+  if(bslk==" ") // boşluk ise listeyi doldur
+  { this.setState({newdatalistG:false,newdatalist:this.state.dataTitle})
 
+  }else { //
+      this.setState({newdatalistG:true}) //listeyi göster
+      var bslk1=texx.slice(texx.length-2,texx.length-1) // sondan ikinci harfi al
+       console.log('23333 bslk1 -',bslk1,"23344",bslk1==" ")
+       console.log('7111',this.state.dataTitle , this.state.newdatalist);
+      var dataN=  bslk1==" "?this.state.dataTitle:this.state.newdatalist //sondan ikinci boşluk ise doldur
+      // console.log('253 azala azala gitmesi lazım-',dataN);
+      var trimF=texx.trim() // boşlıukları al 
+                      var sncnewarray =trimF.split(" ")
+console.log('715',dataN);
+                      
+  newData=dataN
+ 
+   if(this.state.vallength>texx.length){
+    console.log('GERİ GİTTİ GİRMESİ LAZIM');
+    newData=this.state.newdataBeflist
+   }
+   this.setState({newdataBeflist:dataN,vallength:texx.length})
+   console.log('282 vallength',this.state.vallength);
+   console.log('283 dataN',dataN.length);
+   console.log('284 texx ',texx.length,);
+   console.log('285 sncnewarray',sncnewarray);
+   console.log('286 sncnewarray son',sncnewarray[sncnewarray.length-1]);
+      if(texx.length&&dataN.length&&sncnewarray[sncnewarray.length-1].length>1){
+                newData=[]
+                var z=0
+                var sayi=-1
+                var itemData=""
+                var textData="" 
+                for(z=0;z<dataN.length;z++){
+                  // itemData = dataN[z].toUpperCase();
+                  itemData = dataN[z].toLocaleUpperCase('tr-TR');
+                  console.log('254 itemData',itemData);
+                  // textData = texx.toUpperCase();
+                  textData = sncnewarray[sncnewarray.length-1].toLocaleUpperCase('tr-TR');
+                  console.log('253 textData',textData);
+                  sayi= itemData.indexOf(textData)
+                  console.log('22233',sayi);
+                      if(sayi>-1){ 
+                      newData.push(dataN[z])
+                      if(newData.length==7){z=dataN.length}
+                      }
+                }
+      }else{
+        this.setState({newdatalistG:false})
+      }
+   
+      this.setState({newdatalist:newData})
+   }
+  // return newData
+}
+  
+///////////
   render() {
+
+
     let disabled = false;
     if (this.props.item.blockedByMe) {
       disabled = true;
@@ -783,6 +1027,8 @@ export default class CometChatMessageComposer extends React.PureComponent {
         actionGenerated={this.actionHandler}
       />
     );
+  ///// BURAD ÇALIŞMAAA
+  console.log('9522',this.state.newdatalist);  
     return (
       <View
         style={
@@ -799,6 +1045,20 @@ export default class CometChatMessageComposer extends React.PureComponent {
         {createPoll}
         {stickerViewer}
         {smartReplyPreview}
+        {/* BURADA ÇALIŞMA VAR */}
+{ this.state.messageInput.length>1 &&this.state. newdatalist.length&&this.state.newdatalistG?
+  // ||(dataTitle.length !== 0 &&val.length!==0 &&! inputFocused)  (
+                      <RequestSuggestions
+                      data={this.state.newdatalist}
+                      extraData={this.state}
+                      selectTitlee={this.selectTitle}
+                      style={{  position :"absolute",bottom:50,
+                      flex: 0,left: 0}}
+                      />
+                      :null}
+
+{/* BURADA ÇALIŞMA VAR SONU */}
+
         <ComposerActions
           visible={this.state.composerActionsVisible}
           close={() => {
@@ -817,7 +1077,13 @@ export default class CometChatMessageComposer extends React.PureComponent {
             }}>
             <AntDIcon size={26} name="pluscircle" color="rgba(0,0,0,0.35)" />
           </TouchableOpacity>
+
+
           <View style={[style.textInputContainer,{}]}>
+
+
+
+
             <TextInput
               style={[style.messageInputStyle,{borderRadius:12,borderWidth:.3,borderColor:"#BDBDBD"}]}
               editable={!disabled}
@@ -827,6 +1093,11 @@ export default class CometChatMessageComposer extends React.PureComponent {
               onBlur={this.endTyping}
               ref={this.messageInputRef}
             />
+
+           
+
+
+            
             {sendBtn}
           </View>
           {/* {liveReactionBtn} */}
@@ -835,3 +1106,5 @@ export default class CometChatMessageComposer extends React.PureComponent {
     );
   }
 }
+export default 
+inject('general')(observer( CometChatMessageComposer))

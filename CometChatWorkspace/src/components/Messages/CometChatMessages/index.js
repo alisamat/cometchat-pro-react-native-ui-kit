@@ -1027,7 +1027,15 @@ class CometChatMessages extends React.PureComponent {
         </View>
       );
     }
+///// BURAD ÇALIŞma  VAR
+    // let aoutosearch =(
+    //   <View style={style.reactionsWrapperStyle}>
+        
+    //   </View>
+    // );
 
+///// BURAD ÇALIŞma  VAR SONU
+ 
     const threadMessageView = (
       <Modal
         transparent
@@ -1170,6 +1178,7 @@ class CometChatMessages extends React.PureComponent {
               actionGenerated={this.actionHandler}
             />
             {liveReactionView}
+            {/* {aoutosearch} */}
             {messageComposer}
           </SafeAreaView>
           <DropDownAlert ref={(ref) => (this.DropDownAlertRef = ref)} />

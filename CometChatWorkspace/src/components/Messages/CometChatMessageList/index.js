@@ -1060,8 +1060,11 @@ class CometChatMessageList extends React.PureComponent {
           this.loggedInUser.uid === message?.sender?.uid ||
           this.loggedInUser.uid === message?.data?.sender?.uid
         ) {
+          console.log('1077',message);
           component = this.getSenderMessageComponent(message, key);
         } else {
+          console.log('1078',message);
+
           component = this.getReceiverMessageComponent(message, key);
         }
         break;
@@ -1333,7 +1336,7 @@ console.log('3456',this.props.item);
         </TouchableOpacity>
       </View>
     );
-console.log('1233',this.props.pinadd,this.state.pinadd);
+      console.log('1233',this.props.pinadd,this.state.pinadd);
     return (
       <>
                 { (this.state.pinmessage||
@@ -1371,6 +1374,9 @@ console.log('1233',this.props.pinadd,this.state.pinadd);
           keyExtractor={(item, index) => item.messageId + '_' + index}
           renderItem={this.renderItem}
         />
+{/* ÇALIŞMA ALANI */}
+
+
         {this.state.showNewMsg ? newMsgPopUp : null}
       </>
     );

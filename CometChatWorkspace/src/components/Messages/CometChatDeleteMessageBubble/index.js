@@ -48,7 +48,7 @@ const CometChatDeleteMessageBubble = (props) => {
       <View style={style.messageContainerStyle}>
         <View style={style.messageWrapperStyleSender}>
           <View style={style.messageTxtWrapperStyle}>
-            <Text style={style.messageTxtStyle}>You deleted this message.</Text>
+            <Text style={style.messageTxtStyle}>Bu mesajı sildiniz.</Text>
           </View>
         </View>
         <View style={style.containerStyle}>
@@ -91,7 +91,7 @@ const CometChatDeleteMessageBubble = (props) => {
             <View style={style.messageWrapperStyleReceiver}>
               <View style={style.messageTxtWrapperStyle}>
                 <Text style={style.messageTxtStyle}>
-                  This message was deleted.
+                Bu mesaj silindi.
                 </Text>
               </View>
             </View>
