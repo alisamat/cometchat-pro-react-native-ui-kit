@@ -400,7 +400,7 @@ if (diffTimestamp < 60 * 1000) {
   var message=this.state.lastMessage
   message = message.replace('joined', 'katıldı');
   message = message.replace('left', 'ayrıldı');
-  message = message.replace('added', 'yeni üye ekledi. ');
+  message = message.replace('added', 'yeni üye ekledi  @');
   return message
   }
   render() {
