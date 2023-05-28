@@ -46,6 +46,7 @@ class CometChatAddGroupMemberList extends React.Component {
       membersToAdd: [],
       filteredList: [],
       textInputValue: '',
+      useruids:[],
     };
     this.sheetRef = React.createRef(null);
     this.textInputRef = React.createRef(null);
@@ -56,8 +57,14 @@ class CometChatAddGroupMemberList extends React.Component {
     if (this.props?.friendsOnly) {
       this.friendsOnly = this.props.friendsOnly;
     }
+////BURADA ÇALIŞMA
+console.log('6111',this.props?.useraddlist);
+var memberIDs = this.props?.useraddlist//["123", "456"]; // Örnek üye kimlikleri
 
-    this.AddMembersManager = new AddMembersManager();
+////BURADA ÇALIŞMA
+
+
+    this.AddMembersManager = new AddMembersManager("",memberIDs);
     this.AddMembersManager.initializeMembersRequest().then(() => {
       this.getUsers();
       this.AddMembersManager.attachListeners(this.userUpdated);
@@ -140,7 +147,7 @@ class CometChatAddGroupMemberList extends React.Component {
           membersToRemove: [],
           filteredList: [],
         })
-        this.AddMembersManager = new AddMembersManager(val);
+        this.AddMembersManager = new AddMembersManager(val,this.state.useruids);
         this.AddMembersManager.initializeMembersRequest().then(() => {
               this.getUsers();
             });
@@ -157,6 +164,9 @@ class CometChatAddGroupMemberList extends React.Component {
   getUsers = () => {
     new CometChatManager()
       .getLoggedInUser()
+
+
+      /////////////////////BURADA ÇALIŞMA VAR SONU
       .then(() => {
         this.AddMembersManager.fetchNextUsers()
           .then((userList) => {
@@ -201,6 +211,7 @@ class CometChatAddGroupMemberList extends React.Component {
         );
       });
   };
+  
 
   /**
    * updates the memberToAdd by change observed via user object is passed to and managed by CometChatAddGroupMemberListItem.

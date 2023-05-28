@@ -22,10 +22,11 @@ import { logger } from '../../../utils/common';
 import DropDownAlert from '../../Shared/DropDownAlert';
 import styles from '../../Shared/CometChatAvatar/styles';
 import { CometChatContext } from '../../../utils/CometChatContext';
-
+import Customeradd from '../../../../../../Screens/CometChat/cepuseradd'
 const ADD_MEMBER = 'addMember';
 const VIEW_MEMBER = 'viewMember';
 const BAN_MEMBER = 'banMember';
+const CEP_USER='cepuseradd';
 
 export default class CometChatGroupDetails extends React.Component {
   static contextType = CometChatContext;
@@ -44,7 +45,9 @@ export default class CometChatGroupDetails extends React.Component {
       addModerator: false,
       enableLeaveGroup: false,
       restrictions: null,
-      modalVisible: this.props.open
+      modalVisible: this.props.open,
+      cepuseradd:false,
+      useraddlist:[]
     };
 
     this.viewTheme = { ...theme, ...this.props.theme };
@@ -396,6 +399,12 @@ export default class CometChatGroupDetails extends React.Component {
       case BAN_MEMBER:
         this.setState({ banMember: flag });
         break;
+/////ÇALIŞMA
+        case CEP_USER:
+        this.setState({ cepuseradd: flag });
+        break;
+        
+
       default:
         break;
     }
@@ -621,7 +630,13 @@ export default class CometChatGroupDetails extends React.Component {
       addMembersBtn = (
         <TouchableOpacity
           onPress={() => {
-            this.clickHandler(ADD_MEMBER, true);
+            // this.clickHandler(ADD_MEMBER, true);
+            this.setState({useraddlist:[]})
+             this.clickHandler(CEP_USER, true);
+
+            console.log('625',this.props);
+            // this.setState({cepuseradd:true})
+            // this.props.navigation("cepuseradd")
           }}>
           <Text
             style={[
@@ -767,6 +782,7 @@ export default class CometChatGroupDetails extends React.Component {
           open={this.state.addMember}
           close={() => this.clickHandler(ADD_MEMBER, false)}
           actionGenerated={this.membersActionHandler}
+          useraddlist={this.state.useraddlist}
         />
       );
     }
@@ -796,6 +812,28 @@ export default class CometChatGroupDetails extends React.Component {
         />
       </View>
     );
+    ////BURADA :ÇALIŞMA
+    let cepuseradd = null;
+    if (this.state.cepuseradd) {
+      cepuseradd = (
+        <View style={{}}>
+        {/* <Text style={[style.sectionHeaderStyle]}>Üyeler</Text> */}
+        {/* <View style={style.listItemContainer}> */}
+        <Customeradd
+        close={()=>this.setState({cepuseradd:false})}
+        next={(list)=>{
+          console.log('824',list);
+          this.setState({useraddlist:list})
+        this.clickHandler(ADD_MEMBER, true);
+
+          console.log('822',list);
+        }}
+        />
+
+        {/* </View> */}
+      </View>
+   
+    )}
 
     return (
       <View style={style.modalWrapper}>
@@ -873,6 +911,8 @@ export default class CometChatGroupDetails extends React.Component {
                     {viewMembers}
                     {addMembers}
                     {bannedMembers}
+                    {cepuseradd}
+
                   </GroupDetailContext.Provider>
                   </View>
                   </TouchableHighlight>
