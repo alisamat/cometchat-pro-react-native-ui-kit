@@ -288,7 +288,11 @@ export default class ComposerActions extends Component {
 
         <Text
           style={{ fontSize: 18, marginLeft: 10, fontWeight: '500' }}
-          onPress={() => this.props.toggleStickers()}>
+          onPress={() =>{
+            console.log('56788');
+           this.props.toggleStickers()
+          } 
+          }>
           Etiket gönder
         </Text>
       </TouchableOpacity>

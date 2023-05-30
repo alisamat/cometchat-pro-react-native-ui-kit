@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-bitwise */
 import React from 'react';
-import {observer, inject} from 'mobx-react';
+// import {observer, inject} from 'mobx-react';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import { CometChatManager } from '../../../utils/controller';
 import * as enums from '../../../utils/enums';
@@ -19,7 +19,7 @@ import { CometChatImageViewer } from '../../Messages';
 import theme from '../../../resources/theme';
 import { View } from 'react-native';
 import { logger } from '../../../utils/common';
-import General from '../../../../../../store/general';
+// import General from '../../../../../../store/general';
 
 const readAt = 'readAt';
 
@@ -56,7 +56,7 @@ class CometChatConversationListWithMessages extends React.Component {
   }
 
   componentDidMount() {
-    console.log('56777',this.props.General);
+    // console.log('56777',this.props.General);
     this.checkRestrictions();
     if (!Object.keys(this.state.item).length) {
       this.toggleSideBar();
@@ -676,5 +676,5 @@ class CometChatConversationListWithMessages extends React.Component {
   }
 }
 
-
-export default inject('general')(observer(CometChatConversationListWithMessages));
+export default CometChatConversationListWithMessages
+// export default inject('general')(observer(CometChatConversationListWithMessages));

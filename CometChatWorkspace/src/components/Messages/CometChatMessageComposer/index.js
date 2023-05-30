@@ -205,7 +205,7 @@ import constants from '../../../../../../Util/Constants'
     this.setState({ messageInput: text, messageType: 'text' });
     // let suggestions = this.getSuggestions(text);
     // this.setState({suggestions});
-    this.state.aoutowrite? this.descDataGet(text):null
+     this.state.aoutowrite? this.descDataGet(text):null
 
   };
 
