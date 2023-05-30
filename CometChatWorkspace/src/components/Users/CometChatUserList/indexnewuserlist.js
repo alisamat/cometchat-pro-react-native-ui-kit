@@ -224,7 +224,7 @@ class CometChatUserList extends React.PureComponent {
         this.UserListManager.fetchNextUsers()
           .then((userList) => {
             if (userList.length === 0) {
-              this.decoratorMessage = 'No users found';
+              this.decoratorMessage = 'Kullanıcı bulunamadı';
             }
             this.setState({ userList: [...this.state.userList, ...userList] });
           })

@@ -184,7 +184,7 @@ var memberIDs = this.props?.useraddlist//["123", "456"]; // Örnek üye kimlikle
               });
   
               if (filteredUserList.length === 0) {
-                this.decoratorMessage = 'No users found';
+                this.decoratorMessage = 'Kullanıcı bulunamadı';
               }
             
             this.setState({

@@ -240,7 +240,7 @@ console.log('23444',userids,where,username);
         if(where!=="explore"){
           var sonuc= selectusergetComet(["12345678","superhero1"])
           console.log('24545',sonuc);
-          this.decoratorMessage = 'No users found';
+          this.decoratorMessage = 'Kullanıcı bulunamadı';
           this.setState({ userList: [] });
 
         }else{
@@ -252,7 +252,7 @@ console.log('23444',userids,where,username);
           .then((userList) => {
             console.log('2333',userList);
             if (userList.length === 0) {
-              this.decoratorMessage = 'No users found';
+              this.decoratorMessage = 'Kullanıcı bulunamadı';
             }
             this.setState({ userList: [...this.state.userList, ...userList] });
           })
