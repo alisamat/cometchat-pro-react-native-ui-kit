@@ -19,7 +19,7 @@ export class UserListManager {
     const userListModeOptions = UIKitSettings.userListFilterOptions;
 
     return new Promise((resolve, reject) => {
-      // console.log('2000',userListMode,"2222",userListModeOptions);
+       console.log('2000',this.userids,"2222",this.where);
       if (userListMode === userListModeOptions['ALL']) {
         // console.log('2444 1 .alan');
         if (this.searchKey) {
