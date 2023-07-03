@@ -657,7 +657,7 @@ class CometChatMessageList extends React.PureComponent {
    */
   getSenderMessageComponent = (message, key) => {
     let component;
-
+console.log('6666',key,message);
     if (Object.prototype.hasOwnProperty.call(message, 'deletedAt')) {
       component = (
         <CometChatDeleteMessageBubble
@@ -683,6 +683,7 @@ class CometChatMessageList extends React.PureComponent {
               widgetconfig={this.props.widgetconfig}
               actionGenerated={this.props.actionGenerated}
               showMessage={this.props?.showMessage}
+              selectedtextmessage={this.props.selectedtextmessage}
             />
           ) : null;
           break;
@@ -762,7 +763,7 @@ class CometChatMessageList extends React.PureComponent {
 
   getReceiverMessageComponent = (message, key) => {
     let component;
-
+console.log('7666',"getReceiverMessageComponent",key,message);
     if (Object.prototype.hasOwnProperty.call(message, 'deletedAt')) {
       component = (
         <CometChatDeleteMessageBubble
@@ -787,6 +788,8 @@ class CometChatMessageList extends React.PureComponent {
               widgetconfig={this.props.widgetconfig}
               actionGenerated={this.props.actionGenerated}
               showMessage={this.props?.showMessage}
+              selectedtextmessage={this.props.selectedtextmessage}
+
             />
           ) : null;
           break;
@@ -1011,7 +1014,7 @@ class CometChatMessageList extends React.PureComponent {
    * @param
    */
   getActionMessageComponent = (message, key) => {
-    console.log('444',message.message);
+    console.log('4446',message.message);
     message.message = message.message.replace('joined', 'katıldı');
     message.message = message.message.replace('left', 'ayrıldı');
     message.message = message.message.replace('added', 'yeni üye ekledi  @');
@@ -1046,7 +1049,7 @@ class CometChatMessageList extends React.PureComponent {
    * @param message: object message
    * @param key
    */
-  getComponent = (message, key) => {
+  getComponent = (message, key) => {  
     let component;
 
     switch (message.category) {
@@ -1061,10 +1064,10 @@ class CometChatMessageList extends React.PureComponent {
           this.loggedInUser.uid === message?.sender?.uid ||
           this.loggedInUser.uid === message?.data?.sender?.uid
         ) {
-          console.log('1077',message);
+          // console.log('1077',message);
           component = this.getSenderMessageComponent(message, key);
         } else {
-          console.log('1078',message);
+          // console.log('1078',message);
 
           component = this.getReceiverMessageComponent(message, key);
         }

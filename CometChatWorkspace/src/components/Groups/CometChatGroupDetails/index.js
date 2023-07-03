@@ -1,7 +1,7 @@
 /* eslint-disable react/no-did-update-set-state */
 /* eslint-disable react/no-unused-state */
 import React from 'react';
-import { View, Text, TouchableOpacity,Modal, TouchableHighlight} from 'react-native';
+import { View,Alert, Text, TouchableOpacity,Modal, TouchableHighlight} from 'react-native';
 import theme from '../../../resources/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CometChatSharedMedia from '../../Shared/CometChatSharedMedia';
@@ -600,7 +600,30 @@ export default class CometChatGroupDetails extends React.Component {
       logger(error);
     }
   };
-
+  alertF=(type)=>{
+    var a=type=="uye"?"Gruptan ayrıl":"Bu işlem geri alınamaz!"
+    var b=type=="uye"?"Devam etmek için EVET seçeneğini tıklayın": "Evet derseniz grup kalıcı olarak silinecektir"
+    return Alert.alert(
+     a,
+     b,//// "Bu işlem geri alınamaz!",
+     //  "Evet derseniz grup kalıcı olarak silinecektir",
+      [
+       {
+         text: "Evet",
+          onPress: async() => {
+            if("uye"==type){  this.leaveGroup()  }
+            else{
+              this.deleteGroup() 
+            }
+          }
+       },
+       {
+         text: "Hayır",
+       },
+       ]
+      ); 
+    
+}
   render() {
     let viewMembersBtn = (
       <TouchableOpacity
@@ -653,7 +676,8 @@ export default class CometChatGroupDetails extends React.Component {
       deleteGroupBtn = (
         <TouchableOpacity
           onPress={() => {
-            this.deleteGroup();
+            this. alertF("grup")
+
           }}>
           <Text
             style={[style.itemLinkStyle, { color: this.viewTheme.color.red }]}>
@@ -689,7 +713,8 @@ export default class CometChatGroupDetails extends React.Component {
       leaveGroupBtn = (
         <TouchableOpacity
           onPress={() => {
-            this.leaveGroup();
+            this. alertF("uye")
+
           }}>
           <Text
             style={[

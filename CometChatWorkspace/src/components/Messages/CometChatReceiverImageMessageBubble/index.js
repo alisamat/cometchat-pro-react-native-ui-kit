@@ -96,6 +96,7 @@ const CometChatReceiverImageMessageBubble = (props) => {
               onPress={() => open()}
               style={style.messageImgWrapperStyle}
               onLongPress={() => {
+                console.log('9992');
                 props.actionGenerated(actions.OPEN_MESSAGE_ACTIONS, message);
               }}>
               <FastImage

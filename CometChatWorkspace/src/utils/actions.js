@@ -62,6 +62,9 @@ export const EDIT_MESSAGE = 'editMessage';
 
 export const CLOSE_MESSAGE_ACTIONS = 'closeMessageActions';
 export const OPEN_MESSAGE_ACTIONS = 'openMessageActions';
+export const SELECTED_MESSAGE = 'selectedMessageActions';
+
+
 
 export const SEND_STICKER = 'sendSticker';
 export const CLOSE_STICKER = 'closeSticker';
@@ -97,5 +100,7 @@ export const CHANGE_SCOPE = 'changescope';
 
 export const VIEW_MESSAGE_PIN = 'viewmessagepin';
 export const AOUTO_WRİTE = 'aoutowrite';
+export const EXPLOAD = 'explod';
+export const ANKET = 'anket';
 
 

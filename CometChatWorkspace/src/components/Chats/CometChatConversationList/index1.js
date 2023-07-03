@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable react/no-did-update-set-state */ 
+/* eslint-disable react/no-did-update-set-state */
 /* eslint-disable radix */
-import React from 'react'; //
+import React from 'react';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 // import { NavigationContainer } from '@react-navigation/native';
 import assets from '../../../../../../assets';
@@ -24,6 +24,7 @@ import { incomingOtherMessageAlert } from '../../../resources/audio';
 import {
   View,
   Text,
+  TextInput,
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
@@ -52,6 +53,8 @@ class CometChatConversationList extends React.Component {
       selectedConversation: undefined,
       showSmallHeader: false,
       isMessagesSoundEnabled: true,
+      filteredConversationList: [], // Filtered conversation list based on search query
+      searchQuery: "", // To k
     };
     this.chatListRef = React.createRef();
     this.theme = { ...theme, ...this.props.theme };
@@ -815,17 +818,17 @@ class CometChatConversationList extends React.Component {
    * @param conversation: conversation object of the item clicked
    */
   handleClick = (conversation) => {
-    console.log('bass');
-    try {
-      if (!this.props.onItemClick) return;
-console.log('816');
-      this.props.onItemClick(
-        conversation.conversationWith,
-        conversation.conversationType,
-      );
-    } catch (error) {
-      logger(error);
-    }
+    console.log('bass',conversation);
+//     try {
+//       if (!this.props.onItemClick) return;
+// console.log('816');
+//       this.props.onItemClick(
+//         conversation.conversationWith,
+//         conversation.conversationType,
+//       );
+//     } catch (error) {
+//       logger(error);
+//     }
   };
 
   /**
@@ -849,6 +852,15 @@ console.log('816');
                 ...conversationList,
               ],
             });
+            if(this.state.searchQuery.length==0){
+           this.setState({
+            filteredConversationList: [
+              ...this.state.conversationList,
+              ...conversationList,
+            ],
+          })
+        }
+
           })
           .catch((error) => {
             this.decoratorMessage = 'Error';
@@ -889,11 +901,11 @@ console.log('816');
    * @param
    */
   listEmptyContainer = () => {
-    // for loading purposes.....
+    // for loading purposes....
     return (
       <View style={[styles.contactMsgStyle,{flexDirection:"row",flex:1}]}>
         
-          { this.decoratorMessage == 'Sohbet bulunamadı'?  //
+          { this.decoratorMessage == 'Sohbet bulunamadı'? 
           <View style={{justifyContent:"center",alignContent:"center",}}>
             <View style={{flexDirection:"row",alignContent:"center",justifyContent:"center",paddingBottom:22}}>
              <Image
@@ -985,7 +997,8 @@ console.log('816');
         );
 
         newConversationList.splice(conversationKey, 1);
-        this.setState({ conversationList: newConversationList });
+        this.setState({ conversationList: newConversationList,
+         });
       })
       .catch((error) => {
         logger(error);
@@ -999,6 +1012,23 @@ console.log('816');
     // }
 
     navigation.goBack();
+}
+handleSearch = (text) => {
+  // if(text.length){
+    let filteredList = [];
+    for (let i = 0; i < this.state.conversationList.length; i++) {
+      let item = this.state.conversationList[i];
+      console.log('1008', item.conversationWith.name, text);
+      if (item?.conversationWith.name.toLowerCase().includes(text.toLowerCase())) {
+        filteredList.push(item);
+      }
+    }
+    
+  console.log('1021',filteredList);
+  this.setState({ filteredConversationList: filteredList, searchQuery: text });
+  //  }else{
+  //   this.setState({ filteredConversationList: this.state.conversationList, searchQuery: "" });
+  //  }
 }
   render() {
 
@@ -1022,14 +1052,20 @@ console.log('816');
               />
               </View>
             </TouchableOpacity> */}
-            <View style={{alignContent:"center",flexDirection:"row",justifyContent:"center",flex:1}}><Text style={{color:constants.darkblack,fontSize:20,fontWeight:"bold",paddingVertical:11}}>Emlak İşim Sohbet</Text></View>
+            <View style={{alignContent:"center",flexDirection:"row",justifyContent:"center",flex:1}}><Text style={{color:constants.darkblack,fontSize:20,fontWeight:"bold",paddingVertical:11}}>Sohbet Ara</Text></View>
             </View>
-
-    
+            <View style={{  borderColor: 'gray', marginHorizontal:15,borderWidth: 1,padding:15,borderRadius:6 }}>
+            <TextInput
+              style={{flexDirection:"column"}}
+              onChangeText={text => this.handleSearch(text)}
+              value={this.state.searchQuery}
+              placeholder="Ara"
+            />
+            </View>
             {/* {this.listHeaderComponent()} */}
             <SwipeListView
               contentContainerStyle={styles.flexGrow1}
-              data={this.state.conversationList}
+              data={this.state.filteredConversationList}
               keyExtractor={(item, index) => item?.conversationId + '_' + index}
               renderHiddenItem={(data, rowMap) => (
                 <View

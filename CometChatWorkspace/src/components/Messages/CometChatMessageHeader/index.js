@@ -3,6 +3,7 @@ import React from 'react';
 import { MessageHeaderManager } from './controller';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { showMessage, hideMessage } from "react-native-flash-message";
+import MCIIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { CometChatUserPresence, CometChatAvatar } from '../../Shared';
 import * as enums from '../../../utils/enums';
@@ -28,6 +29,8 @@ class CometChatMessageHeader extends React.Component {
       status: '',
       presence: 'offline',
       aoutowrite:true,
+      Disappearing:false,
+      anket:false,
     };
   }
 
@@ -276,9 +279,43 @@ class CometChatMessageHeader extends React.Component {
     type: "success",
     //  icon: "success", 
       // position: "right",
-      icon: props => <Image source={assets.chatsact} {...props} />,
+      icon: props => <Icon name="md-create" size={37} color={ "white"} />,
      autoHide:true,
-    autoHide:false,
+    statusBarHeight:40*heightRatio,
+    onPress: () => {
+      // this.setState({pushloading:false})
+      hideMessage()
+    },
+    });
+  }
+  showmessageDisappearing =()=>{
+    showMessage({
+      message: "PATLAYAN MESAJ", 
+    description: "Kaybolan mesaj oluşturma", 
+    type: "success",
+    //  icon: "success", 
+      // position: "right",
+      icon: props =>     <Icon name="md-time" size={35} color="white"/>,
+      
+     autoHide:true,
+    statusBarHeight:40*heightRatio,
+    onPress: () => {
+      // this.setState({pushloading:false})
+      hideMessage()
+    },
+    });
+  }
+  
+  showmessageAnket =()=>{
+    showMessage({
+      message: "ANKET", 
+    description: "Yeni bir anket oluştur", 
+    type: "success",
+    //  icon: "success", 
+      // position: "right",
+      icon: props =>    < MCIIcon name="comment-plus-outline" size={44} color="orange"/>,
+      
+     autoHide:true,
     statusBarHeight:40*heightRatio,
     onPress: () => {
       // this.setState({pushloading:false})
@@ -373,9 +410,9 @@ class CometChatMessageHeader extends React.Component {
     let info = (
       <TouchableOpacity
         onPress={() => this.props.actionGenerated(actions.VIEW_DETAIL)}
-        style={[styles.videoCallContainer,{paddingHorizontal:3}]}>
+        style={[styles.videoCallContainer,{paddingHorizontal:3,paddingBottom:2}]}>
         {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
-        <Image style={[[styles.callIcon,{ height: 21,width: 21}],{tintColor:"white"}]}  source={assets.setting} />
+        <Image style={[[styles.callIcon,{ height: 22,width: 22}],{tintColor:"white"}]}  source={assets.setting} />
       </TouchableOpacity>
     );
 ////
@@ -396,12 +433,65 @@ this.setState({aoutowrite:color})
     style={styles.videoCallContainer}>
     {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
     {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={assets.setting} /> */}
-   {this.state.aoutowrite? <Icon name="md-create" size={25} color={ "white"} />:
-    <Icon name="md-create" size={25} color={"darkgrey"} />
+   {this.state.aoutowrite? <Icon name="md-create" size={27} color={ "white"} />:
+    <Icon name="md-create" size={27} color={"darkgrey"} />
 }
   </TouchableOpacity>
 );
  
+////
+////
+
+let Disappearing = (
+  <TouchableOpacity
+    onLongPress={()=>{
+    this. showmessageDisappearing()
+    }}
+    onPress={() => {
+       this.props.actionGenerated(actions.EXPLOAD)
+      var color=this.state.Disappearing
+      console.log('3333',color);
+      color=color?false:true
+this.setState({Disappearing:color})
+    }
+    }
+    style={styles.videoCallContainer}>
+    {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
+    {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={assets.setting} /> */}
+    {this.state.Disappearing?<Icon name="md-time" size={25} color="yellow"/>:
+    <Icon name="md-time" size={25} color="white"/>}
+
+   {/* {this.state.Disappearing? <Icon name="md-list" size={25} color={ "white"} />:
+    // <Icon name="md-list" size={25} color={"darkgrey"} />
+    <Icon name="md-time" size={25} color="white"/>} */}
+  </TouchableOpacity>
+);
+ ////
+ let Anket = (
+  <TouchableOpacity
+    onLongPress={()=>{
+    this. showmessageAnket()
+    }}
+    onPress={() => {
+       this.props.actionGenerated(actions.ANKET)
+      var color=this.state.anket
+      console.log('3333',color);
+      color=color?false:true
+this.setState({anket:color})
+    }
+    }
+    style={styles.videoCallContainer}>
+    {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
+    {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={assets.setting} /> */}
+    {this.state.anket?<MCIIcon name="comment-plus-outline" size={24} color="white"/>:
+    // <Icon name="md-time" size={25} color="white"/>}
+        <MCIIcon name="comment-plus-outline" size={24} color="white" />}
+
+   {/* {this.state.Disappearing? <Icon name="md-list" size={25} color={ "white"} />:
+    // <Icon name="md-list" size={25} color={"darkgrey"} />
+    <Icon name="md-time" size={25} color="white"/>} */}
+  </TouchableOpacity>
+);
 ////
     return (
       <View style={[styles.headerContainer,{backgroundColor:"#558B2F"}]}>
@@ -441,8 +531,15 @@ this.setState({aoutowrite:color})
           {/* {videoCallBtn} */} 
           {/* Telefon ile görüşme */}
           {/* {audioCallBtn} */}
-          {aoutowrite}
-          {info}
+          <View style={{flexDirection:"row",marginTop:28,marginBottom:3}}>
+          
+            <View style={{justifyContent:"flex-end",alignContent:"flex-end",}}>{Anket}</View>
+            <View style={{justifyContent:"flex-end",alignContent:"flex-end",}}>{Disappearing}</View>
+            <View style={{justifyContent:"flex-end",alignContent:"flex-end",}}>{aoutowrite}</View>
+            <View style={{justifyContent:"flex-end",alignContent:"flex-end",}}>{info}</View>
+          
+         
+          </View>
         </View>
       </View>
     );

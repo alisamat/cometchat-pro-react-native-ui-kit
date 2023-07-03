@@ -19,6 +19,7 @@ import DocumentPicker from 'react-native-document-picker';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import { heightRatio } from '../../../utils/consts';
 import { CometChatContext } from '../../../utils/CometChatContext';
+import constants from '../../../../../../Util/Constants'
 
 export default class ComposerActions extends Component {
   sheetRef = React.createRef(null);
@@ -33,11 +34,15 @@ export default class ComposerActions extends Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.visible && this.props.visible) {
       this.sheetRef?.current?.snapTo(0);
+      // console.log('3999',this.props.anket);
+      // this.props.anket?this.props.toggleCreatePoll():null
     }
+    
   }
 
   componentDidMount() {
     this.checkRestrictions();
+    
   }
   checkRestrictions = async () => {
     let isPollsEnabled = await this.context.FeatureRestriction.isPollsEnabled();
@@ -304,9 +309,9 @@ export default class ComposerActions extends Component {
         onPress={() => {
           this.props.toggleCreatePoll();
         }}>
-        <MCIIcon name="comment-plus-outline" size={24} />
+        <MCIIcon name="comment-plus-outline" size={24} color={constants.primarycolor} />
 
-        <Text style={{ fontSize: 18, marginLeft: 10, fontWeight: '500' }}>
+        <Text style={{color:constants.primarycolor, fontSize: 18, marginLeft: 10, fontWeight: '500' }}>
         Anket Oluştur
         </Text>
       </TouchableOpacity>

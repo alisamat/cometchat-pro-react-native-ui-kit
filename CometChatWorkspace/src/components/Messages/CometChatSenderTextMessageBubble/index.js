@@ -26,6 +26,7 @@ function usePrevious(value) {
 }
 
 const CometChatSenderTextMessageBubble = (props) => {
+  // console.log('4533',props);
   const [message, setMessage] = useState({
     ...props.message,
     messageFrom: enums.MESSAGE_FROM_SENDER,
@@ -50,6 +51,7 @@ const CometChatSenderTextMessageBubble = (props) => {
    */
 
   const getMessageText = () => {
+    // console.log('53215',message.text);
     return (
       <Autolink
         text={message.text}
@@ -74,6 +76,7 @@ const CometChatSenderTextMessageBubble = (props) => {
   }, [props]);
   
   let messageText = getMessageText();
+  // console.log('78',messageText);
   if (Object.prototype.hasOwnProperty.call(message, 'metadata')) {
     const { metadata } = message;
     const injectedObject = metadata['@injected'];
@@ -184,9 +187,20 @@ const CometChatSenderTextMessageBubble = (props) => {
   }
 
   return (
-    <View style={style.container}>
+    <View style={[style.container,{backgroundColor:props.selectedtextmessage.id==message.id?"#E1F5FE":"white"}]}>
       <TouchableWithoutFeedback
+        onPress={()=>{
+          console.log('1922',props)
+          console.log('45678',message);
+          if(props.selectedtextmessage?.id==message.id){
+            props.actionGenerated(actions.SELECTED_MESSAGE, []);
+
+          }else{
+          props.actionGenerated(actions.SELECTED_MESSAGE, message);
+        }
+        }}
         onLongPress={() => {
+          console.log('3333',messageText);
           props.actionGenerated(actions.OPEN_MESSAGE_ACTIONS, message);
         }}>
         <View style={[style.messageWrapperStyle,{backgroundColor:"#90EE90"}]}>{messageText}</View>
