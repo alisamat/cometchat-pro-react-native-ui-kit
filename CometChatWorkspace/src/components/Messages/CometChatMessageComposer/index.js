@@ -1224,7 +1224,9 @@ flex: 0,left: 0}}
         <ComposerActions
           visible={this.state.composerActionsVisible}
           close={() => {
-            this.setState({ composerActionsVisible: false });
+            if (this.state.composerActionsVisible == true) {
+              this.setState({ composerActionsVisible: false });
+            }
           }}
           toggleStickers={this.toggleStickerPicker}
           toggleCreatePoll={this.toggleCreatePoll}
