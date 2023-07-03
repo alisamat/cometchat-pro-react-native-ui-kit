@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
+  Image,
   Keyboard,
   Platform,
   Pressable,
@@ -19,6 +20,7 @@ import AntDIcon from 'react-native-vector-icons/AntDesign';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import Sound from 'react-native-sound';
 import { MentionInput } from 'react-native-controlled-mentions'
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 import { observer, inject } from 'mobx-react';
 import { getSnapshot } from 'mobx-state-tree';
@@ -40,8 +42,9 @@ import { logger } from '../../../utils/common';
 import { CometChatContext } from '../../../utils/CometChatContext';
 import General from '../../../../../../store/general';
 import RequestSuggestions from '../../../../../../Components/RequestSuggestionsChat';
+import Explodingmessage from '../../../../../../Components/explodingmessage';
 import constants from '../../../../../../Util/Constants'
-
+import assets from '../../../../../../assets'
  class CometChatMessageComposer extends React.PureComponent {
   static contextType = CometChatContext;
   constructor(props) {
@@ -57,6 +60,8 @@ import constants from '../../../../../../Util/Constants'
     this.isTyping = false;
 
     this.state = {
+      anket:false,
+      ExplodingmessageText:["10 dk","30 dk","1 s","6 s","12 s","1 gün","10 gün","30 gün","100 gün"],
       dataTitle:[],
       newdatalist:[],
       newdatalistG:false,
@@ -64,7 +69,7 @@ import constants from '../../../../../../Util/Constants'
       vallength:0,
       newdataBeflist:[],
       aoutowrite:true,
-
+      selectzaman:"1 gün",
       showFilePicker: false,
       messageInput: '',
       messageType: '',
@@ -178,6 +183,22 @@ import constants from '../../../../../../Util/Constants'
       if (prevProps.item !== this.props.item) {
         this.setState({ stickerViewer: false });
       }
+
+      if (prevProps.anket !== this.props.anket) {
+        console.log('18777',this.props.anket);
+
+        this.toggleCreatePoll();
+        // if (this.props.type === enums.TYPE_USER) {
+        //   this.props.actionGenerated(actions.POLL_CREATED, [message]);
+        // }
+        // if(this.state.anket){
+        //   this.setState({ anket: false })
+        // }else{
+        //   this.setState({ anket: true });
+        // }
+       
+      }
+
     } catch (error) {
       logger(error);
     }
@@ -269,7 +290,9 @@ descDataGet=(texx)=>{
       this.setState({newdatalist:newData})
    }
 }
+
 selectTitle=(textt)=>{
+  console.log('4556',textt);
   var str = this.state.messageInput
   var arraystr=str.split(" ")
   var a=0
@@ -330,6 +353,11 @@ selectTitle=(textt)=>{
    
   //  this.messageInputRef.focus()
  }
+ explodF=(textt)=>{
+  console.log('336',textt);
+  this.setState({selectzaman:textt})
+ }
+
 capitalizeFirstLetter(str) {
   return str.charAt(0).toLocaleUpperCase('tr-TR') + str.slice(1);
 }
@@ -422,7 +450,51 @@ return str.charAt(0).toLocaleLowerCase() + str.slice(1);
       logger(error);
     }
   };
+/////7
+showmessageDisappearing =()=>{
+  showMessage({
+    message: "KAYBOLAN MESAJ", 
+  description: "Kaybolan mesajınız gönderildi.", 
+  type: "success",
+  //  icon: "success", 
+    // position: "right",
+    // icon: props =>     <Icon name="md-time" size={45} color="white"/>,
+    
+   autoHide:true,
+  statusBarHeight:40*heightRatio,
+  onPress: () => {
+    // this.setState({pushloading:false})
+    hideMessage()
+  },
+  });
+}
 
+/////
+disappearingmessages(zamanT){
+  function convertToMilliseconds(timeStr) {
+    // var zaman=new Date().getTime()+24*60*60*1000
+
+    const [value, unit] = timeStr.split(' ');
+    switch (unit) {
+      case 'dk':
+        return value * 60 * 1000; // dakika -> milisaniye
+      case 's':
+        return value * 60 * 60 * 1000; // saat -> milisaniye
+      case 'gün':
+        return value * 24 * 60 * 60 * 1000; // gün -> milisaniye
+      default:
+        throw new Error('Geçersiz zaman birimi');
+    }
+  }
+
+  const now = new Date().getTime();
+  const add = convertToMilliseconds(zamanT);
+  console.log('474',add);
+  var zamane=now + add
+  // Şimdiki zaman damgasına dönüştürülen zamanı ekler ve sonucu döndürür
+  return zamane
+}
+////
   /**
    * handler for sending Text Message
    * @param
@@ -477,6 +549,25 @@ newdatalist:this.state.dataTitle,
       this.playAudio();
       CometChat.sendMessage(textMessage)
         .then((message) => {
+          console.log('4800',message);
+
+          ////// BURADA ÇALIŞMA VAR
+       if(  this.props.explod){
+      var zamman=  this.disappearingmessages(this.state.selectzaman)
+        console.log('536',zamman);
+        CometChat.callExtension('disappearing-messages','DELETE','v1/disappear',{
+          msgId: message.id, // The id of the message that was just sent
+          timeInMS: zamman // Time in milliseconds. Should be a time from the future.
+        }).then(response => {
+          console.log('541',response);
+          this.showmessageDisappearing()
+
+          // Successfully scheduled for deletion
+        })
+       }
+          
+
+          ///////
           const newMessageObj = { ...message, _id: textMessage._id };
           this.setState({ messageInput: '' });
           this.messageInputRef.current.textContent = '';
@@ -624,9 +715,10 @@ newdatalist:this.state.dataTitle,
    * @param
    */
   toggleCreatePoll = () => {
-    const { createPoll } = this.state;
-    this.setState({ composerActionsVisible: false, createPoll: !createPoll });
-  };
+    const { createPoll,anket } = this.state;
+    this.setState({ composerActionsVisible: false, createPoll: !createPoll,anket:false });
+  
+}
 
   /**
    * handler to close create poll screen
@@ -852,12 +944,28 @@ console.log('715',dataN);
    }
   // return newData
 }
-  
+// selectshareothers=()=>{
+
+// }
+// selectshareavailable=()=>{
+//   this.props.navigation.navigate(
+//     UsersComponent
+//     // {
+//     //   type,
+//     //   item: { ...item },
+//     //   theme: this.theme,
+//     //   tab: this.state.tab,
+//     //   loggedInUser: this.loggedInUser,
+//     //   callMessage: this.state.callMessage,
+//     //   actionGenerated: this.actionHandler,
+//     //   composedThreadMessage: this.state.composedThreadMessage,
+//     // },
+//   );
+// }  
 ///////////
   render() {
-    console.log('22562',this.props.item,);
-
-
+    console.log('22562',this.props.selectedtextmessage);
+    //  if(this.props.aoutowrite&&this.state.createPoll){this.toggleCreatePoll(1)}{this.toggleCreatePoll(2)}
     let disabled = false;
     if (this.props.item.blockedByMe) {
       disabled = true;
@@ -880,7 +988,31 @@ console.log('715',dataN);
         </TouchableOpacity>
       );
     }
+///////
+let sharebutton =  
+<View style={{flexDirection:"row"}}>
+ <TouchableOpacity
+style={style.sendButtonStyle}
+onPress={() => this.props.selectShareLeft()}>
+  <Image
+            source={assets.shareleft}
+            resizeMode="contain"
+            style={{width:22,height:22}}
+          />
+      {/* <Icon name="share" size={30} color="#3299ff" style={{transform: [{rotate: '190deg'}]}} /> */}
+</TouchableOpacity>
+<TouchableOpacity
+style={style.sendButtonStyle}
+onPress={() => this.props.selectShareRight()}>
+ <Image
+            source={assets.shareright}
+            resizeMode="contain"
+            style={{width:22,height:22}}
+            
+          /></TouchableOpacity>
+</View>
 
+/////
     let sendBtn = (
       <TouchableOpacity
         style={style.sendButtonStyle}
@@ -1041,6 +1173,7 @@ console.log('715',dataN);
         item={this.props.item}
         type={this.props.type}
         open={this.state.createPoll}
+        anket={this.state.anket}
         close={this.closeCreatePoll}
         actionGenerated={this.actionHandler}
       />
@@ -1076,6 +1209,17 @@ console.log('715',dataN);
                       :null}
 
 {/* BURADA ÇALIŞMA VAR SONU */}
+{ this.props.explod? 
+<Explodingmessage
+data={this.state.ExplodingmessageText}
+extraData={this.state}
+selectTitlee={this.explodF}
+selectzaman={this.state.selectzaman}
+style={{  position :"absolute",bottom:55,
+flex: 0,left: 0}}
+/>
+:null}
+
 
         <ComposerActions
           visible={this.state.composerActionsVisible}
@@ -1085,6 +1229,7 @@ console.log('715',dataN);
           toggleStickers={this.toggleStickerPicker}
           toggleCreatePoll={this.toggleCreatePoll}
           sendMediaMessage={this.sendMediaMessage}
+          anket={this.props.anket}
         />
         <View style={style.mainContainer}>
           <TouchableOpacity
@@ -1118,7 +1263,8 @@ console.log('715',dataN);
             
             {sendBtn}
           </View>
-          {/* {liveReactionBtn} */}
+
+          {this.props.selectedtextmessage.length==0?null: sharebutton}
         </View>
       </View>
     );

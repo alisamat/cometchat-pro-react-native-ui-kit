@@ -21,6 +21,8 @@ import * as actions from '../../../../utils/actions';
 const close = <Icon name="close" style={styles.closeIcon} />;
 
 const CometChatCreatePoll = (props) => {
+// const [open, setopen]=useState(false)
+
   const [showScroll, setScroll] = useState(false);
   const [optionArray, setOptions] = useState([]);
   const [error, setError] = useState('');
@@ -68,11 +70,11 @@ const CometChatCreatePoll = (props) => {
     const secondOption = optionTwoRef.trim();
     const optionItems = [firstOption, secondOption];
     if (question.length === 0) {
-      setError({ error: 'Question cannot be blank.' });
+      setError({ error: 'Soru boş olamaz.' });
       return false;
     }
     if (firstOption.length === 0 || secondOption.length === 0) {
-      setError({ error: 'Option cannot be blank.' });
+      setError({ error: 'Seçenek boş olamaz.' });
       return false;
     }
     optionArray.forEach((option) => {
@@ -130,10 +132,10 @@ const CometChatCreatePoll = (props) => {
     <View style={styles.ModalBody}>
       <View style={styles.ModalBodyItemContainer}>
         <View style={styles.ModalBodyItem}>
-          <Text style={styles.ItemText}>Question</Text>
+          <Text style={styles.ItemText}>Soru</Text>
         </View>
         <TextInput
-          placeholder="Enter your question"
+          placeholder="Anket sorunuzu girin"
           style={styles.InputBox}
           onChangeText={(feedback) => {
             QuestionChangeHandler(feedback);
@@ -145,10 +147,10 @@ const CometChatCreatePoll = (props) => {
       </View>
       <View style={styles.ModalBodyItemContainer}>
         <View style={styles.ModalBodyItem}>
-          <Text style={styles.ItemText}>Options</Text>
+          <Text style={styles.ItemText}>Seçenekler</Text>
         </View>
         <TextInput
-          placeholder="Enter your option"
+          placeholder="Cevap seçeneğini girin"
           onChangeText={(feedback) => {
             OptionOneChangeHandler(feedback);
           }}
@@ -168,7 +170,7 @@ const CometChatCreatePoll = (props) => {
             OptionTwoChangeHandler(feedback);
           }}
           style={styles.InputBox}
-          placeholder="Enter your option"
+          placeholder="Diğer Cevap seçeneğini girin"
           ref={thirdInputReference}
         />
       </View>
@@ -180,7 +182,7 @@ const CometChatCreatePoll = (props) => {
         <Text style={styles.SpecificItemText} />
       </View>
       <View style={styles.WrapperForTextAndAdd}>
-        <Text style={styles.TextInAddWrapper}>Add new option</Text>
+        <Text style={styles.TextInAddWrapper}>Başka cevap seçeneği ekle</Text>
         <TouchableOpacity
           style={styles.AddButtonContainer}
           onPress={() => {
@@ -222,15 +224,15 @@ const CometChatCreatePoll = (props) => {
       onContentSizeChange={onChangeScreenSize}
     />
   );
-
+console.log('1231',props);
   return (
-    <Modal transparent animated animationType="fade" visible={props.open}>
+    <Modal transparent animated animationType="fade" visible={props.open||props.anket}>
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <View style={styles.ModalWrapperStyle}>
             <View style={styles.ModalHeader}>
               <View style={styles.ModalHeadingContainer}>
-                <Text style={styles.HeadingText}>Create Poll</Text>
+                <Text style={styles.HeadingText}>Anket Oluştur</Text>
                 <TouchableOpacity
                   style={styles.ModalCloseButtonContainer}
                   onPress={() => {
@@ -254,7 +256,7 @@ const CometChatCreatePoll = (props) => {
                 onPress={() => {
                   createPoll();
                 }}>
-                <Text style={styles.CreateButtonText}>Create</Text>
+                <Text style={styles.CreateButtonText}>Kaydet</Text>
               </TouchableOpacity>
             </View>
           </View>

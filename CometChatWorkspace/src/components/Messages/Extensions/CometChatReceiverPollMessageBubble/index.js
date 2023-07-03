@@ -80,7 +80,7 @@ const CometChatReceiverPollMessageBubble = (props) => {
   pollId = pollExtensionData.id;
   const { total } = pollExtensionData.results;
 
-  const totalText = total === 1 ? `${total} vote` : `${total} votes`;
+  const totalText = total === 1 ? `${total} oy` : `${total} oy`;
   const arrayOfVotes = Object.entries(pollExtensionData.results.options).map(
     (e) => e[1],
   );

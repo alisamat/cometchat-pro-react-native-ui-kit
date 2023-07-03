@@ -182,7 +182,7 @@ const CometChatReceiverTextMessageBubble = (props) => {
   }
   return (
     <View style={style.container}>
-      <View style={style.innerContainer}>
+      <View style={[style.innerContainer,{backgroundColor:props.selectedtextmessage.id==message.id?"#E1F5FE":"white"}]}>
         {props.message.receiverType === CometChat.RECEIVER_TYPE.GROUP ? (
           <View style={style.avatarStyle}>
             <CometChatAvatar
@@ -202,9 +202,20 @@ const CometChatReceiverTextMessageBubble = (props) => {
               </Text>
             </View>
           ) : null}
-          <View style={style.messageContainer}>
+          <View style={[style.messageContainer]}>
             <TouchableWithoutFeedback
+              onPress={()=>{
+                console.log('20888',message);
+                if(props.selectedtextmessage?.id==message.id){
+                  props.actionGenerated(actions.SELECTED_MESSAGE, []);
+      
+                }else{
+                props.actionGenerated(actions.SELECTED_MESSAGE, message);
+              }
+              
+              }}
               onLongPress={() => {
+                console.log('4544');
                 props.actionGenerated(actions.OPEN_MESSAGE_ACTIONS, message);
               }}>
               <View style={{ flexDirection: 'row' }}>

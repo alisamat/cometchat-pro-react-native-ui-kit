@@ -55,6 +55,7 @@ class CometChatMessageThread extends React.PureComponent {
       parentMessage: props.parentMessage,
       keyboardActivity: false,
       hideDeletedEnabled: false,
+      selecteditem:[]
     };
   }
 
@@ -421,7 +422,12 @@ class CometChatMessageThread extends React.PureComponent {
    * @param key
    */
 
+  selecteditem=(selectitem)=>{
+console.log('4567',selectitem);
+  // return [{"title":"deneme"}]
+  }
   getSenderMessageComponent = (message, key) => {
+    console.log('4254',key,);
     let component;
     try {
       switch (message.type) {
@@ -435,6 +441,7 @@ class CometChatMessageThread extends React.PureComponent {
               type={this.props.type}
               message={message}
               actionGenerated={this.actionHandler}
+              // selecteditem={this.selecteditem(selectitem)}
             />
           );
           break;

@@ -52,7 +52,7 @@ const CometChatSenderPollMessageBubble = (props) => {
     props.message.metadata['@injected'].extensions.polls;
 
   const { total } = pollExtensionData.results;
-  const totalText = total === 1 ? `${total} vote` : `${total} votes`;
+  const totalText = total === 1 ? `Toplam ${total} oy` : `Toplam ${total} oy`;
   const arrayOfVotes = Object.entries(pollExtensionData.results.options).map(
     (e) => e[1],
   );
@@ -102,6 +102,9 @@ const CometChatSenderPollMessageBubble = (props) => {
           props.actionGenerated(actions.OPEN_MESSAGE_ACTIONS, message)
         }>
         <View style={style.messageWrapperStyle}>
+          <View style={{justifyContent:"center",alignContent:"center",flexDirection:"row"}}> 
+          <Text style={{color:"yellow",fontWeight:"bold"}} >ANKET</Text>
+          </View>
           <Text style={style.pollQuestionText}>
             {pollExtensionData.question}
           </Text>

@@ -1,10 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-classes-per-file */
 import React, { Component } from 'react';
+import ConfettiCannon from 'react-native-confetti-cannon';
 import { Dimensions, View, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { logger } from '../../../utils/common';
 import styles from './styles';
+import KonfetiEylemi from '../../../../../../Components/konfeti'
 import * as enums from '../../../utils/enums';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 const { height: deviceHeight } = Dimensions.get('window');
@@ -28,6 +30,8 @@ class AnimatedHeart extends Component {
     super(props);
     this.state = {
       position: new Animated.Value(0),
+      confettiColors: this.generateRandomColors(15),
+
     };
     this._yAnimation = this.state.position.interpolate({
       inputRange: [NEGATIVE_END_Y, 0],
@@ -68,7 +72,16 @@ class AnimatedHeart extends Component {
       outputRange: ['0deg', '-2deg', '0deg', '2deg', '0deg'],
     });
   }
+  generateRandomColors = count => {
+    const colors = [];
 
+    for (let i = 0; i < count; i++) {
+      const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+      colors.push(color);
+    }
+
+    return colors;
+  };
   componentDidMount() {
     Animated.timing(this.state.position, {
       duration: 2000,
@@ -167,22 +180,43 @@ export default class CometChatLiveReactions extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {this.state.hearts.map(function (v, i) {
+      <View style={[styles.container,{zIndex:2222}]}>
+        <ConfettiCannon 
+   count={22}
+   origin={{ x: 210, y: 0 }}
+   fadeOut={false}
+   colors={this.state.confettiColors}
+   explosionSpeed={2222}
+   fallSpeed={2222}
+ />s
+ {/* <KonfetiEylemi/> */}
+        {/* {this.state.hearts.map(function (v, i) {
           return (
-            <AnimatedHeart
-              key={v.id}
-              item={this.props.item}
-              type={this.props.type}
-              // eslint-disable-next-line react/jsx-no-bind
-              onComplete={this.removeHeart.bind(this, v.id)}
-              style={{
-                right: this.state.hearts[i].right,
-                bottom: this.state.hearts[i].bottom,
-              }}
-            />
+            // <AnimatedHeart
+            //   key={v.id}
+            //   item={this.props.item}
+            //   type={this.props.type}
+            //   // eslint-disable-next-line react/jsx-no-bind
+            //   onComplete={this.removeHeart.bind(this, v.id)}
+            //   style={{
+            //     right: this.state.hearts[i].right,
+            //     bottom: this.state.hearts[i].bottom,
+            //   }}
+            // />
+                     ///// BURAD ÇALIŞma  VAR
+//  <View style={style.reactionsWrapperStyle}>
+ <ConfettiCannon 
+   count={300}
+   origin={{ x: -10, y: 0 }}
+   fadeOut={true}
+   colors={this.state.confettiColors}
+   explosionSpeed={500}
+   fallSpeed={1300}
+ />
+          //  </View>
+ ///// BURAD ÇALIŞma  VARSONU
           );
-        }, this)}
+        }, this)} */}
       </View>
     );
   }

@@ -7,8 +7,10 @@ import {
   Modal,
   Dimensions,
   KeyboardAvoidingView,
+  StyleSheet,
   Text
 } from 'react-native';
+
 import { CometChat } from '@cometchat-pro/react-native-chat';
 // import { NavigationContainer } from '@react-navigation/native';
 import * as actions from '../../../utils/actions';
@@ -51,6 +53,9 @@ class CometChatMessages extends React.PureComponent {
     const { route } = props;
     const params = route?.params || props;
     this.state = {
+      selectedtextmessage:[],
+      explod:false,
+      anket:false,
       aoutowrite:true,
       messageList: [],
       scrollToBottom: true,
@@ -259,6 +264,26 @@ class CometChatMessages extends React.PureComponent {
 
 //////////////// BURADA ÇALIŞMA sonu
 
+//////////////// BURADA ÇALIŞMA
+case actions.EXPLOAD:
+  console.log('253',);
+   this.explod()
+  // this.viewmessagepin(messages);
+  break;
+
+  case actions.ANKET:
+  console.log('253',);
+   this.anket()
+  // this.viewmessagepin(messages);
+  break;
+
+  
+//////////////// BURADA ÇALIŞMA sonu
+
+
+
+
+
       case actions.CLOSE_THREAD_CLICKED:
         this.closeThreadMessages();
         break;
@@ -359,6 +384,14 @@ class CometChatMessages extends React.PureComponent {
       case actions.OPEN_MESSAGE_ACTIONS:
         this.setState({ messageToReact: messages });
         break;
+
+        case actions.SELECTED_MESSAGE:
+          console.log('3899',messages);
+           this.setState({ selectedtextmessage: messages });
+          break;
+  
+
+
       case actions.UPDATE_THREAD_MESSAGE:
         this.updateThreadMessage(messages[0], key);
         break;
@@ -435,7 +468,23 @@ class CometChatMessages extends React.PureComponent {
     this.setState({ aoutowrite: resaoutowrite });
    
   }
-
+  
+  explod=()=>{
+    console.log('4544',);
+  
+    var explod=this.state.explod?false:true
+    this.setState({ explod: explod });
+   
+  }
+  
+  anket=()=>{
+    console.log('4777',);
+  
+    var anket=this.state.anket?false:true
+    this.setState({ anket: anket });
+  //  this.props.toggleCreatePoll()
+  }
+  
   sendMessage = (message) => {
     const { route } = this.props;
 
@@ -964,6 +1013,16 @@ class CometChatMessages extends React.PureComponent {
   reactToMessage = (message) => {
     this.setState({ messageToReact: message });
   };
+  generateRandomColors = count => {
+    const colors = [];
+
+    for (let i = 0; i < count; i++) {
+      const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+      colors.push(color);
+    }
+
+    return colors;
+  };
 
   getConversationId = () => {
     const { route } = this.props;
@@ -978,10 +1037,38 @@ class CometChatMessages extends React.PureComponent {
 
     return conversationId;
   };
+  selectShareLeft=()=>{
 
+  }
+  selectShareRight=()=>{
+
+    this.props.navigation.navigate(
+    
+      'cometchatuserlistselcet' ,
+       {
+         userids:[""],
+         where:"chat",
+         username:""
+
+       }
+       
+      // "chatuserlist"
+      // // {
+      // //   type,
+      // //   item: { ...item },
+      // //   theme: this.theme,
+      // //   tab: this.state.tab,
+      // //   loggedInUser: this.loggedInUser,
+      // //   callMessage: this.state.callMessage,
+      // //   actionGenerated: this.actionHandler,
+      // //   composedThreadMessage: this.state.composedThreadMessage,
+      // // },
+    );
+  }
   render() {
-    console.log('4256',this.props.route.params);
+    // console.log('4256',this.props.route.params);
     const { route } = this.props;
+    console.log('1033',this.props.navigation);
     const params = route?.params || this.props;
     let imageView = null;
     if (this.state.imageView) {
@@ -1017,6 +1104,11 @@ class CometChatMessages extends React.PureComponent {
           this.DropDownAlertRef?.showMessage(type, message);
         }}
         aoutowrite={this.state.aoutowrite}
+        explod={this.state.explod}
+        anket={this.state.anket}
+        selectedtextmessage={this.state.selectedtextmessage}
+        selectShareRight={this.selectShareRight}
+        selectShareLeft={this.selectShareLeft}
       />
     );
 
@@ -1032,6 +1124,7 @@ class CometChatMessages extends React.PureComponent {
     let liveReactionView = null;
     if (this.state.liveReaction) {
       liveReactionView = (
+        
         <View style={style.reactionsWrapperStyle}>
           <CometChatLiveReactions
             reactionName={this.reactionName}
@@ -1046,6 +1139,8 @@ class CometChatMessages extends React.PureComponent {
         </View>
       );
     }
+
+
 ///// BURAD ÇALIŞma  VAR
     // let aoutosearch =(
     //   <View style={style.reactionsWrapperStyle}>
@@ -1177,7 +1272,7 @@ class CometChatMessages extends React.PureComponent {
               actionGenerated={this.actionHandler}
             />
             <CometChatMessageList
-
+              selectedtextmessage={this.state.selectedtextmessage}
               theme={this.theme}
               pinadd={this.state.pinadd}
               messages={this.state.messageList}
@@ -1252,5 +1347,14 @@ class CometChatMessages extends React.PureComponent {
     );
   }
 }
-
+const styles1 = StyleSheet.create({
+  confettiContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 999,
+  },
+})
 export default CometChatMessages;
