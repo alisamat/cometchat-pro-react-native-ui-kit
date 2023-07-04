@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable react/no-did-update-set-state */
+/* eslint-disable react/no-did-update-set-state */ 
 /* eslint-disable radix */
-import React from 'react';
+import React from 'react'; //
 import { CometChat } from '@cometchat-pro/react-native-chat';
 // import { NavigationContainer } from '@react-navigation/native';
 import assets from '../../../../../../assets';
@@ -889,11 +889,11 @@ console.log('816');
    * @param
    */
   listEmptyContainer = () => {
-    // for loading purposes....
+    // for loading purposes.....
     return (
       <View style={[styles.contactMsgStyle,{flexDirection:"row",flex:1}]}>
         
-          { this.decoratorMessage == 'Sohbet bulunamadı'? 
+          { this.decoratorMessage == 'Sohbet bulunamadı'?  //
           <View style={{justifyContent:"center",alignContent:"center",}}>
             <View style={{flexDirection:"row",alignContent:"center",justifyContent:"center",paddingBottom:22}}>
              <Image

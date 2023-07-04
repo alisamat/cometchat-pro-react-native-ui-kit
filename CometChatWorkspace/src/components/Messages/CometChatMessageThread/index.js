@@ -749,6 +749,8 @@ console.log('4567',selectitem);
                   replyPreview={this.state.replyPreview}
                   messageToReact={this.state.messageToReact}
                   actionGenerated={this.actionHandler}
+                  threadMessageView={this.props.threadMessageView}
+
                 />
               </View>
             </View>

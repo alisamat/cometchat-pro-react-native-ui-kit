@@ -10,7 +10,7 @@ import { CometChatManager } from '../../../utils/controller';
 import { ConversationListManager } from './controller';
 import * as enums from '../../../utils/enums';
 import * as consts from '../../../utils/consts';
-import CometChatConversationListItem from '../CometChatConversationListItem';
+import CometChatConversationListItem from '../CometChatConversationListItem/index1';
 import theme from '../../../resources/theme';
 import styles from './styles';
 import Sound from 'react-native-sound';
@@ -37,6 +37,7 @@ import {
 } from 'react-native';
 import { logger } from '../../../utils/common';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import style from '../../Groups/CometChatViewGroupMemberListItem/style';
 const {width, height, widthRatio, heightRatio} = constants.styleGuide;
 
 
@@ -49,6 +50,7 @@ class CometChatConversationList extends React.Component {
     super(props);
 
     this.state = {
+      selectitem:{},
       conversationList: [],
       selectedConversation: undefined,
       showSmallHeader: false,
@@ -819,6 +821,7 @@ class CometChatConversationList extends React.Component {
    */
   handleClick = (conversation) => {
     console.log('bass',conversation);
+    this.setState({selectitem:conversation})
 //     try {
 //       if (!this.props.onItemClick) return;
 // console.log('816');
@@ -1031,7 +1034,7 @@ handleSearch = (text) => {
   //  }
 }
   render() {
-
+console.log('1022',this.state.selectitem.conversationId);
     return (
 
       <CometChatContextProvider ref={(el) => (this.contextProviderRef = el)}>
@@ -1043,7 +1046,7 @@ handleSearch = (text) => {
         
            {/* {1- GERİ GİT} */}
            <View style={{flexDirection:"row"}}>
-           {/* <TouchableOpacity style={[styles1.closeIcon,{}]} onPress={this.goBack}>
+           <TouchableOpacity style={[styles1.closeIcon,{}]} onPress={this.goBack}>
             <View style={styles1.closeIcon1}>
               <Image
                 source={assets.back}
@@ -1051,10 +1054,10 @@ handleSearch = (text) => {
                 style={styles1.imageIcon}
               />
               </View>
-            </TouchableOpacity> */}
-            <View style={{alignContent:"center",flexDirection:"row",justifyContent:"center",flex:1}}><Text style={{color:constants.darkblack,fontSize:20,fontWeight:"bold",paddingVertical:11}}>Sohbet Ara</Text></View>
+            </TouchableOpacity>
+            <View style={{alignContent:"center",flexDirection:"row",justifyContent:"center",paddingLeft:22,paddingTop:5}}><Text style={{color:constants.darkblack,fontSize:20,fontWeight:"bold",paddingVertical:11}}>Mesajı İlet</Text></View>
             </View>
-            <View style={{  borderColor: 'gray', marginHorizontal:15,borderWidth: 1,padding:15,borderRadius:6 }}>
+            <View style={{  borderColor: 'gray', marginHorizontal:15,borderWidth: 1,padding:15,borderRadius:6,marginBottom:15 }}>
             <TextInput
               style={{flexDirection:"column"}}
               onChangeText={text => this.handleSearch(text)}
@@ -1076,6 +1079,7 @@ handleSearch = (text) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     paddingLeft: 15,
+                    
                   }}>
                   <TouchableOpacity
                     style={{
@@ -1105,7 +1109,11 @@ handleSearch = (text) => {
               previewOpenValue={-40}
               previewOpenDelay={3000}
               renderItem={({ item }) => {
+                console.log('1112',item);
+                
                 return (
+                  
+                    // <View style={{backgroundColor: this.state.selectitem.conversationId==item?.conversationId?"grey":"white"}}>
                   <CometChatConversationListItem
                     theme={this.theme}
                     config={this.props.config}
@@ -1113,6 +1121,7 @@ handleSearch = (text) => {
                     selectedConversation={this.state.selectedConversation}
                     loggedInUser={this.loggedInUser}
                     handleClick={this.handleClick}
+                    select={this.state.selectitem.conversationId==item?.conversationId?true:false}
                   />
                 );
               }}

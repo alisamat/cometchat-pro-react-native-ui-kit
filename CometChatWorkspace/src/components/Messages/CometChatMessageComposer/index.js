@@ -527,7 +527,7 @@ disappearingmessages(zamanT){
       if (this.props.parentMessageId) {
         textMessage.setParentMessageId(this.props.parentMessageId);
       }
-
+console.log('5330',this.loggedInUser,textMessage);
       textMessage.setSender(this.loggedInUser);
       textMessage.setReceiver(receiverType);
       textMessage.setText(messageInput);
@@ -547,6 +547,7 @@ newdatalist:this.state.dataTitle,
 
       this.messageInputRef.current.textContent = '';
       this.playAudio();
+      console.log('550',textMessage);
       CometChat.sendMessage(textMessage)
         .then((message) => {
           console.log('4800',message);
@@ -826,6 +827,7 @@ newdatalist:this.state.dataTitle,
    */
 
   sendReplyMessage = (messageInput) => {
+
     try {
       const { receiverId, receiverType } = this.getReceiverDetails();
       const textMessage = new CometChat.TextMessage(
@@ -1179,7 +1181,7 @@ onPress={() => this.props.selectShareRight()}>
       />
     );
   ///// BURAD ÇALIŞMAAA
-  console.log('9522',this.state.newdatalist);  
+  console.log('9522',this.props.threadMessageView);  
     return (
       <View
         style={
@@ -1224,7 +1226,9 @@ flex: 0,left: 0}}
         <ComposerActions
           visible={this.state.composerActionsVisible}
           close={() => {
-            this.setState({ composerActionsVisible: false });
+            if (this.state.composerActionsVisible == true) {
+              this.setState({ composerActionsVisible: false });
+            }
           }}
           toggleStickers={this.toggleStickerPicker}
           toggleCreatePoll={this.toggleCreatePoll}
@@ -1264,7 +1268,7 @@ flex: 0,left: 0}}
             {sendBtn}
           </View>
 
-          {this.props.selectedtextmessage.length==0?null: sharebutton}
+          {this.props.threadMessageView||this.props.selectedtextmessage?.length==0?null: sharebutton}
         </View>
       </View>
     );

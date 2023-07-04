@@ -1109,6 +1109,7 @@ case actions.EXPLOAD:
         selectedtextmessage={this.state.selectedtextmessage}
         selectShareRight={this.selectShareRight}
         selectShareLeft={this.selectShareLeft}
+        threadMessageView={this.state.threadMessageView}
       />
     );
 
@@ -1181,7 +1182,9 @@ case actions.EXPLOAD:
                     loggedInUser={this.loggedInUser}
                     actionGenerated={this.actionHandler}
                     getConversationId={this.getConversationId}
-                  />
+                    threadMessageView={this.state.threadMessageView}
+
+              />
                 </View>
               );
             }}

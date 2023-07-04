@@ -187,7 +187,7 @@ const CometChatSenderTextMessageBubble = (props) => {
   }
 
   return (
-    <View style={[style.container,{backgroundColor:props.selectedtextmessage.id==message.id?"#E1F5FE":"white"}]}>
+    <View style={[style.container,{backgroundColor:props.selectedtextmessage?.id==message.id?"#E1F5FE":"white"}]}>
       <TouchableWithoutFeedback
         onPress={()=>{
           console.log('1922',props)

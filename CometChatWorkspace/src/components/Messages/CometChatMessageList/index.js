@@ -657,7 +657,7 @@ class CometChatMessageList extends React.PureComponent {
    */
   getSenderMessageComponent = (message, key) => {
     let component;
-console.log('6666',key,message);
+// console.log('6666',key,message);
     if (Object.prototype.hasOwnProperty.call(message, 'deletedAt')) {
       component = (
         <CometChatDeleteMessageBubble
@@ -763,7 +763,7 @@ console.log('6666',key,message);
 
   getReceiverMessageComponent = (message, key) => {
     let component;
-console.log('7666',"getReceiverMessageComponent",key,message);
+// console.log('7666',"getReceiverMessageComponent",key,message);
     if (Object.prototype.hasOwnProperty.call(message, 'deletedAt')) {
       component = (
         <CometChatDeleteMessageBubble
