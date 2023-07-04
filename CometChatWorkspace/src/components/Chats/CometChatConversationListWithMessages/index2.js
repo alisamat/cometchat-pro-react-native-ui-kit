@@ -56,7 +56,6 @@ class CometChatConversationListWithMessages extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('56777',this.props.General);
     this.checkRestrictions();
     if (!Object.keys(this.state.item).length) {
       this.toggleSideBar();
@@ -599,7 +598,7 @@ class CometChatConversationListWithMessages extends React.Component {
         />
       );
     }
-
+console.log('6020',this.props.route.params.selecttext);
     return (
       // <NavigationContainer independent={true}>
 
@@ -619,6 +618,7 @@ class CometChatConversationListWithMessages extends React.Component {
               actionGenerated={this.actionHandler}
               enableCloseMenu={Object.keys(this.state.item).length}
               navigation={this.props.navigation}
+              selecttextmessage={this.props.route.params.selecttext}
             />
           </View>
           {imageView}

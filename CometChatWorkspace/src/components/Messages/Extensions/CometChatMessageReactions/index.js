@@ -155,7 +155,7 @@ class CometChatMessageReactions extends Component {
         messageReactions.unshift(addReactionEmoji);
       }
     }
-    if (this.props.item.blockedByMe) {
+    if (this.props.item?.blockedByMe) {
       return null;
     }
     return (

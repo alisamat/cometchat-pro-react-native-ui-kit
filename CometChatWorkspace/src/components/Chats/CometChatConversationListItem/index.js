@@ -181,7 +181,7 @@ class CometChatConversationListItem extends React.Component {
       const currentTimestamp = Date.now();
 
       const diffTimestamp = currentTimestamp - messageTimestamp;
-console.log('184',currentTimestamp,messageTimestamp);
+// console.log('184',currentTimestamp,messageTimestamp);
       // if (diffTimestamp < 24 * 60 * 60 * 1000) {
       //   timestamp = messageTimestamp.toLocaleTimeString('tr-TR', {
       //     hour: 'numeric',
@@ -319,7 +319,7 @@ if (diffTimestamp < 60 * 1000) {
    * @param lastMessage - message object
    */
   getMessage = (lastMessage) => {
-    console.log('3222',lastMessage);
+    // console.log('3222',lastMessage);
     try {
       let message = null;
       this.setState({ isThreaded: lastMessage.parentMessageId });
@@ -405,7 +405,7 @@ if (diffTimestamp < 60 * 1000) {
   }
   render() {
     let lastMessageTimeStamp = null;
-    console.log('343',this.state.lastMessage);
+    // console.log('343',this.state.lastMessage);
     if (this.state.lastMessage) {
       lastMessageTimeStamp = (
         <Text style={[styles.itemLastMsgTimeStyle,{ fontWeight: "400" }]} numberOfLines={1}>

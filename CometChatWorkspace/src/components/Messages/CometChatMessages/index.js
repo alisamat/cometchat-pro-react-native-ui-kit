@@ -53,6 +53,8 @@ class CometChatMessages extends React.PureComponent {
     const { route } = props;
     const params = route?.params || props;
     this.state = {
+      leftsendtextMessage:{},
+      refress:false,
       selectedtextmessage:[],
       explod:false,
       anket:false,
@@ -1037,19 +1039,193 @@ case actions.EXPLOAD:
 
     return conversationId;
   };
-  selectShareLeft=()=>{
-
+  selectShareLeft=(selecttext)=>{
+    this.sendTextMessage(selecttext)
   }
-  selectShareRight=()=>{
+  sendTextMessage1 = (item) => {
+    
+console.log('1044',item.rawMessage.receiver);
+console.log('1044',item.rawMessage.data.text);
+console.log('1044',item.rawMessage.receiverType);
+console.log('1044',item.rawMessage.conversationId);
+    try {
+      let receiverId1=item.rawMessage.receiver
+      let  messageInput1=item.rawMessage.data.text
+      let  receiverType1=item.rawMessage.receiverType
+      let conversationId1=item.rawMessage.conversationId
+      console.log('1233',this.props.selectedtextmessage);
+  console.log('825',receiverId1,messageInput1,receiverType1,conversationId1);
+      // if (this.state.emojiViewer) {
+      //   this.setState({ emojiViewer: false });
+      // }
+  
+      if (!messageInput1.trim().length) {
+        return false;
+      }
+  
+      // if (this.state.messageToBeEdited) {
+      //   this.editMessage();
+      //   return false;
+      // }
+      // this.endTyping();
+  
+      // const { receiverId, receiverType } = this.getReceiverDetails();
+      const messageInput = messageInput1.trim();
+      const conversationId =conversationId1// this.props.getConversationId();
+      const textMessage = new CometChat.TextMessage(
+        receiverId1,
+        messageInput,
+        receiverType1,
+      );
+      // if (this.props.parentMessageId) {
+      //   textMessage.setParentMessageId(this.props.parentMessageId);
+      // }
+  console.log('5330',this.loggedInUser,textMessage);
+      textMessage.setSender(this.loggedInUser);
+      textMessage.setReceiver(receiverType1);
+      textMessage.setText(messageInput);
+      textMessage.setConversationId(conversationId);
+      textMessage._composedAt = Date.now();
+      textMessage._id = '_' + Math.random().toString(36).substr(2, 9);
+      textMessage.setId(textMessage._id)
 
+  //     this.props.actionGenerated(actions.MESSAGE_COMPOSED, [textMessage]);
+  //     this.setState({ messageInput: '', replyPreview: false });
+  
+  // this.setState({
+  // vallength:0,
+  // newdataBeflist:[],
+  // newdatalist:this.state.dataTitle,
+  // })
+  
+  
+  //     this.messageInputRef.current.textContent = '';
+  //     this.playAudio();
+      console.log('550',textMessage);
+      CometChat.sendMessage(textMessage)
+        .then((message) => {
+          console.log('1104',message);
+          this.setState({refress:true})
+          // this.showmessageDisappearing()
+          // this.goBack()
+          // this.props.navigation.navigate("CometChatConversationListWithMessages")
+      //     ////// BURADA ÇALIŞMA VAR
+      //  if(  this.props.explod){
+      // var zamman=  this.disappearingmessages(this.state.selectzaman)
+      //   console.log('536',zamman);
+      //   CometChat.callExtension('disappearing-messages','DELETE','v1/disappear',{
+      //     msgId: message.id, // The id of the message that was just sent
+      //     timeInMS: zamman // Time in milliseconds. Should be a time from the future.
+      //   }).then(response => {
+      //     console.log('541',response);
+      //     this.showmessageDisappearing()
+  
+      //     // Successfully scheduled for deletion
+      //   })
+      //  }
+          
+  
+          ///////
+          // const newMessageObj = { ...message, _id: textMessage._id };
+          // this.setState({ messageInput: '' });
+          // this.messageInputRef.current.textContent = '';
+          // // this.playAudio();
+          // this.props.actionGenerated(actions.MESSAGE_SENT, newMessageObj);
+        })
+        .catch((error) => {
+          Alert.alert("İşlem tamamlanamadı")
+          // const newMessageObj = { ...textMessage, error: error };
+          // this.props.actionGenerated(
+          //   actions.ERROR_IN_SEND_MESSAGE,
+          //   newMessageObj,
+          // );
+          // logger('Message sending failed with error:', error);
+          // const errorCode = error?.message || 'ERROR';
+          // this.props?.showMessage('error', errorCode);
+        });
+    } catch (error) {
+      logger(error);
+    }
+  };
+  sendTextMessage = (item) => {
+    
+          let receiverId1=item.rawMessage.receiver
+          let  messageInput1=item.rawMessage.data.text
+          let  receiverType1=item.rawMessage.receiverType
+          let conversationId1=item.rawMessage.conversationId
+          if (!messageInput1.trim().length) {
+            return false;
+          }
+          const messageInput = messageInput1.trim();
+          const conversationId =conversationId1// this.props.getConversationId();
+          const textMessage = new CometChat.TextMessage(
+            receiverId1,
+            messageInput,
+            receiverType1,
+          );
+          textMessage.setSender(this.loggedInUser);
+          textMessage.setReceiver(receiverType1);
+          textMessage.setText(messageInput);
+          textMessage.setConversationId(conversationId);
+          textMessage._composedAt = Date.now();
+          textMessage._id = '_' + Math.random().toString(36).substr(2, 9);
+          textMessage.setId(textMessage._id)
+
+          this.setState({leftsendtextMessage:textMessage})
+          // CometChat.sendMessage(textMessage)
+          //   .then((message) => {
+          //     console.log('1104',message);
+          //     this.setState({refress:true})
+          //     // this.showmessageDisappearing()
+          //     // this.goBack()
+          //     // this.props.navigation.navigate("CometChatConversationListWithMessages")
+          // //     ////// BURADA ÇALIŞMA VAR
+          // //  if(  this.props.explod){
+          // // var zamman=  this.disappearingmessages(this.state.selectzaman)
+          // //   console.log('536',zamman);
+          // //   CometChat.callExtension('disappearing-messages','DELETE','v1/disappear',{
+          // //     msgId: message.id, // The id of the message that was just sent
+          // //     timeInMS: zamman // Time in milliseconds. Should be a time from the future.
+          // //   }).then(response => {
+          // //     console.log('541',response);
+          // //     this.showmessageDisappearing()
+      
+          // //     // Successfully scheduled for deletion
+          // //   })
+          // //  }
+              
+      
+          //     ///////
+          //     // const newMessageObj = { ...message, _id: textMessage._id };
+          //     // this.setState({ messageInput: '' });
+          //     // this.messageInputRef.current.textContent = '';
+          //     // // this.playAudio();
+          //     // this.props.actionGenerated(actions.MESSAGE_SENT, newMessageObj);
+          //   })
+          //   .catch((error) => {
+          //     Alert.alert("İşlem tamamlanamadı")
+          //     // const newMessageObj = { ...textMessage, error: error };
+          //     // this.props.actionGenerated(
+          //     //   actions.ERROR_IN_SEND_MESSAGE,
+          //     //   newMessageObj,
+          //     // );
+          //     // logger('Message sending failed with error:', error);
+          //     // const errorCode = error?.message || 'ERROR';
+          //     // this.props?.showMessage('error', errorCode);
+          //   });
+       
+      };
+  selectShareRight=(selecttext)=>{
+console.log('1044',selecttext.data.text);
     this.props.navigation.navigate(
     
       'cometchatuserlistselcet' ,
        {
          userids:[""],
          where:"chat",
-         username:""
-
+         username:"",
+         selecttext:selecttext.data.text,
+         onGoBack:()=>{Alert.Alert("debe")}
        }
        
       // "chatuserlist"
@@ -1110,6 +1286,7 @@ case actions.EXPLOAD:
         selectShareRight={this.selectShareRight}
         selectShareLeft={this.selectShareLeft}
         threadMessageView={this.state.threadMessageView}
+        leftsendtextMessage={this.state.leftsendtextMessage}
       />
     );
 
@@ -1294,6 +1471,7 @@ case actions.EXPLOAD:
               // widgetconfig={route.params.widgetconfig}
               loggedInUser={params.loggedInUser}
               actionGenerated={this.actionHandler}
+
             />
             {liveReactionView}
             {/* {aoutosearch} */}

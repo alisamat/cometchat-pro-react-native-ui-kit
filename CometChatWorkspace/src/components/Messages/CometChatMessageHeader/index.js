@@ -328,8 +328,8 @@ class CometChatMessageHeader extends React.Component {
     let userName;
     let presence;
     if (this.props.type === CometChat.RECEIVER_TYPE.USER) {
-      image = this.props.item.avatar;
-      userName = this.props.item.name;
+      image = this.props.item?.avatar;
+      userName = this.props.item?.name;
       presence = (
         <CometChatUserPresence
           status={this.state.presence}
@@ -340,7 +340,7 @@ class CometChatMessageHeader extends React.Component {
         />
       );
     } else {
-      if (this.props.item.icon) {
+      if (this.props.item?.icon) {
         image = this.props.item.icon;
       }
       userName = this.props.item.name;
@@ -373,7 +373,7 @@ class CometChatMessageHeader extends React.Component {
     );
 
     if (
-      this.props.item.blockedByMe === true ||
+      this.props.item?.blockedByMe === true ||
       this.props.audioCall === false ||
       this.props.type === CometChat.ACTION_TYPE.TYPE_GROUP
     ) {

@@ -4,6 +4,8 @@
 import React from 'react';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 // import { NavigationContainer } from '@react-navigation/native';
+import { showMessage, hideMessage } from "react-native-flash-message";
+
 import assets from '../../../../../../assets';
 import constants from '../../../../../../Util/Constants';
 import { CometChatManager } from '../../../utils/controller';
@@ -814,14 +816,133 @@ class CometChatConversationList extends React.Component {
         logger('This is an error in converting message to conversation', error);
       });
   };
+///
+showmessageDisappearing =()=>{
+  showMessage({
+    message: "MESAJ", 
+  description: "Mesaj gönderildi.", 
+  type: "success",
+  //  icon: "success", 
+    // position: "right",
+    // icon: props =>     <Icon name="md-time" size={45} color="white"/>,
+    
+   autoHide:true,
+  statusBarHeight:40*heightRatio,
+  onPress: () => {
+    // this.setState({pushloading:false})
+    hideMessage()
+  },
+  });
+}
+sendTextMessage = (item) => {
 
+  try {
+    let receiverId1=item.lastMessage.rawMessage.receiver
+    let  messageInput1=this.props.selecttextmessage
+    let  receiverType1=item.lastMessage.rawMessage.receiverType
+    let conversationId1=item.conversationId
+    console.log('1233',this.props.selectedtextmessage);
+console.log('825',receiverId1,messageInput1,receiverType1,conversationId1);
+    // if (this.state.emojiViewer) {
+    //   this.setState({ emojiViewer: false });
+    // }
+
+    if (!messageInput1.trim().length) {
+      return false;
+    }
+
+    // if (this.state.messageToBeEdited) {
+    //   this.editMessage();
+    //   return false;
+    // }
+    // this.endTyping();
+
+    // const { receiverId, receiverType } = this.getReceiverDetails();
+    const messageInput = messageInput1.trim();
+    const conversationId =conversationId1// this.props.getConversationId();
+    const textMessage = new CometChat.TextMessage(
+      receiverId1,
+      messageInput,
+      receiverType1,
+    );
+    // if (this.props.parentMessageId) {
+    //   textMessage.setParentMessageId(this.props.parentMessageId);
+    // }
+console.log('5330',this.loggedInUser,textMessage);
+    textMessage.setSender(this.loggedInUser);
+    textMessage.setReceiver(receiverType1);
+    textMessage.setText(messageInput);
+    textMessage.setConversationId(conversationId);
+    textMessage._composedAt = Date.now();
+    textMessage._id = '_' + Math.random().toString(36).substr(2, 9);
+    textMessage.setId(textMessage._id)
+//     this.props.actionGenerated(actions.MESSAGE_COMPOSED, [textMessage]);
+//     this.setState({ messageInput: '', replyPreview: false });
+
+// this.setState({
+// vallength:0,
+// newdataBeflist:[],
+// newdatalist:this.state.dataTitle,
+// })
+
+
+//     this.messageInputRef.current.textContent = '';
+//     this.playAudio();
+    console.log('550',textMessage);
+    CometChat.sendMessage(textMessage)
+      .then((message) => {
+        console.log('4800',message);
+        this.showmessageDisappearing()
+        this.goBack()
+        // this.props.navigation.navigate("CometChatConversationListWithMessages")
+    //     ////// BURADA ÇALIŞMA VAR
+    //  if(  this.props.explod){
+    // var zamman=  this.disappearingmessages(this.state.selectzaman)
+    //   console.log('536',zamman);
+    //   CometChat.callExtension('disappearing-messages','DELETE','v1/disappear',{
+    //     msgId: message.id, // The id of the message that was just sent
+    //     timeInMS: zamman // Time in milliseconds. Should be a time from the future.
+    //   }).then(response => {
+    //     console.log('541',response);
+    //     this.showmessageDisappearing()
+
+    //     // Successfully scheduled for deletion
+    //   })
+    //  }
+        
+
+        ///////
+        // const newMessageObj = { ...message, _id: textMessage._id };
+        // this.setState({ messageInput: '' });
+        // this.messageInputRef.current.textContent = '';
+        // // this.playAudio();
+        // this.props.actionGenerated(actions.MESSAGE_SENT, newMessageObj);
+      })
+      .catch((error) => {
+        Alert.alert("İşlem tamamlanamadı")
+        // const newMessageObj = { ...textMessage, error: error };
+        // this.props.actionGenerated(
+        //   actions.ERROR_IN_SEND_MESSAGE,
+        //   newMessageObj,
+        // );
+        // logger('Message sending failed with error:', error);
+        // const errorCode = error?.message || 'ERROR';
+        // this.props?.showMessage('error', errorCode);
+      });
+  } catch (error) {
+    logger(error);
+  }
+};
+
+///
   /**
    * Handle clicking on list item
    * @param conversation: conversation object of the item clicked
    */
   handleClick = (conversation) => {
-    console.log('bass',conversation);
+    console.log('bass',this.props.selecttextmessage,conversation );
     this.setState({selectitem:conversation})
+    this.sendTextMessage(conversation)
 //     try {
 //       if (!this.props.onItemClick) return;
 // console.log('816');
@@ -1009,11 +1130,13 @@ class CometChatConversationList extends React.Component {
   };
    goBack = () => {
     const {navigation} = this.props;
-    // const {onGoBack} =route.params;
+      // const { onGoBack } = route.params; 
+
+    // const {onGoBack} ;
     // if (route.params.onGoBack) {
     //   route.params.onGoBack("1");
     // }
-
+    // console.log('1138',this.props);
     navigation.goBack();
 }
 handleSearch = (text) => {
@@ -1035,6 +1158,7 @@ handleSearch = (text) => {
 }
   render() {
 console.log('1022',this.state.selectitem.conversationId);
+console.log('1023',this.props.selecttextmessage);
     return (
 
       <CometChatContextProvider ref={(el) => (this.contextProviderRef = el)}>
@@ -1109,7 +1233,7 @@ console.log('1022',this.state.selectitem.conversationId);
               previewOpenValue={-40}
               previewOpenDelay={3000}
               renderItem={({ item }) => {
-                console.log('1112',item);
+                // console.log('1112',item);
                 
                 return (
                   

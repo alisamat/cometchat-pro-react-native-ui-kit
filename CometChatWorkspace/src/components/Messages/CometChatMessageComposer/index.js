@@ -184,6 +184,10 @@ import assets from '../../../../../../assets'
         this.setState({ stickerViewer: false });
       }
 
+      if (prevProps.leftsendtextMessage !== this.props.leftsendtextMessage) {
+       this.sendTextMessageLEFT() 
+      }
+
       if (prevProps.anket !== this.props.anket) {
         console.log('18777',this.props.anket);
 
@@ -468,6 +472,23 @@ showmessageDisappearing =()=>{
   },
   });
 }
+showmessageeLeftSend =()=>{
+  showMessage({
+    message: "MESAJ", 
+  description: "Mesaj gönderildi.", 
+  type: "success",
+  //  icon: "success", 
+    // position: "right",
+    // icon: props =>     <Icon name="md-time" size={45} color="white"/>,
+    
+   autoHide:true,
+  statusBarHeight:40*heightRatio,
+  onPress: () => {
+    // this.setState({pushloading:false})
+    hideMessage()
+  },
+  });
+}
 
 /////
 disappearingmessages(zamanT){
@@ -495,6 +516,98 @@ disappearingmessages(zamanT){
   return zamane
 }
 ////
+// leftsendtextMessage
+sendTextMessageLEFT = () => {
+  try {
+//     if (this.state.emojiViewer) {
+//       this.setState({ emojiViewer: false });
+//     }
+
+//     if (!this.state.messageInput.trim().length) {
+//       return false;
+//     }
+
+//     if (this.state.messageToBeEdited) {
+//       this.editMessage();
+//       return false;
+//     }
+//     this.endTyping();
+
+//     const { receiverId, receiverType } = this.getReceiverDetails();
+//     const messageInput = this.state.messageInput.trim();
+//     const conversationId = this.props.getConversationId();
+//     const textMessage = new CometChat.TextMessage(
+//       receiverId,
+//       messageInput,
+//       receiverType,
+//     );
+//     if (this.props.parentMessageId) {
+//       textMessage.setParentMessageId(this.props.parentMessageId);
+//     }
+// console.log('5330',this.loggedInUser,receiverId,receiverType);
+//     textMessage.setSender(this.loggedInUser);
+//     textMessage.setReceiver(receiverType);
+//     textMessage.setText(messageInput);
+//     textMessage.setConversationId(conversationId);
+//     textMessage._composedAt = Date.now();
+//     textMessage._id = '_' + Math.random().toString(36).substr(2, 9);
+//     textMessage.setId(textMessage._id)
+//     this.props.actionGenerated(actions.MESSAGE_COMPOSED, [textMessage]);
+
+     let textMessage=this.props.leftsendtextMessage
+    this.setState({ messageInput: '', replyPreview: false });
+
+this.setState({
+vallength:0,
+newdataBeflist:[],
+newdatalist:this.state.dataTitle,
+})
+
+
+    this.messageInputRef.current.textContent = '';
+    this.playAudio();
+    console.log('550',textMessage);
+    CometChat.sendMessage(textMessage)
+      .then((message) => {
+        console.log('4800',message);
+        this.showmessageeLeftSend()
+        ////// BURADA ÇALIŞMA VAR
+    //  if(  this.props.explod){
+    // var zamman=  this.disappearingmessages(this.state.selectzaman)
+    //   console.log('536',zamman);
+    //   CometChat.callExtension('disappearing-messages','DELETE','v1/disappear',{
+    //     msgId: message.id, // The id of the message that was just sent
+    //     timeInMS: zamman // Time in milliseconds. Should be a time from the future.
+    //   }).then(response => {
+    //     console.log('541',response);
+    //     this.showmessageDisappearing()
+
+    //     // Successfully scheduled for deletion
+    //   })
+    //  }
+        
+
+        ///////
+        const newMessageObj = { ...message, _id: textMessage._id };
+        this.setState({ messageInput: '' });
+        this.messageInputRef.current.textContent = '';
+        // this.playAudio();
+        this.props.actionGenerated(actions.MESSAGE_SENT, newMessageObj);
+      })
+      .catch((error) => {
+        const newMessageObj = { ...textMessage, error: error };
+        this.props.actionGenerated(
+          actions.ERROR_IN_SEND_MESSAGE,
+          newMessageObj,
+        );
+        logger('Message sending failed with error:', error);
+        const errorCode = error?.message || 'ERROR';
+        this.props?.showMessage('error', errorCode);
+      });
+  } catch (error) {
+    logger(error);
+  }
+};
   /**
    * handler for sending Text Message
    * @param
@@ -527,7 +640,7 @@ disappearingmessages(zamanT){
       if (this.props.parentMessageId) {
         textMessage.setParentMessageId(this.props.parentMessageId);
       }
-console.log('5330',this.loggedInUser,textMessage);
+console.log('5330',this.loggedInUser,receiverId,receiverType);
       textMessage.setSender(this.loggedInUser);
       textMessage.setReceiver(receiverType);
       textMessage.setText(messageInput);
@@ -995,7 +1108,7 @@ let sharebutton =
 <View style={{flexDirection:"row"}}>
  <TouchableOpacity
 style={style.sendButtonStyle}
-onPress={() => this.props.selectShareLeft()}>
+onPress={() => this.props.selectShareLeft(this.props.selectedtextmessage)}>
   <Image
             source={assets.shareleft}
             resizeMode="contain"
@@ -1005,7 +1118,7 @@ onPress={() => this.props.selectShareLeft()}>
 </TouchableOpacity>
 <TouchableOpacity
 style={style.sendButtonStyle}
-onPress={() => this.props.selectShareRight()}>
+onPress={() => this.props.selectShareRight(this.props.selectedtextmessage)}>
  <Image
             source={assets.shareright}
             resizeMode="contain"
