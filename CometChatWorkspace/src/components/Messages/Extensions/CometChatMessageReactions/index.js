@@ -99,7 +99,7 @@ class CometChatMessageReactions extends Component {
               this.setState({ reactionsDetailContainer: true });
             }}
             activeOpacity={1}>
-            <View style={styles.reactionContainer}>
+            <View style={[styles.reactionContainer,]}>
               <View style={styles.emojiContainer}>
                 <Emoji
                   emoji={{ id: reactionName }}

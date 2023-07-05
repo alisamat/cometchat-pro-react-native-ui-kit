@@ -205,7 +205,20 @@ const CometChatSenderTextMessageBubble = (props) => {
         }}>
         <View style={[style.messageWrapperStyle,{backgroundColor:"#90EE90"}]}>{messageText}</View>
       </TouchableWithoutFeedback>
-      <View style={[style.messageInfoWrapperStyle]}>
+      {/* <View style={[style.messageInfoWrapperStyle,{}]}> */}
+      <View style={[{flexDirection: "row",
+    alignItems: "center",    
+    justifyContent: "flex-end"
+  }]}>
+    <View style={{paddingRight:4}}>
+      <CometChatMessageReactions
+        showMessage={props.showMessage}
+        theme={props.theme}
+        {...props}
+        message={message}
+      />
+      </View>
+        <View>
         <CometChatThreadedMessageReplyCount
           theme={props.theme}
           {...props}
@@ -216,13 +229,10 @@ const CometChatSenderTextMessageBubble = (props) => {
           {...props}
           message={message}
         />
+        </View>
+       
       </View>
-      <CometChatMessageReactions
-        showMessage={props.showMessage}
-        theme={props.theme}
-        {...props}
-        message={message}
-      />
+     
     </View>
   );
 };
