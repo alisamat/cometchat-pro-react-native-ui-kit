@@ -667,9 +667,12 @@ class CometChatGroupList extends React.Component {
 
   ListHeaderComponent = () => {
     return (
-      <View style={[styles.groupHeaderStyle]}>
-        <View style={styles.headingContainer}>
-          <Text style={styles.groupHeaderTitleStyle}>Gruplar</Text>
+      <View style={[styles.groupHeaderStyle,]}>
+        <View style={[styles.headingContainer,{paddingHorizontal:5}]}>
+          <Text style={{ margin: 0,
+          fontWeight: '700',
+          textAlign: 'left',
+          fontSize: 22,}}>Gruplar</Text>
           {this.state.restrictions?.isGroupCreationEnabled ? (
             <TouchableOpacity
               onPress={() => this.createGroupHandler(true)}
@@ -839,7 +842,8 @@ class CometChatGroupList extends React.Component {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.groupWrapperStyle}>
             <SafeAreaView style={{ flex: 1 }}>
-              <View style={styles.headerContainer}>
+              <View style={[{ alignItems: 'center',paddingTop:5,
+              width: '100%',justifyContent: 'center'  }]}>
                 <Text
                   style={{
                     fontSize: 18,
