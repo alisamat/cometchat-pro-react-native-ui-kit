@@ -345,7 +345,7 @@ export default class ComposerActions extends Component {
         }
         { this.state.restrictions?.isFilesEnabled && this.DocumentOption() }
         { this.state.restrictions?.isStickersEnabled && this.StickerOption() }
-        { this.state.restrictions?.isPollsEnabled && this.CreatePollOption() }
+        {/* { this.state.restrictions?.isPollsEnabled && this.CreatePollOption() } */}
       </View>
     );
   };

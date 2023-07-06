@@ -1107,22 +1107,24 @@ console.log('715',dataN);
 let sharebutton =  
 <View style={{flexDirection:"row"}}>
  <TouchableOpacity
-style={style.sendButtonStyle}
+ style={[{marginLeft:11,alignItems: "center",justifyContent:"center",height:36,width:36,borderRadius:18,}]}
+
+// style={[style.sendButtonStyle,{paddingLeft:17,height:40,borderRadius:13,backgroundColor:"#ECEFF1"}]}
 onPress={() => this.props.selectShareLeft(this.props.selectedtextmessage)}>
   <Image
             source={assets.shareleft}
             resizeMode="contain"
-            style={{width:22,height:22}}
+            style={{width:24,height:24}}
           />
       {/* <Icon name="share" size={30} color="#3299ff" style={{transform: [{rotate: '190deg'}]}} /> */}
 </TouchableOpacity>
 <TouchableOpacity
-style={style.sendButtonStyle}
+style={[{marginLeft:15,alignItems: "center",justifyContent:"center",height:36,width:36,borderRadius:18,}]}
 onPress={() => this.props.selectShareRight(this.props.selectedtextmessage)}>
  <Image
             source={assets.shareright}
             resizeMode="contain"
-            style={{width:22,height:22}}
+            style={{width:24,height:24}}
             
           /></TouchableOpacity>
 </View>

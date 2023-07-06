@@ -10,6 +10,8 @@ import {
   StyleSheet,
   Text
 } from 'react-native';
+import {observer, inject} from 'mobx-react';
+import {getSnapshot} from 'mobx-state-tree';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 // import { NavigationContainer } from '@react-navigation/native';
@@ -43,6 +45,10 @@ import DropDownAlert from '../../Shared/DropDownAlert';
 import BottomSheet from 'reanimated-bottom-sheet';
 import style from './styles';
 import CometChatUserProfile from '../../Users/CometChatUserProfile';
+import User from '../../../../../../store/user';
+import Apartments from '../../../../../../store/apartment';
+import General from '../../../../../../store/general';
+import checkPackageValidity from '../../../../../../Components/paket'
 
 class CometChatMessages extends React.PureComponent {
   static contextType = CometChatContext;
@@ -82,6 +88,8 @@ class CometChatMessages extends React.PureComponent {
       incomingCall: null,
       ongoingDirectCall: null,
       pinadd:0,
+      gecicialan:false,
+      paket:false,
     };
 
     this.composerRef = React.createRef();
@@ -90,8 +98,36 @@ class CometChatMessages extends React.PureComponent {
     this.reactionName = props.reaction || 'heart';
     this.theme = { ...theme, ...params.theme };
   }
+ gecicalancheckandpaketcheck(){
+  const {general,user}=this.props
+  console.log('1011',general);
+  let generaldetail = getSnapshot(general);
+  var gecicialan=generaldetail.generalsList[0].General?.gecicialan   
+  console.log('1077',gecicialan); 
+  if(gecicialan=="true"){
+      this.setState({gecicialan:true})
+    }
 
+      var startpackage=generaldetail.generalsList[0].General?.startpackage   
+        if(startpackage=="notpackage"){
+          this.setState({paket:true})
+
+        }else {
+        let userdetail = getSnapshot(user);
+        var paketdet=userdetail.paket
+        var paket=  checkPackageValidity(paketdet)
+            if(paket.paket!=="Standart"){
+            this.setState({paket:true})
+            }else{
+              this.setState({paket:false})
+            }
+        }
+       
+ }
   componentDidMount() {
+    ////
+    this.gecicalancheckandpaketcheck()
+    /////
     this.checkRestrictions();
     new CometChatManager()
       .getLoggedInUser()
@@ -1450,6 +1486,8 @@ console.log('1044',selecttext.data.text);
               // widgetsettings={route.params.widgetsettings}
               loggedInUser={params.loggedInUser}
               actionGenerated={this.actionHandler}
+              gecicialan={this.state.gecicialan}
+              paket={this.state.paket}
             />
             <CometChatMessageList
               selectedtextmessage={this.state.selectedtextmessage}
@@ -1538,4 +1576,4 @@ const styles1 = StyleSheet.create({
     zIndex: 999,
   },
 })
-export default CometChatMessages;
+export default inject('user','general','apartments','auth')(observer(CometChatMessages))

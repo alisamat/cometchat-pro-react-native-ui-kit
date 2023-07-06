@@ -323,6 +323,49 @@ class CometChatMessageHeader extends React.Component {
     },
     });
   }
+  gecicialanMessages=(type)=>{
+    var message=type=="anket"? "ANKET":type=="patlayanmesaj"?"KAYBOLAN MESAJ":""
+    var description=type=="anket"? "Anket özelliği geçici süre devre dışı bırakılmıştır":type=="patlayanmesaj"?"Kaybolan Mesaj özelliği geçici süre devre dışı bırakılmıştır":""
+    showMessage({
+      message: message, 
+    description: description, 
+    type: "danger",
+    //  icon: "success", 
+      // position: "right",
+      //      icon: props =>     <Icon name="md-time" size={35} color="white"/>,
+
+      icon: props => type=="anket"?   < MCIIcon name= "comment-plus-outline" size={44} color="orange"/>:<Icon name="md-time" size={35} color="white"/>,
+      
+     autoHide:true,
+    statusBarHeight:40*heightRatio,
+    onPress: () => {
+      // this.setState({pushloading:false})
+      hideMessage()
+    },
+    });
+  
+  }
+  paketyukselt=(type)=>{
+    // var message=type=="anket"? "PAKET":type=="patlayanmesaj"?"KAYBOLAN MESAJ":""
+    var description=type=="anket"? "Anket Özelliğini Kullanabilmeniz İçin Paketinizi Yükseltin":type=="patlayanmesaj"?"Kaybolan Mesaj Özelliğini Kullanabilmeniz İçin Paketinizi Yükseltin":""
+   
+    showMessage({
+      message: "PAKET YÜKSELT", 
+    description: description, 
+    type: "danger",
+    //  icon: "success", 
+      // position: "right",
+      icon: props => type=="anket"?   < MCIIcon name= "comment-plus-outline" size={44} color="orange"/>:<Icon name="md-time" size={35} color="white"/>,
+
+      // icon: () => <Icon name="md-arrow-up" size={37} color={ "white"} />,
+     autoHide:true,
+    statusBarHeight:40*heightRatio,
+    onPress: () => {
+      // this.setState({pushloading:false})
+      hideMessage()
+    },
+    });
+  }
   render() {
     let image;
     let userName;
@@ -448,13 +491,20 @@ let Disappearing = (
     this. showmessageDisappearing()
     }}
     onPress={() => {
-       this.props.actionGenerated(actions.EXPLOAD)
-      var color=this.state.Disappearing
-      console.log('3333',color);
-      color=color?false:true
-this.setState({Disappearing:color})
-    }
-    }
+            if(this.props.gecicialan){
+              this.gecicialanMessages("patlayanmesaj")
+              }else{
+                  if(this.props.paket==false){
+                    this.paketyukselt("patlayanmesaj")
+                  }else{
+                this.props.actionGenerated(actions.EXPLOAD)
+                var color=this.state.Disappearing
+                console.log('3333',color);
+                color=color?false:true
+                this.setState({Disappearing:color})
+              }
+              } 
+    }}
     style={styles.videoCallContainer}>
     {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
     {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={assets.setting} /> */}
@@ -473,12 +523,23 @@ this.setState({Disappearing:color})
     this. showmessageAnket()
     }}
     onPress={() => {
-       this.props.actionGenerated(actions.ANKET)
-      var color=this.state.anket
-      console.log('3333',color);
-      color=color?false:true
-this.setState({anket:color})
-    }
+      console.log('567',this.props.gecicialan);
+      console.log('567',this.props.paket);
+            if(this.props.gecicialan){
+            this.gecicialanMessages("anket")
+            }else{
+                if(this.props.paket==false){
+                  this.paketyukselt("anket")
+                }else{
+                  this.props.actionGenerated(actions.ANKET)
+                  var color=this.state.anket
+                  console.log('3333',color);
+                  color=color?false:true
+                  this.setState({anket:color})
+                }
+            }
+          
+          }
     }
     style={styles.videoCallContainer}>
     {/* <Image style={[styles.callIcon,{tintColor:"white"}]}  source={detailPaneIcon} /> */}
